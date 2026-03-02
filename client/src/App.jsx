@@ -28,6 +28,7 @@ import AdminSecurityLogs from './pages/admin/AdminSecurityLogs';
 import CompanyDashboard from './pages/company/CompanyDashboard';
 import CompanyProjects from './pages/company/CompanyProjects';
 import CompanyExpenses from './pages/company/CompanyExpenses';
+import CompanyReports from './pages/company/CompanyReports';
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
                 <Route path="/company/dashboard" element={<CompanyDashboard />} />
                 <Route path="/company/projects" element={<CompanyProjects />} />
                 <Route path="/company/expenses" element={<CompanyExpenses />} />
+                <Route path="/company/reports" element={<CompanyReports />} />
               </Route>
 
               <Route element={<ProtectedRoute allowedRoles={['admin']} />}>

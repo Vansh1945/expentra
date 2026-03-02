@@ -52,7 +52,7 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
                 { name: 'Business Board', path: '/company/dashboard', icon: <MdDashboard className="w-6 h-6 text-indigo-400" /> },
                 { name: 'Projects', path: '/company/projects', icon: <MdPieChart className="w-6 h-6 text-orange-400" /> },
                 { name: 'Approvals', path: '/company/expenses', icon: <MdAttachMoney className="w-6 h-6 text-red-400" /> },
-                ...items.filter(item => ['Income', 'Expenses', 'Reports'].includes(item.name))
+                { name: 'Financial Reports', path: '/company/reports', icon: <MdBarChart className="w-6 h-6 text-green-400" /> }
             ];
         }
 

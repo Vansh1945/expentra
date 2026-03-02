@@ -85,6 +85,7 @@ const CompanyDashboard = () => {
     // Dashboard View Once Company is Registered
     const totalBudget = projects.reduce((acc, p) => acc + p.budget, 0);
     const totalSpent = projects.reduce((acc, p) => acc + p.spent, 0);
+    const netRemaining = totalBudget - totalSpent;
 
     return (
         <div className="space-y-6">
@@ -104,21 +105,21 @@ const CompanyDashboard = () => {
                         <MdAccountBalanceWallet className="w-5 h-5 mr-2" />
                         <h3 className="text-sm font-medium uppercase tracking-wider">Total Project Budgets</h3>
                     </div>
-                    <p className="text-3xl font-bold text-gray-900">${totalBudget.toLocaleString()}</p>
+                    <p className="text-3xl font-bold text-gray-900">₹{totalBudget.toLocaleString()}</p>
                 </div>
                 <div className="bg-white p-6 rounded-xl shadow">
                     <div className="flex items-center text-gray-500 mb-2">
                         <MdReceipt className="w-5 h-5 mr-2" />
                         <h3 className="text-sm font-medium uppercase tracking-wider">Total Approved Spend</h3>
                     </div>
-                    <p className="text-3xl font-bold text-red-600">${totalSpent.toLocaleString()}</p>
+                    <p className="text-3xl font-bold text-red-600">₹{totalSpent.toLocaleString()}</p>
                 </div>
                 <div className="bg-white p-6 rounded-xl shadow">
                     <div className="flex items-center text-gray-500 mb-2">
                         <MdShowChart className="w-5 h-5 mr-2" />
                         <h3 className="text-sm font-medium uppercase tracking-wider">Net Remaining</h3>
                     </div>
-                    <p className="text-3xl font-bold text-green-600">${(totalBudget - totalSpent).toLocaleString()}</p>
+                    <p className="text-3xl font-bold text-green-600">₹{netRemaining.toLocaleString()}</p>
                 </div>
             </div>
         </div>

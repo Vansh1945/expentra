@@ -109,7 +109,7 @@ const CompanyExpenses = () => {
                                     {exp.submittedBy?.name}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-900">
-                                    ${exp.amount.toLocaleString()}
+                                    ₹{exp.amount.toLocaleString()}
                                 </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
                                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -153,7 +153,7 @@ const CompanyExpenses = () => {
                                 <label className="block text-sm font-medium text-gray-700">Project</label>
                                 <select required value={formData.projectId} onChange={e => setFormData({ ...formData, projectId: e.target.value })} className="mt-1 block w-full px-3 py-2 border rounded-md">
                                     {projects.map(p => (
-                                        <option key={p._id} value={p._id}>{p.name} (Budget: ${p.budget})</option>
+                                        <option key={p._id} value={p._id}>{p.name} (Budget: ₹{p.budget})</option>
                                     ))}
                                 </select>
                             </div>
