@@ -9,8 +9,22 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     // Group Mode State
-    const [appMode, setAppMode] = useState('personal'); // 'personal' | 'group'
-    const [selectedGroupId, setSelectedGroupId] = useState(null);
+    const [appMode, setAppModeState] = useState(localStorage.getItem('appMode') || 'personal'); // 'personal' | 'group'
+    const [selectedGroupId, setSelectedGroupIdState] = useState(localStorage.getItem('selectedGroupId') || null);
+
+    const setAppMode = (mode) => {
+        setAppModeState(mode);
+        localStorage.setItem('appMode', mode);
+    };
+
+    const setSelectedGroupId = (groupId) => {
+        setSelectedGroupIdState(groupId);
+        if (groupId) {
+            localStorage.setItem('selectedGroupId', groupId);
+        } else {
+            localStorage.removeItem('selectedGroupId');
+        }
+    };
 
     useEffect(() => {
         const checkLoggedIn = async () => {

@@ -17,11 +17,19 @@ const groupExpenseSchema = new mongoose.Schema(
             required: true,
             min: [0.01, 'Amount must be positive'],
         },
-        paidBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true,
-        },
+        paidBy: [
+            {
+                user: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'User',
+                },
+                name: String,
+                amount: {
+                    type: Number,
+                    required: true,
+                },
+            }
+        ],
         splitBetween: [
             {
                 user: {

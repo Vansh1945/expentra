@@ -57,36 +57,14 @@ const Settlement = () => {
                 ) : (
                     <div className="space-y-4 max-w-2xl mx-auto">
                         {simplifiedDebts.map((debt, index) => (
-                            <div key={index} className="flex flex-col sm:flex-row items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
-                                <div className="flex items-center space-x-4 w-full sm:w-auto mb-2 sm:mb-0">
-                                    <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center font-bold text-red-700">
-                                        {debt.from.name.charAt(0)}
-                                    </div>
-                                    <div className="flex flex-col">
-                                        <span className="font-semibold text-gray-900">{debt.from.name}</span>
-                                        <span className="text-xs text-gray-500">Owes</span>
-                                    </div>
+                            <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <div className="flex items-center text-lg gap-2">
+                                    <span className="font-bold text-red-600">{debt.from.name}</span>
+                                    <span className="text-gray-500 font-medium">pays</span>
+                                    <span className="font-bold text-green-600">{debt.to.name}</span>
                                 </div>
-
-                                <div className="hidden sm:flex flex-1 items-center justify-center px-4">
-                                    <div className="h-px bg-gray-300 flex-1"></div>
-                                    <span className="font-bold text-indigo-700 px-3 bg-white border border-indigo-100 rounded-full text-sm">₹{debt.amount.toLocaleString(undefined, { maximumFractionDigits: 2 })}</span>
-                                    <div className="h-px bg-gray-300 flex-1 relative">
-                                        <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-2 h-2 border-t-2 border-r-2 border-gray-300 rotate-45"></div>
-                                    </div>
-                                </div>
-                                <div className="sm:hidden font-bold text-indigo-700 w-full text-center py-2">
-                                    ₹{debt.amount.toLocaleString(undefined, { maximumFractionDigits: 2 })}
-                                </div>
-
-                                <div className="flex items-center space-x-4 w-full sm:w-auto justify-end">
-                                    <div className="flex flex-col text-right">
-                                        <span className="font-semibold text-gray-900">{debt.to.name}</span>
-                                        <span className="text-xs text-gray-500">Receives</span>
-                                    </div>
-                                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center font-bold text-green-700">
-                                        {debt.to.name.charAt(0)}
-                                    </div>
+                                <div className="font-bold text-indigo-700 bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100 text-lg">
+                                    ₹{debt.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </div>
                             </div>
                         ))}

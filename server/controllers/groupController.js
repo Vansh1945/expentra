@@ -148,3 +148,88 @@ export const addMemberToGroup = async (req, res, next) => {
         next(error);
     }
 };
+// @desc    Update member in group
+// @route   PUT /api/groups/:id/members/:memberId
+// @access  Private
+export const updateMemberInGroup = async (req, res, next) => {
+    try {
+        const { name, email } = req.body;
+        const { id: groupId, memberId } = req.params;
+
+        const group = await Group.findById(groupId);
+
+        if (!group) {
+            res.status(404);
+            throw new Error('Group not found');
+        }
+
+        // Only creator can update members
+        if (group.createdBy.toString() !== req.user._id.toString()) {
+            res.status(401);
+            throw new Error('Not authorized to update members in this group');
+        }
+
+        const member = group.members.id(memberId);
+        if (!member) {
+            res.status(404);
+            throw new Error('Member not found');
+        }
+
+        // Update fields if provided
+        if (name) member.name = name;
+        if (email !== undefined) member.email = email;
+
+        // If email changed, we might need to update the linked user ID
+        if (email) {
+            const registeredUser = await User.findOne({ email });
+            member.user = registeredUser ? registeredUser._id : null;
+        }
+
+        await group.save();
+        res.status(200).json(group);
+    } catch (error) {
+        next(error);
+    }
+};
+
+// @desc    Remove member from group
+// @route   DELETE /api/groups/:id/members/:memberId
+// @access  Private
+export const removeMemberFromGroup = async (req, res, next) => {
+    try {
+        const { id: groupId, memberId } = req.params;
+
+        const group = await Group.findById(groupId);
+
+        if (!group) {
+            res.status(404);
+            throw new Error('Group not found');
+        }
+
+        // Only creator can remove members
+        if (group.createdBy.toString() !== req.user._id.toString()) {
+            res.status(401);
+            throw new Error('Not authorized to remove members from this group');
+        }
+
+        const member = group.members.id(memberId);
+        if (!member) {
+            res.status(404);
+            throw new Error('Member not found');
+        }
+
+        // Cannot remove the creator
+        if (member.user && member.user.toString() === group.createdBy.toString()) {
+            res.status(400);
+            throw new Error('Cannot remove the group creator');
+        }
+
+        // In Mongoose nested arrays, you can use .remove() or .pull()
+        member.deleteOne();
+        await group.save();
+
+        res.status(200).json(group);
+    } catch (error) {
+        next(error);
+    }
+};

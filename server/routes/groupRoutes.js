@@ -1,5 +1,5 @@
 import express from 'express';
-import { createGroup, getGroups, getGroupById, addMemberToGroup } from '../controllers/groupController.js';
+import { createGroup, getGroups, getGroupById, addMemberToGroup, updateMemberInGroup, removeMemberFromGroup } from '../controllers/groupController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -13,5 +13,9 @@ router.route('/:id')
 
 router.route('/:id/members')
     .put(protect, addMemberToGroup);
+
+router.route('/:id/members/:memberId')
+    .put(protect, updateMemberInGroup)
+    .delete(protect, removeMemberFromGroup);
 
 export default router;

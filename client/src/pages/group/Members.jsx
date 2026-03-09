@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import api from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import { MdGroupAdd, MdPerson } from 'react-icons/md';
+import { MdGroupAdd, MdPerson, MdEdit, MdDelete, MdCheck, MdClose } from 'react-icons/md';
 
 const Members = () => {
     const { selectedGroupId } = useContext(AuthContext);
@@ -13,6 +13,14 @@ const Members = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Edit states
+    const [editingMemberId, setEditingMemberId] = useState(null);
+    const [editName, setEditName] = useState('');
+    const [editEmail, setEditEmail] = useState('');
+    const { user } = useContext(AuthContext);
+
+    const isAdmin = groupData && user && groupData.createdBy.toString() === user._id.toString();
 
     const fetchGroupData = async () => {
         try {
@@ -55,6 +63,41 @@ const Members = () => {
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleUpdateMember = async (memberId) => {
+        if (!editName.trim()) return toast.error("Name is required");
+        setIsSubmitting(true);
+        try {
+            await api.put(`/groups/${selectedGroupId}/members/${memberId}`, {
+                name: editName.trim(),
+                email: editEmail.trim() || ''
+            });
+            toast.success("Member updated");
+            setEditingMemberId(null);
+            await fetchGroupData();
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Update failed");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    const handleDeleteMember = async (memberId, memberName) => {
+        if (!window.confirm(`Are you sure you want to remove ${memberName} from the group?`)) return;
+        try {
+            await api.delete(`/groups/${selectedGroupId}/members/${memberId}`);
+            toast.success("Member removed");
+            await fetchGroupData();
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Delete failed");
+        }
+    };
+
+    const startEditing = (member) => {
+        setEditingMemberId(member._id);
+        setEditName(member.name);
+        setEditEmail(member.email || '');
     };
 
     if (!selectedGroupId) {
@@ -118,23 +161,71 @@ const Members = () => {
                         Current Group Members ({groupData?.members?.length || 0})
                     </h2>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    <div className="space-y-3 mt-4">
                         {groupData?.members.map(member => (
-                            <div key={member.user || member.name} className="flex items-center p-3 border border-gray-100 rounded-lg bg-gray-50 hover:bg-white transition hover:shadow-sm">
-                                <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold mr-3 shrink-0">
-                                    {member.name.charAt(0).toUpperCase()}
+                            <div key={member._id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 border border-gray-100 rounded-lg bg-gray-50 hover:bg-white transition hover:shadow-sm gap-3">
+                                <div className="flex items-center flex-1 truncate">
+                                    <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold mr-3 shrink-0">
+                                        {member.name.charAt(0).toUpperCase()}
+                                    </div>
+                                    {editingMemberId === member._id ? (
+                                        <div className="flex flex-wrap gap-2 flex-1">
+                                            <input
+                                                type="text"
+                                                value={editName}
+                                                onChange={e => setEditName(e.target.value)}
+                                                className="px-2 py-1 border rounded text-xs"
+                                                placeholder="Name"
+                                            />
+                                            <input
+                                                type="email"
+                                                value={editEmail}
+                                                onChange={e => setEditEmail(e.target.value)}
+                                                className="px-2 py-1 border rounded text-xs"
+                                                placeholder="Email"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="truncate">
+                                            <p className="font-semibold text-gray-900 truncate" title={member.name}>
+                                                {member.name}
+                                                {groupData.createdBy.toString() === (member.user && member.user.toString()) && (
+                                                    <span className="ml-2 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full uppercase tracking-wide">Admin</span>
+                                                )}
+                                            </p>
+                                            <p className="text-xs text-gray-500 truncate" title={member.email || 'Unregistered User'}>
+                                                {member.email || 'Unregistered User'}
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="truncate">
-                                    <p className="font-semibold text-gray-900 truncate" title={member.name}>
-                                        {member.name}
-                                        {groupData.createdBy.toString() === (member.user && member.user.toString()) && (
-                                            <span className="ml-2 text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full uppercase tracking-wide">Admin</span>
+
+                                {isAdmin && (
+                                    <div className="flex items-center gap-2 self-end sm:self-center">
+                                        {editingMemberId === member._id ? (
+                                            <>
+                                                <button onClick={() => handleUpdateMember(member._id)} className="p-1.5 text-green-600 hover:bg-green-50 rounded" title="Save">
+                                                    <MdCheck className="w-5 h-5" />
+                                                </button>
+                                                <button onClick={() => setEditingMemberId(null)} className="p-1.5 text-gray-500 hover:bg-gray-100 rounded" title="Cancel">
+                                                    <MdClose className="w-5 h-5" />
+                                                </button>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <button onClick={() => startEditing(member)} className="p-1.5 text-indigo-600 hover:bg-indigo-50 rounded" title="Edit">
+                                                    <MdEdit className="w-5 h-5" />
+                                                </button>
+                                                {/* Only show delete if NOT the creator themselves */}
+                                                {groupData.createdBy.toString() !== (member.user && member.user.toString()) && (
+                                                    <button onClick={() => handleDeleteMember(member._id, member.name)} className="p-1.5 text-red-600 hover:bg-red-50 rounded" title="Delete">
+                                                        <MdDelete className="w-5 h-5" />
+                                                    </button>
+                                                )}
+                                            </>
                                         )}
-                                    </p>
-                                    <p className="text-xs text-gray-500 truncate" title={member.email || 'Unregistered User'}>
-                                        {member.email || 'Unregistered User'}
-                                    </p>
-                                </div>
+                                    </div>
+                                )}
                             </div>
                         ))}
                     </div>

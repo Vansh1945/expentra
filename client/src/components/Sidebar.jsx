@@ -21,7 +21,7 @@ import logo from '../assets/logo.png';
 
 const Sidebar = ({ role, isOpen, setIsOpen }) => {
     const location = useLocation();
-    const { appMode } = useContext(AuthContext);
+    const { appMode, setAppMode } = useContext(AuthContext);
 
     const getNavItems = () => {
         // Personal role: split by appMode

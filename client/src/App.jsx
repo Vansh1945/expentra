@@ -23,6 +23,7 @@ import Alerts from './pages/Alerts';
 import GroupSelection from './pages/group/GroupSelection';
 import GroupDashboard from './pages/group/GroupDashboard';
 import GroupExpenses from './pages/group/GroupExpenses';
+import AddGroupExpense from './pages/group/AddGroupExpense';
 import Settlement from './pages/group/Settlement';
 import Members from './pages/group/Members';
 import GroupAnalytics from './pages/group/GroupAnalytics';
@@ -71,6 +72,7 @@ function App() {
               <Route path="/groups" element={<GroupSelection />} />
               <Route path="/groups/dashboard" element={<GroupDashboard />} />
               <Route path="/groups/expenses" element={<GroupExpenses />} />
+              <Route path="/groups/add-expense" element={<AddGroupExpense />} />
               <Route path="/groups/settlement" element={<Settlement />} />
               <Route path="/groups/members" element={<Members />} />
               <Route path="/groups/analytics" element={<GroupAnalytics />} />

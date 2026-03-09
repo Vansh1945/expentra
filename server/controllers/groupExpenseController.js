@@ -8,9 +8,15 @@ export const addGroupExpense = async (req, res, next) => {
     try {
         const { groupId, title, amount, paidBy, splitBetween, category, note, date } = req.body;
 
-        if (!groupId || !title || !amount || !paidBy || !splitBetween) {
+        if (!groupId || !title || !amount || !paidBy || !splitBetween || paidBy.length === 0) {
             res.status(400);
             throw new Error('Please fill all required fields');
+        }
+
+        const totalPaid = paidBy.reduce((sum, p) => sum + Number(p.amount), 0);
+        if (Math.abs(totalPaid - amount) > 0.1) {
+            res.status(400);
+            throw new Error('Sum of amounts paid must equal total expense amount');
         }
 
         const group = await Group.findById(groupId);
@@ -105,11 +111,20 @@ export const getGroupSettlements = async (req, res, next) => {
         });
 
         expenses.forEach(exp => {
-            // Credit the person who paid
-            const payerId = exp.paidBy.toString();
-            // Since paidBy could be a user id we find it in balances
-            if (balances[payerId]) {
-                balances[payerId].balance += exp.amount;
+            // Credit the people who paid
+            if (Array.isArray(exp.paidBy)) {
+                exp.paidBy.forEach(payer => {
+                    const payerId = payer.user ? payer.user.toString() : payer.name;
+                    if (balances[payerId]) {
+                        balances[payerId].balance += payer.amount;
+                    }
+                });
+            } else {
+                // Backward compatibility for old records where paidBy was an ObjectId
+                const payerId = exp.paidBy.toString();
+                if (balances[payerId]) {
+                    balances[payerId].balance += exp.amount;
+                }
             }
 
             // Debit the members who share the expense
@@ -127,8 +142,9 @@ export const getGroupSettlements = async (req, res, next) => {
 
         Object.keys(balances).forEach(identifier => {
             const bal = balances[identifier];
-            if (bal.balance < -0.01) debtors.push({ ...bal, identifier });
-            else if (bal.balance > 0.01) creditors.push({ ...bal, identifier });
+            bal.balance = Math.round(bal.balance * 100) / 100;
+            if (bal.balance < 0) debtors.push({ ...bal, identifier });
+            else if (bal.balance > 0) creditors.push({ ...bal, identifier });
         });
 
         debtors.sort((a, b) => a.balance - b.balance); // most negative first
@@ -143,7 +159,8 @@ export const getGroupSettlements = async (req, res, next) => {
             const debtor = debtors[i];
             const creditor = creditors[j];
 
-            const amountToSettle = Math.min(Math.abs(debtor.balance), creditor.balance);
+            let amountToSettle = Math.min(Math.abs(debtor.balance), creditor.balance);
+            amountToSettle = Math.round(amountToSettle * 100) / 100;
 
             simplifiedDebts.push({
                 from: debtor.memberInfo,
@@ -151,11 +168,11 @@ export const getGroupSettlements = async (req, res, next) => {
                 amount: amountToSettle,
             });
 
-            debtor.balance += amountToSettle;
-            creditor.balance -= amountToSettle;
+            debtor.balance = Math.round((debtor.balance + amountToSettle) * 100) / 100;
+            creditor.balance = Math.round((creditor.balance - amountToSettle) * 100) / 100;
 
-            if (Math.abs(debtor.balance) < 0.01) i++;
-            if (creditor.balance < 0.01) j++;
+            if (Math.abs(debtor.balance) === 0) i++;
+            if (creditor.balance === 0) j++;
         }
 
         res.json({
