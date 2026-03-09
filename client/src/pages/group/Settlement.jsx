@@ -70,9 +70,8 @@ const Settlement = () => {
         totalOwedToUser,
         totalUserOwes,
         pendingReimbursements,
-        paidReimbursements,
         overdueReimbursements
-    } = data || { balances: [], totalOwedToUser: 0, totalUserOwes: 0, pendingReimbursements: [], paidReimbursements: [], overdueReimbursements: [] };
+    } = data || { balances: [], totalOwedToUser: 0, totalUserOwes: 0, pendingReimbursements: [], overdueReimbursements: [] };
 
     const SettlementCard = ({ settlement, status }) => {
         const isFromMe = settlement.from.user === (user?._id || user?.id);
@@ -115,12 +114,6 @@ const Settlement = () => {
                         >
                             <MdPayment className="mr-2" /> Mark as Paid
                         </button>
-                    </div>
-                )}
-
-                {status === 'paid' && (
-                    <div className="flex items-center text-xs font-bold text-emerald-600 bg-white/50 p-2 rounded-lg border border-emerald-100">
-                        <MdCheckCircle className="mr-2 w-4 h-4" /> Paid via {settlement.paymentMethod || 'Cash'} on {new Date(settlement.paymentDate).toLocaleDateString()}
                     </div>
                 )}
             </div>
@@ -191,21 +184,6 @@ const Settlement = () => {
                         </div>
                     )}
                 </section>
-
-                {/* Paid Section */}
-                {paidReimbursements.length > 0 && (
-                    <section>
-                        <div className="flex items-center space-x-3 mb-4">
-                            <span className="w-2 h-8 bg-emerald-500 rounded-full"></span>
-                            <h3 className="text-xl font-black text-gray-900 flex items-center uppercase tracking-tight">
-                                Payment History <span className="ml-2 px-2 py-0.5 bg-emerald-100 text-emerald-600 text-xs rounded-lg">{paidReimbursements.length}</span>
-                            </h3>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {paidReimbursements.map(s => <SettlementCard key={s._id} settlement={s} status="paid" />)}
-                        </div>
-                    </section>
-                )}
             </div>
 
             {/* Balances Sidebar-style table */}

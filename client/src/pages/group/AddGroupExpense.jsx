@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import { MdArrowBack, MdCalculate, MdCheckCircle, MdInfoOutline } from 'react-icons/md';
+import { format } from 'date-fns';
+import { MdArrowBack, MdCalculate, MdCheckCircle, MdInfoOutline, MdReceipt, MdCategory } from 'react-icons/md';
 
 const AddGroupExpense = () => {
     const navigate = useNavigate();
@@ -15,6 +16,7 @@ const AddGroupExpense = () => {
     const [amount, setAmount] = useState('');
     const [category, setCategory] = useState('General');
     const [note, setNote] = useState('');
+    const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd'));
 
     const [paidBy, setPaidBy] = useState([]); // [{ user, name, amount }]
     const [splitType, setSplitType] = useState('equal');
@@ -42,11 +44,10 @@ const AddGroupExpense = () => {
                 }));
                 setSplitDetails(initialSplit);
 
-                // Initialize paidBy with empty array (will be handled by UI)
                 setPaidBy([]);
+                setLoading(false);
             } catch (error) {
                 toast.error("Failed to load group data");
-            } finally {
                 setLoading(false);
             }
         };
@@ -142,7 +143,8 @@ const AddGroupExpense = () => {
                 splitType,
                 splitDetails: finalSplitDetails,
                 category,
-                note
+                note,
+                date: new Date(date)
             });
 
             toast.success("Expense added successfully");
@@ -171,7 +173,9 @@ const AddGroupExpense = () => {
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-6">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Expense Title</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                    <MdReceipt className="mr-2 text-indigo-500" /> Expense Title
+                                </label>
                                 <input
                                     type="text"
                                     value={title}
@@ -181,7 +185,9 @@ const AddGroupExpense = () => {
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-gray-700 mb-2">Total Amount (₹)</label>
+                                <label className="block text-sm font-semibold text-gray-700 mb-2 flex items-center">
+                                    <MdCalculate className="mr-2 text-indigo-500" /> Total Amount (₹)
+                                </label>
                                 <input
                                     type="number"
                                     value={amount}
@@ -310,34 +316,43 @@ const AddGroupExpense = () => {
                         </button>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 space-y-4">
                         <h4 className="text-sm font-bold text-gray-700 uppercase tracking-widest mb-4">Details</h4>
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">Category</label>
-                                <select
-                                    value={category}
-                                    onChange={e => setCategory(e.target.value)}
-                                    className="w-full px-4 py-2 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                                >
-                                    <option value="General">General</option>
-                                    <option value="Food">Food</option>
-                                    <option value="Travel">Travel</option>
-                                    <option value="Entertainment">Entertainment</option>
-                                    <option value="Shopping">Shopping</option>
-                                    <option value="Household">Household</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">Notes</label>
-                                <textarea
-                                    rows="3"
-                                    value={note}
-                                    onChange={e => setNote(e.target.value)}
-                                    className="w-full px-4 py-2 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
-                                    placeholder="Add any extra details..."
-                                ></textarea>
-                            </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1 flex items-center">
+                                <MdCategory className="mr-1" /> Category
+                            </label>
+                            <select
+                                value={category}
+                                onChange={e => setCategory(e.target.value)}
+                                className="w-full px-4 py-2 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                            >
+                                <option value="General">General</option>
+                                <option value="Food">Food</option>
+                                <option value="Travel">Travel</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Household">Household</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">Date</label>
+                            <input
+                                type="date"
+                                value={date}
+                                onChange={e => setDate(e.target.value)}
+                                className="w-full px-4 py-2 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-xs font-semibold text-gray-500 mb-1 ml-1">Notes</label>
+                            <textarea
+                                rows="3"
+                                value={note}
+                                onChange={e => setNote(e.target.value)}
+                                className="w-full px-4 py-2 bg-gray-50 border border-transparent rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                                placeholder="Add any extra details..."
+                            ></textarea>
                         </div>
                     </div>
                 </div>
