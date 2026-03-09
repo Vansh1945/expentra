@@ -25,6 +25,7 @@ const GroupExpenses = () => {
 
                 const rawExpenses = expRes.data;
                 const transformedActivities = [];
+                const settlementAggregator = {};
 
                 rawExpenses.forEach(exp => {
                     // Add the expense
@@ -33,25 +34,39 @@ const GroupExpenses = () => {
                         activityType: 'expense'
                     });
 
-                    // Add paid settlements from this expense
+                    // Collect paid settlements for bulk aggregation
                     if (exp.settlements && exp.settlements.length > 0) {
                         exp.settlements.forEach(s => {
                             if (s.reimbursementStatus === 'paid') {
-                                transformedActivities.push({
-                                    _id: s._id,
-                                    expenseId: exp._id,
-                                    activityType: 'settlement',
-                                    title: `Settled: ${s.from.name} → ${s.to.name}`,
-                                    amount: s.amount,
-                                    date: s.paymentDate || exp.date,
-                                    from: s.from,
-                                    to: s.to,
-                                    paymentMethod: s.paymentMethod,
-                                    note: `Settlement for ${exp.title}`
-                                });
+                                // Group by date (string), from, and to
+                                const dateKey = s.paymentDate ? new Date(s.paymentDate).getTime() : new Date(exp.date).getTime();
+                                const fromKey = s.from.user || s.from.name;
+                                const toKey = s.to.user || s.to.name;
+                                const key = `${dateKey}_${fromKey}_${toKey}`;
+
+                                if (!settlementAggregator[key]) {
+                                    settlementAggregator[key] = {
+                                        _id: `settle_${key}`,
+                                        activityType: 'settlement',
+                                        title: `Settled: ${s.from.name} → ${s.to.name}`,
+                                        amount: s.amount,
+                                        date: new Date(dateKey),
+                                        note: `Settled for group of expenses`,
+                                        paymentMethod: s.paymentMethod,
+                                        expensesCount: 1
+                                    };
+                                } else {
+                                    settlementAggregator[key].amount += s.amount;
+                                    settlementAggregator[key].expensesCount += 1;
+                                }
                             }
                         });
                     }
+                });
+
+                // Add aggregated settlements to activities
+                Object.values(settlementAggregator).forEach(aggS => {
+                    transformedActivities.push(aggS);
                 });
 
                 // Sort by date descending
