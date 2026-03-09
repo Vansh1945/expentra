@@ -48,14 +48,16 @@ const Navbar = ({ user, setIsSidebarOpen }) => {
 
             <div className="flex items-center space-x-6">
                 <div className="flex items-center">
-                    <Link to="/alerts" className="relative text-gray-400 hover:text-gray-600 mr-4 transition-colors">
-                        <MdNotifications className="w-7 h-7" />
-                        {notifications.length > 0 && (
-                            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white bg-red-500 rounded-full transform translate-x-1/4 -translate-y-1/4">
-                                {notifications.length > 99 ? '99+' : notifications.length}
-                            </span>
-                        )}
-                    </Link>
+                    {appMode !== 'group' && (
+                        <Link to="/alerts" className="relative text-gray-400 hover:text-gray-600 mr-4 transition-colors">
+                            <MdNotifications className="w-7 h-7" />
+                            {notifications.length > 0 && (
+                                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-bold leading-none text-white bg-red-500 rounded-full transform translate-x-1/4 -translate-y-1/4">
+                                    {notifications.length > 99 ? '99+' : notifications.length}
+                                </span>
+                            )}
+                        </Link>
+                    )}
 
                     <MdAccountCircle className="h-8 w-8 text-gray-400" />
                     <span className="text-gray-700 text-sm font-medium ml-2 mr-4 hidden sm:inline-block">
