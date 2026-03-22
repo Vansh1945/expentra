@@ -69,7 +69,6 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
             { name: 'Reports', path: '/reports', icon: <MdPieChart className="w-6 h-6" /> },
             { name: 'Budget', path: '/budget', icon: <MdAttachMoney className="w-6 h-6" /> },
             { name: 'Analysis', path: '/analysis', icon: <MdAnalytics className="w-6 h-6" /> },
-            { name: 'Alerts', path: '/alerts', icon: <MdNotificationsActive className="w-6 h-6" /> },
             { name: 'Switch to Group', path: '/groups', icon: <MdGroup className="w-6 h-6 text-indigo-400" />, action: () => setAppMode('group') },
         ];
 
