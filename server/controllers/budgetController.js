@@ -53,7 +53,8 @@ const getBudgetStatus = async (req, res, next) => {
         });
 
         if (!budget) {
-            return res.status(404).json({ message: 'Budget not found for this period' });
+            // Return 200 with null to avoid console 404 error but still indicate no budget is set
+            return res.status(200).json(null);
         }
 
         const startDate = new Date(Number(year), Number(month) - 1, 1);

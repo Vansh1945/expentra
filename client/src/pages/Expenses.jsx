@@ -29,10 +29,10 @@ const Expenses = () => {
                 api.get('/categories')
             ]);
             setExpenses(expRes.data);
-            const expCats = catRes.data.filter(c => c.type === 'expense');
+            const expCats = catRes.data.filter(c => c.type === 'expense' && c.isActive !== false);
             setCategories(expCats);
-            if (!formData.category && expCats.length > 0) {
-                setFormData(prev => ({ ...prev, category: expCats[0].name }));
+            if (!formData.category) {
+                setFormData(prev => ({ ...prev, category: expCats[0]?.name || 'Other' }));
             }
         } catch (error) {
             toast.error('Failed to load expenses');
@@ -50,7 +50,7 @@ const Expenses = () => {
 
     const openAdd = () => {
         setEditingId(null);
-        setFormData({ amount: '', category: categories[0]?.name || '', note: '', date: '', paymentMethod: 'cash', recurring: false });
+        setFormData({ amount: '', category: categories[0]?.name || 'Other', note: '', date: new Date().toISOString().split('T')[0], paymentMethod: 'cash', recurring: false });
         setShowModal(true);
     };
 

@@ -24,43 +24,12 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
     const { appMode, setAppMode } = useContext(AuthContext);
 
     const getNavItems = () => {
-        // Personal role: split by appMode
-        if (role === 'personal') {
-            if (appMode === 'group') {
-                return [
-                    { name: 'Group Dashboard', path: '/groups/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
-                    { name: 'Expenses', path: '/groups/expenses', icon: <MdAttachMoney className="w-6 h-6 text-red-400" /> },
-                    { name: 'Settlements', path: '/groups/settlement', icon: <MdHandshake className="w-6 h-6" /> },
-                    { name: 'Members', path: '/groups/members', icon: <MdGroup className="w-6 h-6" /> },
-                    { name: 'Analysis', path: '/groups/analytics', icon: <MdAnalytics className="w-6 h-6" /> },
-                    { name: 'Reports', path: '/groups/reports', icon: <MdPieChart className="w-6 h-6" /> },
-                    { name: 'Back to Personal', path: '/dashboard', icon: <MdHome className="w-6 h-6 text-indigo-400" />, action: () => setAppMode('personal') },
-                ];
-            } else {
-                return [
-                    { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
-                    { name: 'Income', path: '/income', icon: <FaMoneyBillWave className="w-6 h-6 text-green-400" /> },
-                    { name: 'Expenses', path: '/expenses', icon: <FaMoneyBillWave className="w-6 h-6 text-red-400" /> },
-                    { name: 'Reports', path: '/reports', icon: <MdPieChart className="w-6 h-6" /> },
-                    { name: 'Budget', path: '/budget', icon: <MdAttachMoney className="w-6 h-6" /> },
-                    { name: 'Switch to Group', path: '/groups', icon: <MdGroup className="w-6 h-6 text-indigo-400" />, action: () => setAppMode('group') },
-                ];
-            }
-        }
+        const isAdminPath = location.pathname.startsWith('/admin');
+        const isGroupPath = location.pathname.startsWith('/groups');
 
-        let items = [
-            { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
-            { name: 'Income', path: '/income', icon: <FaMoneyBillWave className="w-6 h-6 text-green-500" /> },
-            { name: 'Expenses', path: '/expenses', icon: <FaMoneyBillWave className="w-6 h-6 text-red-500" /> },
-            { name: 'Budget', path: '/budget', icon: <MdAttachMoney className="w-6 h-6" /> },
-            { name: 'Reports', path: '/reports', icon: <MdPieChart className="w-6 h-6" /> },
-            { name: 'Analysis', path: '/analysis', icon: <MdAnalytics className="w-6 h-6" /> },
-            { name: 'Alerts', path: '/alerts', icon: <MdNotificationsActive className="w-6 h-6" /> },
-        ];
-
-
-        if (role === 'admin') {
-            items = [
+        // Admin mode items - Only if user is admin and on an admin path
+        if (role === 'admin' && isAdminPath) {
+            return [
                 { name: 'Admin Dashboard', path: '/admin/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
                 { name: 'Manage Users', path: '/admin/users', icon: <MdGroup className="w-6 h-6" /> },
                 { name: 'Categories', path: '/admin/categories', icon: <MdPieChart className="w-6 h-6" /> },
@@ -68,7 +37,45 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
                 { name: 'Security Logs', path: '/admin/security', icon: <MdSecurity className="w-6 h-6 text-red-500" /> },
                 { name: 'Settings', path: '/admin/settings', icon: <MdSettings className="w-6 h-6 text-slate-400" /> },
                 { name: 'Admin Profile', path: '/admin/profile', icon: <MdAdminPanelSettings className="w-6 h-6" /> },
+                { name: 'Back to Personal', path: '/dashboard', icon: <MdHome className="w-6 h-6 text-indigo-400" />, action: () => setAppMode('personal') },
             ];
+        }
+
+        // Group mode items - if on a group path or appMode is set to group
+        if (isGroupPath || appMode === 'group') {
+            const groupItems = [
+                { name: 'Group Dashboard', path: '/groups/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
+                { name: 'Expenses', path: '/groups/expenses', icon: <MdAttachMoney className="w-6 h-6 text-red-400" /> },
+                { name: 'Settlements', path: '/groups/settlement', icon: <MdHandshake className="w-6 h-6" /> },
+                { name: 'Members', path: '/groups/members', icon: <MdGroup className="w-6 h-6" /> },
+                { name: 'Analysis', path: '/groups/analytics', icon: <MdAnalytics className="w-6 h-6" /> },
+                { name: 'Reports', path: '/groups/reports', icon: <MdPieChart className="w-6 h-6" /> },
+                { name: 'Back to Personal', path: '/dashboard', icon: <MdHome className="w-6 h-6 text-indigo-400" />, action: () => setAppMode('personal') },
+            ];
+
+            // If admin, they still might want to jump back to admin view
+            if (role === 'admin') {
+                groupItems.push({ name: 'Admin Panel', path: '/admin/dashboard', icon: <MdAdminPanelSettings className="w-6 h-6 text-indigo-600" /> });
+            }
+
+            return groupItems;
+        }
+
+        // Personal mode items (Default)
+        const items = [
+            { name: 'Dashboard', path: '/dashboard', icon: <MdDashboard className="w-6 h-6" /> },
+            { name: 'Income', path: '/income', icon: <FaMoneyBillWave className="w-6 h-6 text-green-400" /> },
+            { name: 'Expenses', path: '/expenses', icon: <FaMoneyBillWave className="w-6 h-6 text-red-400" /> },
+            { name: 'Reports', path: '/reports', icon: <MdPieChart className="w-6 h-6" /> },
+            { name: 'Budget', path: '/budget', icon: <MdAttachMoney className="w-6 h-6" /> },
+            { name: 'Analysis', path: '/analysis', icon: <MdAnalytics className="w-6 h-6" /> },
+            { name: 'Alerts', path: '/alerts', icon: <MdNotificationsActive className="w-6 h-6" /> },
+            { name: 'Switch to Group', path: '/groups', icon: <MdGroup className="w-6 h-6 text-indigo-400" />, action: () => setAppMode('group') },
+        ];
+
+        // Add Admin link if user is admin but in personal mode
+        if (role === 'admin') {
+            items.push({ name: 'Admin Panel', path: '/admin/dashboard', icon: <MdAdminPanelSettings className="w-6 h-6 text-indigo-600" />, action: () => setAppMode('personal') });
         }
 
         return items;

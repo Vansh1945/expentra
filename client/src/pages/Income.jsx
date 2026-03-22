@@ -25,7 +25,7 @@ const Income = () => {
                 api.get('/categories')
             ]);
             setIncomes(incRes.data);
-            const incomeCats = catRes.data.filter(c => c.type === 'income');
+            const incomeCats = catRes.data.filter(c => c.type === 'income' && c.isActive !== false);
             setCategories(incomeCats);
             if (!formData.category && incomeCats.length > 0) {
                 setFormData(prev => ({ ...prev, category: incomeCats[0].name }));
@@ -44,7 +44,7 @@ const Income = () => {
 
     const openAdd = () => {
         setEditingId(null);
-        setFormData({ amount: '', category: categories[0]?.name || 'Salary', description: '', date: '' });
+        setFormData({ amount: '', category: categories[0]?.name || 'Other', description: '', date: new Date().toISOString().split('T')[0] });
         setShowModal(true);
     };
 

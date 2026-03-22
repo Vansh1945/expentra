@@ -7,9 +7,13 @@ const createExpense = async (req, res, next) => {
     const { amount, category, note, location, date, groupId, paymentMethod, recurring } = req.body;
 
     try {
-        if (!amount || !category) {
+        if (!amount) {
             res.status(400);
-            return next(new Error('amount and category are required'));
+            return next(new Error('Amount is required and must be a number'));
+        }
+        if (!category) {
+            res.status(400);
+            return next(new Error('Category is required'));
         }
         if (Number(amount) <= 0) {
             res.status(400);
