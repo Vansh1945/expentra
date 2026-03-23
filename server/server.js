@@ -20,9 +20,17 @@ connectDB();
 
 const app = express();
 
-const frontend = process.env.FRONTEND_URL;
+const allowedOrigins = [
+    'https://expentra-ten.vercel.app',
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:5175',
+    process.env.FRONTEND_URL,
+    process.env.Frontend_URL
+].filter(Boolean).map(origin => origin.replace(/\/$/, ""));
+
 const corsOptions = {
-    origin: [frontend, 'http://localhost:5175', 'http://localhost:5174', 'http://localhost:5173'],
+    origin: allowedOrigins,
     credentials: true, // Allow credentials (cookies)
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
