@@ -1,11 +1,8 @@
 {
-  "routes": [
-    { "src": "/sw.js", "dest": "/sw.js" },
-    { "src": "/manifest.webmanifest", "dest": "/manifest.webmanifest" },
-    { "src": "/firebase-messaging-sw.js", "dest": "/firebase-messaging-sw.js" },
-    { "src": "/pwa-(.*)\\.png", "dest": "/pwa-$1.png" },
-    { "src": "/assets/(.*)", "dest": "/assets/$1" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    {
+      "source": "/((?!assets/|sw.js|manifest.webmanifest|firebase-messaging-sw.js|pwa-.*\\.png|vite.svg).*)$",
+      "destination": "/index.html"
+    }
   ]
 }
