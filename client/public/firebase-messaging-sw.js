@@ -16,51 +16,36 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-    console.log('[firebase-messaging-sw.js] Received background message ', payload);
-    const notificationTitle = payload.notification.title;
-    const notificationOptions = {
-        body: payload.notification.body,
-        icon: '/pwa-192x192.png',
-        badge: '/pwa-192x192.png',
-        data: payload.data || { url: '/' }
-    };
-
-    self.registration.showNotification(notificationTitle, notificationOptions);
-});
-
-// Handling generic push event for extra reliability
-self.addEventListener('push', function (event) {
-    if (event.data) {
-        try {
-            const data = event.data.json();
-            // If FCM's onBackgroundMessage hasn't handled it or if it's a raw web push
-            if (data.notification) {
-                const options = {
-                    body: data.notification.body,
-                    icon: '/pwa-192x192.png',
-                    badge: '/pwa-192x192.png',
-                    data: data.data || { url: '/' }
-                };
-                event.waitUntil(self.registration.showNotification(data.notification.title, options));
-            }
-        } catch (e) {
-            console.log('Push event error:', e);
-        }
+    console.log('[firebase-messaging-sw.js] Background message: ', payload);
+    
+    // Only manually show notification if the 'notification' block is MISSING 
+    // to avoid the "Double Notification" bug on Desktop/Android.
+    if (!payload.notification && payload.data) {
+        const notificationTitle = payload.data.title || 'New Notification';
+        const notificationOptions = {
+            body: payload.data.body || 'You have a new alert.',
+            icon: '/pwa-192x192.png',
+            badge: '/pwa-192x192.png',
+            data: { url: payload.data.url || '/' }
+        };
+        self.registration.showNotification(notificationTitle, notificationOptions);
     }
 });
-
+ 
 self.addEventListener('notificationclick', (event) => {
     event.notification.close();
-    const urlToOpen = event.notification.data.url || '/';
-
+    const urlToOpen = event.notification.data?.url || '/';
+ 
     event.waitUntil(
         clients.matchAll({ type: 'window', includeUncontrolled: true }).then((windowClients) => {
+            // If window already open, focus it
             for (let i = 0; i < windowClients.length; i++) {
                 const client = windowClients[i];
                 if (client.url === urlToOpen && 'focus' in client) {
                     return client.focus();
                 }
             }
+            // Else open a new window
             if (clients.openWindow) {
                 return clients.openWindow(urlToOpen);
             }
