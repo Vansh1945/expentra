@@ -60,24 +60,30 @@ const CategoryIcon = ({ iconName, className }) => {
           
           // SPECIAL CASE: Fa icons might be in fa or fa6
           if (prefix === 'fa' && !lib[iconName]) {
-             try {
-               const lib6 = await libMap['fa6']();
-               if (lib6[iconName]) lib = lib6;
-             } catch(e) {}
+              try {
+                const lib6 = await libMap['fa6']();
+                if (lib6[iconName]) lib = lib6;
+              } catch {
+                // ignore
+              }
           }
           // SPECIAL CASE: Io icons might be in io or io5
           if (prefix === 'io' && !lib[iconName]) {
-             try {
-               const lib5 = await libMap['io5']();
-               if (lib5[iconName]) lib = lib5;
-             } catch(e) {}
+              try {
+                const lib5 = await libMap['io5']();
+                if (lib5[iconName]) lib = lib5;
+              } catch {
+                // ignore
+              }
           }
           // SPECIAL CASE: Hi icons might be in hi or hi2
           if (prefix === 'hi' && !lib[iconName]) {
-             try {
-               const lib2 = await libMap['hi2']();
-               if (lib2[iconName]) lib = lib2;
-             } catch(e) {}
+              try {
+                const lib2 = await libMap['hi2']();
+                if (lib2[iconName]) lib = lib2;
+              } catch {
+                // ignore
+              }
           }
 
           if (isMounted) {

@@ -15,6 +15,7 @@ const AdminProfile = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const loginActivities = user?.loginActivities || [];
 
     useEffect(() => {
         if (user) {

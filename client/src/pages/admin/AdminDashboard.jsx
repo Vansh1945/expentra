@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { AuthContext, API } from '../../context/AuthContext';
+import { API } from '../../context/AuthContext';
 import {
     MdAdminPanelSettings, MdPeople, MdAttachMoney, MdTrendingUp,
-    MdCategory, MdReceipt, MdGroup, MdShowChart, MdWarning,
-    MdVerifiedUser, MdTimeline, MdDashboard, MdRefresh
+    MdCategory, MdReceipt, MdShowChart, MdWarning,
+    MdVerifiedUser, MdTimeline, MdDashboard
 } from 'react-icons/md';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
-    ResponsiveContainer, BarChart, Bar, PieChart, Pie, Cell, Legend
+    ResponsiveContainer, PieChart, Pie, Cell, Legend
 } from 'recharts';
 
 const COLORS = ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC489A', '#06B6D4'];
@@ -28,7 +28,7 @@ const AdminDashboard = () => {
                 ]);
                 setStats(basicRes.data);
                 setAdvancedStats(advRes.data);
-            } catch (error) {
+            } catch {
                 toast.error('Failed to load admin stats');
             } finally {
                 setLoading(false);
@@ -270,8 +270,8 @@ const AdminDashboard = () => {
                                         <td className="px-4 py-2 text-sm text-textColor/70">{user.email}</td>
                                         <td className="px-4 py-2">
                                             <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${user.role === 'admin'
-                                                    ? 'bg-primary/10 text-primary'
-                                                    : 'bg-card text-textColor/70'
+                                                ? 'bg-primary/10 text-primary'
+                                                : 'bg-card text-textColor/70'
                                                 }`}>
                                                 {user.role === 'admin' && <MdVerifiedUser className="text-xs" />}
                                                 {user.role || 'user'}
