@@ -52,7 +52,7 @@ const Reports = () => {
             + rows.map(r => r.join(',')).join('\n');
         const link = document.createElement('a');
         link.setAttribute('href', encodeURI(csvContent));
-        link.setAttribute('download', `Expentra_Report_${MONTHS[selectedMonth - 1]}_${selectedYear}.csv`);
+        link.setAttribute('download', `FinVibe_Report_${MONTHS[selectedMonth - 1]}_${selectedYear}.csv`);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

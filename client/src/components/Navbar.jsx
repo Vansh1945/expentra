@@ -3,6 +3,8 @@ import { AuthContext } from '../context/AuthContext';
 import { MdLogout, MdAccountCircle, MdMenu, MdNotifications } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
+import logoImg from '../assets/logo.png';
+
 const Navbar = ({ user, setIsSidebarOpen }) => {
     const { logout, appMode, activeGroup, unreadCount, markAsSeen } = useContext(AuthContext);
 
@@ -13,10 +15,7 @@ const Navbar = ({ user, setIsSidebarOpen }) => {
             <div className="flex items-center gap-3">
                 {/* Mobile App logo and name */}
                 <div className="flex items-center gap-2 md:hidden">
-                    <div className="w-8 h-8 bg-gradient-to-br from-primary to-indigo-600 rounded-lg flex items-center justify-center shadow-sm p-1.5">
-                        <span className="font-bold text-white text-sm">E</span>
-                    </div>
-                    <span className="font-bold text-base bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent tracking-tight">Expentra</span>
+                    <img src={logoImg} alt="FinVibe Logo" className="h-11 object-contain" />
                 </div>
 
                 {/* Desktop Portal/Group Title */}

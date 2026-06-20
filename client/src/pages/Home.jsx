@@ -43,7 +43,7 @@ const Home = () => {
                         Manage Your <span className="text-primary bg-primary/5 px-2.5 py-0.5 rounded-lg">Expenses</span> Smartly
                     </h1>
                     <p className="body-premium text-base mb-8 max-w-2xl mx-auto">
-                        Take control of your finances with Expentra. Track spending, set budgets, and achieve your financial goals with ease.
+                        Take control of your finances with FinVibe. Track spending, set budgets, and achieve your financial goals with ease.
                     </p>
                     <div className="flex justify-center gap-3">
                         <Link
@@ -65,7 +65,7 @@ const Home = () => {
                 <section className="py-12 bg-card border-y border-slate-100">
                     <div className="max-w-6xl mx-auto px-6">
                         <h2 className="h2-premium text-center mb-10">
-                            Why Choose Expentra?
+                            Why Choose FinVibe?
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {features.map((feature, index) => (
@@ -97,7 +97,7 @@ const Home = () => {
                                 Ready to Take Charge of Your Finances?
                             </h2>
                             <p className="text-white/80 text-sm mb-6 max-w-2xl mx-auto">
-                                Join thousands of users who are already saving more and spending smarter with Expentra.
+                                Join thousands of users who are already saving more and spending smarter with FinVibe.
                             </p>
                             <Link
                                 to="/register"
@@ -113,7 +113,7 @@ const Home = () => {
             {/* Footer */}
             <footer className="py-8 border-t border-slate-100 bg-card text-center">
                 <p className="text-xs text-textMuted/60">
-                    &copy; 2026 Expentra. All rights reserved.
+                    &copy; 2026 FinVibe. All rights reserved.
                 </p>
             </footer>
         </div>

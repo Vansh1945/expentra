@@ -24,6 +24,7 @@ const app = express();
 
 const allowedOrigins = [
     'https://expentra-ten.vercel.app',
+    'https://finvibe-ten.vercel.app',
     'http://localhost:5173',
     process.env.FRONTEND_URL
 ].filter(Boolean).map(origin => origin.replace(/\/$/, ""));

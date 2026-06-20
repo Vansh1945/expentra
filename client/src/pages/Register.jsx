@@ -8,6 +8,8 @@ import { auth, googleProvider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { FcGoogle } from 'react-icons/fc';
 
+import logoImg from '../assets/logo.png';
+
 const Register = () => {
     const [formData, setFormData] = useState({
         name: '',
@@ -87,18 +89,15 @@ const Register = () => {
 
             <div className="flex-grow flex items-center justify-center py-4 px-3">
                 <div className="w-full max-w-3xl bg-card rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col md:flex-row min-h-[400px]">
- 
+
                     {/* Visual Identity Panel */}
                     <div className="hidden md:flex md:w-[42%] bg-gradient-to-br from-primary to-indigo-800 p-6 text-white flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mt-24 blur-2xl" />
                         <div className="absolute bottom-0 right-0 w-48 h-48 bg-white/5 rounded-full -mr-24 -mb-24 blur-2xl" />
- 
+
                         <div className="relative z-10">
                             <div className="flex items-center gap-2 mb-6">
-                                <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                                    <span className="text-primary font-bold text-xs">E</span>
-                                </div>
-                                <span className="text-xs font-semibold tracking-wider uppercase text-white/90">Expentra</span>
+                                <img src={logoImg} alt="FinVibe Logo" className="h-12 object-contain bg-white rounded-lg p-1 shadow-sm" />
                             </div>
  
                             <h2 className="text-xl font-bold leading-tight mb-2">
@@ -128,7 +127,7 @@ const Register = () => {
                             <div className="mb-4">
                                 <h1 className="h2-premium mb-0.5">Create Account</h1>
                                 <p className="text-[10px] text-textMuted uppercase tracking-wider font-semibold">
-                                    Join the Expentra family
+                                    Join the FinVibe family
                                 </p>
                             </div>
  

@@ -8,6 +8,8 @@ import { auth, googleProvider } from '../firebase';
 import { signInWithPopup } from 'firebase/auth';
 import { FcGoogle } from 'react-icons/fc';
 
+import logoImg from '../assets/logo.png';
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -30,7 +32,7 @@ const Login = () => {
             const res = await axios.post(`${API}/auth/login`, { email, password });
             const { token, role } = res.data;
             login(token, res.data, role);
-            toast.success('Welcome back to Expentra!');
+            toast.success('Welcome back to FinVibe!');
             if (role === 'admin') {
                 navigate('/admin/dashboard');
             } else {
@@ -78,18 +80,15 @@ const Login = () => {
 
             <div className="flex-grow flex items-center justify-center py-4 px-3">
                 <div className="w-full max-w-3xl bg-card rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col md:flex-row min-h-[400px]">
- 
+
                     {/* Visual Identity Panel */}
                     <div className="hidden md:flex md:w-[42%] bg-gradient-to-br from-primary to-indigo-800 p-6 text-white flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -mr-24 -mt-24 blur-2xl" />
                         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24 blur-2xl" />
- 
+
                         <div className="relative z-10">
                             <div className="flex items-center gap-2 mb-6">
-                                <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                                    <span className="text-primary font-bold text-xs">E</span>
-                                </div>
-                                <span className="text-xs font-semibold tracking-wider uppercase text-white/90">Expentra</span>
+                                <img src={logoImg} alt="FinVibe Logo" className="h-12 object-contain bg-white rounded-lg p-1 shadow-sm" />
                             </div>
  
                             <h2 className="text-xl font-bold leading-tight mb-2">
@@ -185,7 +184,7 @@ const Login = () => {
  
                             <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2.5">
                                 <div className="text-left w-full sm:w-auto">
-                                    <p className="text-[9px] text-textMuted/60 uppercase tracking-wider mb-0.5">New to Expentra?</p>
+                                    <p className="text-[9px] text-textMuted/60 uppercase tracking-wider mb-0.5">New to FinVibe?</p>
                                     <p className="text-[11px] font-semibold text-textColor">Create your free account</p>
                                 </div>
                                 <Link

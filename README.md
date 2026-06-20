@@ -1,6 +1,6 @@
 <div align="center">
 
-# 💳 Expentra
+# 💳 FinVibe
 
 ### Smart Expense & Financial Control System
 
@@ -18,15 +18,15 @@
 
 ## 📖 Project Overview
 
-**Expentra** is a full-stack MERN (MongoDB, Express, React, Node.js) application that transforms traditional expense tracking into an intelligent, proactive financial decision-support system.
+**FinVibe** is a full-stack MERN (MongoDB, Express, React, Node.js) application that transforms traditional expense tracking into an intelligent, proactive financial decision-support system.
 
-Unlike conventional expense trackers that simply record and display data, Expentra **actively monitors** your financial behaviour, **detects anomalies in real-time**, **predicts future spending**, and **delivers personalized push notifications** with deep linking directly to the relevant section of the app.
+Unlike conventional expense trackers that simply record and display data, FinVibe **actively monitors** your financial behaviour, **detects anomalies in real-time**, **predicts future spending**, and **delivers personalized push notifications** with deep linking directly to the relevant section of the app.
 
 The system operates in two parallel modes:
 - **Personal Mode** — Individual expense tracking with budget monitoring and financial analysis
 - **Group Mode** — Shared expense management with automatic debt calculation and an optimized settlement algorithm
 
-Built as a full-stack MERN project, Expentra is designed to be a **final-year capstone-grade** application demonstrating complex backend algorithms, real-time notification infrastructure, and a polished, responsive UI.
+Built as a full-stack MERN project, FinVibe is designed to be a **final-year capstone-grade** application demonstrating complex backend algorithms, real-time notification infrastructure, and a polished, responsive UI.
 
 ---
 
@@ -73,7 +73,7 @@ Category-level insights are also generated — top 5 spending categories are che
 
 ### 5. 🔄 Optimized Group Settlement Algorithm
 
-When settling group debts, a naive approach might require N×M transactions. Expentra implements a **greedy debt simplification algorithm**:
+When settling group debts, a naive approach might require N×M transactions. FinVibe implements a **greedy debt simplification algorithm**:
 
 1. Computes each member's **net balance** across all group expenses
 2. Separates members into **debtors** (negative balance) and **creditors** (positive balance)
@@ -98,13 +98,20 @@ FCM (Firebase Cloud Messaging) is integrated end-to-end:
 - `onMessage()` listener handles **foreground** notifications — displays a toast with the notification content
 - **Clicking the toast** reads `payload.data.route` and navigates the user directly to the correct page (deep linking)
 
+### 7. 🏆 Financial Fitness Quests & Badges (Gamification)
+
+- **Savings Streak Tracker:** Tracks and displays consecutive daily logging activities to build good financial habits.
+- **Dynamic Quests:** Renders daily tasks such as *Daily Tracker* (log any transaction), *Frugal Day* (spend less than ₹500 today), and *Saver Quest* (log a new income).
+- **Badge Achievements:** Automatically evaluates database records and unlocks badges like *First Step*, *Streak Starter*, *Weekly Warrior*, *Budget Hero*, *Centurion*, and *Savings Savvy*.
+- **Interactive Celebration:** Utilizes browser canvas confetti mechanics when claiming rewards for completed quests.
+
 ---
 
 ## 🏗️ System Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                        EXPENTRA SYSTEM                          │
+│                        FINVIBE SYSTEM                           │
 │                                                                 │
 │  ┌───────────────┐     REST API      ┌───────────────────────┐  │
 │  │               │ ◄──── Axios ────► │                       │  │
@@ -295,7 +302,7 @@ Keyword frequency matching: the expense title is lowercased and matched against 
 ## 📁 Folder Structure
 
 ```
-EXPENTRA/
+FINVIBE/
 │
 ├── client/                          # React Frontend (Vite SPA + PWA)
 │   ├── public/                      # Static assets
@@ -317,6 +324,7 @@ EXPENTRA/
 │   │   │   ├── Analysis.jsx         # Insights + predictions
 │   │   │   ├── Alerts.jsx           # Notification centre
 │   │   │   ├── Reports.jsx          # Report + PDF export
+│   │   │   ├── Challenges.jsx       # Financial fitness quests page
 │   │   │   ├── group/               # Group expense pages
 │   │   │   │   ├── Settlement.jsx   # Debt optimization view
 │   │   │   │   └── ...
@@ -343,6 +351,7 @@ EXPENTRA/
 │   │   ├── groupExpenseController.js# Group expenses + Debt Algorithm
 │   │   ├── incomeController.js      # Income management
 │   │   ├── reportController.js      # Report generation
+│   │   ├── challengeController.js   # Gamification & quest controllers
 │   │   └── adminController.js       # Admin user management
 │   ├── models/
 │   │   ├── userModel.js             # User schema + bcrypt hooks
@@ -367,6 +376,7 @@ EXPENTRA/
 │   │   ├── incomeRoutes.js          # /api/incomes
 │   │   ├── reportRoutes.js          # /api/reports
 │   │   ├── categoryRoutes.js        # /api/categories
+│   │   ├── challengeRoutes.js       # /api/challenges
 │   │   └── adminRoutes.js           # /api/admin
 │   ├── utils/
 │   │   ├── notificationHelper.js    # FCM dispatch + token cleanup
@@ -394,7 +404,7 @@ EXPENTRA/
 
 ```bash
 git clone https://github.com/Vansh1945/expentra.git
-cd expentra
+cd finvibe
 ```
 
 ### Step 2 — Setup the Server
@@ -409,7 +419,7 @@ Create `server/.env`:
 ```env
 NODE_ENV=development
 PORT=5000
-MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/expentra
+MONGO_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/finvibe
 JWT_SECRET=your_jwt_secret_min_32_chars
 FRONTEND_URL=http://localhost:5173
 
@@ -464,11 +474,11 @@ npm run dev
 
 ### 1. Active Financial Control vs Passive Tracking
 
-Most expense trackers are **rearview mirrors** — they show what you spent after the fact. Expentra is a **windshield** — it actively monitors your spending behaviour and warns you before you exceed your limits, not after. Budget thresholds, smart alerts, and inactivity detection all fire in real-time during normal app usage.
+Most expense trackers are **rearview mirrors** — they show what you spent after the fact. FinVibe is a **windshield** — it actively monitors your spending behaviour and warns you before you exceed your limits, not after. Budget thresholds, smart alerts, and inactivity detection all fire in real-time during normal app usage.
 
 ### 2. Intelligent Multi-Layer Alert System
 
-Expentra's notification system is **context-aware and layered**:
+FinVibe's notification system is **context-aware and layered**:
 - **Budget-level alerts** → total monthly spending against your set limit
 - **Category-level alerts** → individual category overruns (top-5 categories, 30% of total budget each)
 - **Anomaly detection** → velocity-based (today's spend vs 30-day average)
@@ -478,7 +488,7 @@ Each alert type uses a unique `referenceId` with deduplication logic to prevent 
 
 ### 3. Hybrid Personal + Group Finance System
 
-Unlike apps that focus exclusively on personal finance or group splitting, Expentra **combines both** in a single platform with a seamless mode-switch. The same user can track personal expenses with full budget intelligence, then switch to group mode to manage shared expenses with optimized settlement — all without leaving the app or switching accounts.
+Unlike apps that focus exclusively on personal finance or group splitting, FinVibe **combines both** in a single platform with a seamless mode-switch. The same user can track personal expenses with full budget intelligence, then switch to group mode to manage shared expenses with optimized settlement — all without leaving the app or switching accounts.
 
 ---
 

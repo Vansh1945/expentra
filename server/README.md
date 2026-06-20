@@ -1,6 +1,6 @@
-# Expentra — Server (Backend API)
+# FinVibe — Server (Backend API)
 
-> The Node.js + Express + MongoDB backend powering the Expentra Smart Expense & Financial Control System.
+> The Node.js + Express + MongoDB backend powering the FinVibe Smart Expense & Financial Control System.
 
 ---
 
@@ -25,7 +25,7 @@
 
 ## 🌐 Backend Overview
 
-The Expentra server is a **Node.js + Express 5** REST API with **ES Modules** (`"type": "module"`). It connects to a **MongoDB** database via Mongoose and integrates with **Firebase Admin SDK** for push notification dispatch via FCM (Firebase Cloud Messaging).
+The FinVibe server is a **Node.js + Express 5** REST API with **ES Modules** (`"type": "module"`). It connects to a **MongoDB** database via Mongoose and integrates with **Firebase Admin SDK** for push notification dispatch via FCM (Firebase Cloud Messaging).
 
 The server enforces:
 - **JWT-based stateless authentication** on all protected routes
@@ -156,6 +156,15 @@ All routes are prefixed under `/api/`.
 | `POST` | `/categories` | Admin | Create a new category with name, type, keywords |
 | `PUT` | `/categories/:id` | Admin | Update a category |
 | `DELETE` | `/categories/:id` | Admin | Deactivate a category |
+
+---
+
+### 🏆 Challenges & Gamification — `/api/challenges`
+
+| Method | Route | Access | Description |
+|---|---|---|---|
+| `GET` | `/challenges/status` | Private | Retrieve active streak count, quest progress, and badge status for the user |
+| `POST` | `/challenges/complete-quest` | Private | Claim/complete a specific quest by ID, incrementing streak or unlocking badges |
 
 ---
 
@@ -449,6 +458,10 @@ A **unique sparse index** on `Notification.referenceId` prevents duplicate DB re
   isBlocked:  Boolean (default: false)
   status:     String (enum: ['active', 'blocked', 'pending'], default: 'active')
   fcmTokens:  [String] (array of registered device tokens, default: [])
+  streakCount:Number (default: 0)
+  lastActiveDate: Date
+  badges:     [String] (array of unlocked badge IDs, default: [])
+  questsCompleted: [String] (array of completed quest IDs, default: [])
   createdAt, updatedAt (timestamps)
 }
 ```

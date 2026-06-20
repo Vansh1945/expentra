@@ -14,6 +14,8 @@ import {
 } from 'react-icons/md';
 import { FaMoneyBillWave } from 'react-icons/fa';
 
+import logoImg from '../assets/logo.png';
+
 const Sidebar = ({ role }) => {
     const location = useLocation();
     const { appMode, setAppMode } = useContext(AuthContext);
@@ -81,13 +83,7 @@ const Sidebar = ({ role }) => {
             <aside className="hidden md:flex flex-col w-64 bg-card text-textColor border-r border-slate-100">
                 {/* Header / Logo Section */}
                 <div className="flex items-center gap-3 h-16 px-5 border-b border-slate-100 bg-card">
-                    <div className="w-9 h-9 bg-gradient-to-br from-primary to-indigo-600 rounded-lg flex items-center justify-center shadow-sm p-1.5">
-                        <span className="font-bold text-white text-base">E</span>
-                    </div>
-                    <div>
-                        <span className="font-bold text-base bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent tracking-tight">Expentra</span>
-                        <p className="text-xs text-textMuted uppercase font-bold tracking-wider">Financial Dashboard</p>
-                    </div>
+                    <img src={logoImg} alt="FinVibe Logo" className="h-12 object-contain" />
                 </div>
 
                 {/* Navigation */}

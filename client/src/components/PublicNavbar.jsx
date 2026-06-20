@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { MdMenu, MdClose } from 'react-icons/md';
 
+import logoImg from '../assets/logo.png';
+
 const PublicNavbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { pathname } = useLocation();
@@ -22,12 +24,7 @@ const PublicNavbar = () => {
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-primary to-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
-                            <span className="font-bold text-white text-sm">E</span>
-                        </div>
-                        <span className="text-base font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent tracking-tight">
-                            Expentra
-                        </span>
+                        <img src={logoImg} alt="FinVibe Logo" className="h-11 object-contain" />
                     </Link>
 
                     {/* Desktop Navigation */}

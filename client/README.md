@@ -1,6 +1,6 @@
-# Expentra — Client (Frontend)
+# FinVibe — Client (Frontend)
 
-> A modern, intelligent React-based frontend for the Expentra Smart Expense & Financial Control System.
+> A modern, intelligent React-based frontend for the FinVibe Smart Expense & Financial Control System.
 
 ---
 
@@ -20,7 +20,7 @@
 
 ## 🌐 Frontend Overview
 
-The Expentra client is a **React 19 + Vite** single-page application (SPA) with full PWA (Progressive Web App) support. It is designed around a dual-mode workspace — **personal finance mode** and **group expense mode** — switchable at runtime without a page reload. The frontend is deeply integrated with Firebase for Google OAuth and real-time Firebase Cloud Messaging (FCM) push notifications with deep-linking.
+The FinVibe client is a **React 19 + Vite** single-page application (SPA) with full PWA (Progressive Web App) support. It is designed around a dual-mode workspace — **personal finance mode** and **group expense mode** — switchable at runtime without a page reload. The frontend is deeply integrated with Firebase for Google OAuth and real-time Firebase Cloud Messaging (FCM) push notifications with deep-linking.
 
 The application uses **Axios** with global request/response interceptors for authentication, **React Router v7** for client-side routing, **Recharts** for data visualizations, **React Toastify** for in-app notification toasts, and **Tailwind CSS** for utility-first styling.
 
@@ -47,6 +47,7 @@ The application uses **Axios** with global request/response interceptors for aut
 | `/reports` | `Reports.jsx` | Monthly/category-based report generation with PDF export |
 | `/analysis` | `Analysis.jsx` | AI-style insights, monthly growth, and predicted expenses |
 | `/alerts` | `Alerts.jsx` | Notification centre — all persistent smart alerts and warnings |
+| `/challenges` | `Challenges.jsx` | Financial fitness quests, active savings streaks, and unlocked badges gallery |
 
 ### Protected Pages (Group Mode)
 
@@ -192,6 +193,15 @@ When creating an expense, the `title` field is matched against category keywords
 - The `Sidebar.jsx` renders different navigation links depending on the active mode
 - Group mode selection stores `selectedGroupId` and fetches the active group metadata
 - Mode persists across browser refreshes
+
+### 11. Financial Fitness Quests & Badges
+
+**File:** `Challenges.jsx`
+
+- Tracks and displays the user's active consecutive savings streak days.
+- Lists daily active quests (*Daily Tracker*, *Frugal Day*, *Saver Quest*) with their progress.
+- Users can click "Complete Challenge" to claim quest rewards, triggering a celebratory fullscreen confetti animation (`canvas-confetti` integration).
+- Displays a visual locked/unlocked achievement badges gallery (*First Step*, *Streak Starter*, *Weekly Warrior*, *Budget Hero*, *Centurion*, *Savings Savvy*).
 
 ---
 
