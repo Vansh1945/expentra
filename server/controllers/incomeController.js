@@ -36,6 +36,16 @@ export const addIncome = async (req, res, next) => {
             throw new Error('Title is required');
         }
 
+        if (amount === undefined || amount === null || isNaN(Number(amount))) {
+            res.status(400);
+            throw new Error('Amount is required and must be a number');
+        }
+
+        if (Number(amount) <= 0) {
+            res.status(400);
+            throw new Error('Amount must be greater than 0');
+        }
+
         const categories = await Category.find({ type: 'income', isActive: true });
         const detectedCategory = detectCategory(title, categories);
 
@@ -83,8 +93,18 @@ export const updateIncome = async (req, res, next) => {
         const income = await Income.findById(req.params.id);
 
         if (income && income.userId.toString() === req.user._id.toString()) {
+            if (amount !== undefined && amount !== null) {
+                if (isNaN(Number(amount))) {
+                    res.status(400);
+                    throw new Error('Amount must be a number');
+                }
+                if (Number(amount) <= 0) {
+                    res.status(400);
+                    throw new Error('Amount must be greater than 0');
+                }
+                income.amount = Number(amount);
+            }
             income.title = title || income.title;
-            income.amount = amount || income.amount;
             income.category = category || income.category;
             income.description = description || income.description;
             if (date) income.date = date;

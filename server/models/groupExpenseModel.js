@@ -106,5 +106,9 @@ const groupExpenseSchema = new mongoose.Schema(
     }
 );
 
+// Indexes
+groupExpenseSchema.index({ groupId: 1 });
+groupExpenseSchema.index({ groupId: 1, date: -1 });
+
 const GroupExpense = mongoose.model('GroupExpense', groupExpenseSchema);
 export default GroupExpense;

@@ -56,5 +56,9 @@ incomeSchema.pre('save', function (next) {
     next();
 });
 
+// Indexes
+incomeSchema.index({ userId: 1 });
+incomeSchema.index({ userId: 1, date: -1 });
+
 const Income = mongoose.model('Income', incomeSchema);
 export default Income;

@@ -73,8 +73,18 @@ export const addGroupExpense = async (req, res, next) => {
             splitBetween = membersInvolved.map(m => ({ user: m.user, name: m.name, amount: share }));
             const diff = amount - splitBetween.reduce((s, m) => s + m.amount, 0);
             if (diff !== 0) splitBetween[0].amount = Math.round((splitBetween[0].amount + diff) * 100) / 100;
+        } else if (splitType === 'percentage') {
+            splitBetween = splitDetails.map(m => ({
+                user: m.user,
+                name: m.name,
+                amount: Math.round(((m.share / 100) * amount) * 100) / 100
+            }));
+            const diff = amount - splitBetween.reduce((s, m) => s + m.amount, 0);
+            if (diff !== 0 && splitBetween.length > 0) {
+                splitBetween[0].amount = Math.round((splitBetween[0].amount + diff) * 100) / 100;
+            }
         } else {
-            // Handles exact value or percentage based splits
+            // Handles exact value based splits
             splitBetween = splitDetails.map(m => ({ user: m.user, name: m.name, amount: m.share || m.amount }));
         }
 
@@ -210,11 +220,15 @@ export const getGroupSettlements = async (req, res, next) => {
                 const roundedAmt = Math.round(settleAmt * 100) / 100;
 
                 // Check if a pending Settlement doc already exists for this pair + amount
-                const existingDoc = pendingOptimizedDocs.find(d =>
-                    d.fromUser?.user?.toString() === debtor.user?.toString() &&
-                    d.toUser?.user?.toString()   === creditor.user?.toString() &&
-                    Math.abs(d.amount - roundedAmt) < 0.01
-                );
+                const existingDoc = pendingOptimizedDocs.find(d => {
+                    const matchFrom = debtor.user 
+                        ? d.fromUser?.user?.toString() === debtor.user.toString() 
+                        : d.fromUser?.name === debtor.name;
+                    const matchTo = creditor.user 
+                        ? d.toUser?.user?.toString() === creditor.user.toString() 
+                        : d.toUser?.name === creditor.name;
+                    return matchFrom && matchTo && Math.abs(d.amount - roundedAmt) < 0.01;
+                });
 
                 optimizedSettlements.push({
                     _id: existingDoc ? existingDoc._id.toString() : null,
@@ -379,6 +393,16 @@ export const updateGroupExpense = async (req, res, next) => {
             splitBetween = membersInvolved.map(m => ({ user: m.user, name: m.name, amount: share }));
             const diff = amount - splitBetween.reduce((s, m) => s + m.amount, 0);
             if (diff !== 0) splitBetween[0].amount = Math.round((splitBetween[0].amount + diff) * 100) / 100;
+        } else if (splitType === 'percentage') {
+            splitBetween = splitDetails.map(m => ({
+                user: m.user,
+                name: m.name,
+                amount: Math.round(((m.share / 100) * amount) * 100) / 100
+            }));
+            const diff = amount - splitBetween.reduce((s, m) => s + m.amount, 0);
+            if (diff !== 0 && splitBetween.length > 0) {
+                splitBetween[0].amount = Math.round((splitBetween[0].amount + diff) * 100) / 100;
+            }
         } else {
             splitBetween = splitDetails.map(m => ({ user: m.user, name: m.name, amount: m.share || m.amount }));
         }
