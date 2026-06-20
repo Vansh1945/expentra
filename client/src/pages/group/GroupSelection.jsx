@@ -107,11 +107,6 @@ const GroupSelection = () => {
         setEditData({ name: group.name, description: group.description || '' });
     };
 
-    const copyInviteCode = (code) => {
-        navigator.clipboard.writeText(code);
-        toast.success("Invite code copied!");
-    };
-
     if (loading) {
         return (
             <div className="min-h-screen bg-background flex justify-center items-center">

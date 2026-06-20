@@ -342,7 +342,7 @@ const GroupDashboard = () => {
                     <div className="bg-card rounded-3xl border border-background p-8 shadow-sm flex-1">
                         <h3 className="text-lg font-bold tracking-tight mb-6">Group Members</h3>
                         <div className="space-y-4">
-                            {groupData?.members.map((m, index) => (
+                            {groupData?.members.map((m) => (
                                 <div key={m._id || m.name} className="flex items-center justify-between p-3 rounded-2xl hover:bg-background/50 transition-colors">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center text-primary font-bold text-sm">

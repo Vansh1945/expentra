@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { MdAdd, MdDelete, MdEdit, MdOutlineReceiptLong } from 'react-icons/md';
@@ -9,7 +9,7 @@ import { detectCategory } from '../utils/categoryDetector';
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const Expenses = () => {
-    const { user } = useContext(AuthContext);
+    // Expenses State
 
     const [expenses, setExpenses] = useState([]);
     const [categories, setCategories] = useState([]);

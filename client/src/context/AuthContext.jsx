@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
     const [selectedGroupId, setSelectedGroupIdState] = useState(localStorage.getItem('selectedGroupId') || null);
     const [activeGroup, setActiveGroup] = useState(null);
     const [notifications, setNotifications] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [notificationsLoading, setNotificationsLoading] = useState(false);
     
     // ==========================================
@@ -181,11 +180,8 @@ export const AuthProvider = ({ children }) => {
         }
     }, [user, token]);
 
-    const [lastSeen, setLastSeen] = useState(localStorage.getItem('notificationsLastSeen') || 0);
-
     const markAsSeen = () => {
         const now = new Date().toISOString();
-        setLastSeen(now);
         localStorage.setItem('notificationsLastSeen', now);
     };
 
@@ -197,7 +193,7 @@ export const AuthProvider = ({ children }) => {
             appMode, setAppMode, selectedGroupId, setSelectedGroupId, activeGroup,
             notifications, fetchNotifications, unreadCount, markAsSeen,
             markAsRead, markAllAsRead, deleteNotification, clearAllNotifications,
-            login, logout, loading, notificationsLoading
+            login, logout, notificationsLoading
         }}>
             {children}
         </AuthContext.Provider>

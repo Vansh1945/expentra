@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { AuthContext, API } from '../context/AuthContext';
 import {
     MdNotificationsActive, MdClose, MdWarning, MdPayment,
@@ -11,7 +10,7 @@ import { toast } from 'react-toastify';
 const Alerts = () => {
     const {
         notifications, notificationsLoading, fetchNotifications,
-        markAsRead, markAllAsRead,
+        markAllAsRead,
         deleteNotification, clearAllNotifications
     } = useContext(AuthContext);
     const [filter, setFilter] = useState('all');
@@ -31,10 +30,7 @@ const Alerts = () => {
         toast.success('Notification removed');
     };
 
-    const handleMarkAsRead = async (id) => {
-        await markAsRead(id);
-        toast.success('Notification marked as read');
-    };
+
 
     const handleMarkAllRead = async () => {
         await markAllAsRead();

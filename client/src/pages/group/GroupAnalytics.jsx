@@ -121,7 +121,6 @@ const GroupAnalytics = () => {
         return months.indexOf(a.month) - months.indexOf(b.month);
     });
 
-    const avgExpense = expenses.length > 0 ? totalSpent / expenses.length : 0;
     const topPayer = paidByData[0]?.name || 'N/A';
     const topCategory = categoryData[0]?.name || 'N/A';
 
@@ -224,7 +223,7 @@ const GroupAnalytics = () => {
                                             verticalAlign="bottom"
                                             align="center"
                                             wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingTop: '10px' }}
-                                            formatter={(value, entry) => {
+                                            formatter={(value, _entry) => {
                                                 const item = categoryData.find(d => d.name === value);
                                                 return <span className="text-textColor/70">{value}: ₹{item?.value.toLocaleString()}</span>;
                                             }}

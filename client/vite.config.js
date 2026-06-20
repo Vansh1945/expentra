@@ -16,25 +16,18 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
-              if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/') || id.includes('node_modules/scheduler/')) {
+              if (
+                id.includes('node_modules/react/') ||
+                id.includes('node_modules/react-dom/') ||
+                id.includes('node_modules/scheduler/') ||
+                id.includes('node_modules/react-router/') ||
+                id.includes('node_modules/react-router-dom/')
+              ) {
                 return 'vendor-react';
-              }
-              if (id.includes('node_modules/react-router') || id.includes('node_modules/react-router-dom')) {
-                return 'vendor-router';
-              }
-              if (id.includes('node_modules/recharts') || id.includes('node_modules/d3') || id.includes('node_modules/lodash')) {
-                return 'vendor-charts';
               }
               if (id.includes('node_modules/firebase') || id.includes('node_modules/@firebase')) {
                 return 'vendor-firebase';
               }
-              if (id.includes('node_modules/react-icons')) {
-                return 'vendor-icons';
-              }
-              if (id.includes('node_modules/date-fns')) {
-                return 'vendor-date-fns';
-              }
-              return 'vendor-others';
             }
           }
         }

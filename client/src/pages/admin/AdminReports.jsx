@@ -30,7 +30,6 @@ const AdminReports = () => {
             
         // Fetch initial data for the default 1-week range
         fetchReports();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchReports = async (e) => {
