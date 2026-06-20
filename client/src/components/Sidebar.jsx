@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -14,9 +14,10 @@ import {
 } from 'react-icons/md';
 import { FaMoneyBillWave } from 'react-icons/fa';
 
-const Sidebar = ({ role, isOpen, setIsOpen }) => {
+const Sidebar = ({ role }) => {
     const location = useLocation();
     const { appMode, setAppMode } = useContext(AuthContext);
+    const [showMoreMenu, setShowMoreMenu] = useState(false);
 
     const getNavItems = () => {
         const isAdminPath = location.pathname.startsWith('/admin');
@@ -52,13 +53,13 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
             return items;
         }
 
-        // Personal navigation
+        // Personal navigation (Rearranged to put Budget as the 4th item)
         const items = [
             { name: 'Dashboard', path: '/dashboard', icon: MdDashboard },
             { name: 'Income', path: '/income', icon: FaMoneyBillWave },
             { name: 'Expenses', path: '/expenses', icon: FaMoneyBillWave },
-            { name: 'Reports', path: '/reports', icon: MdPieChart },
             { name: 'Budget', path: '/budget', icon: MdAttachMoney },
+            { name: 'Reports', path: '/reports', icon: MdPieChart },
             { name: 'Analysis', path: '/analysis', icon: MdAnalytics },
             { name: 'Quests & Badges', path: '/challenges', icon: MdEmojiEvents },
             { name: 'Group Mode', path: '/groups', icon: MdGroup, action: () => setAppMode('group') },
@@ -71,42 +72,27 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
     };
 
     const navItems = getNavItems();
+    const mainItems = navItems.slice(0, 4);
+    const moreItems = navItems.slice(4);
 
     return (
         <>
-            {/* Mobile overlay */}
-            {isOpen && (
-                <div
-                    className="fixed inset-0 bg-textColor/50 backdrop-blur-sm z-40 md:hidden transition-all duration-300"
-                    onClick={() => setIsOpen(false)}
-                />
-            )}
-
-            {/* Sidebar */}
-            <aside className={`
-                fixed inset-y-0 left-0 z-50
-                flex flex-col w-64
-                bg-card text-textColor
-                shadow-sm
-                transform transition-transform duration-300 ease-in-out
-                ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-                md:relative md:translate-x-0
-                border-r border-background
-            `}>
+            {/* Desktop Sidebar (hidden on mobile) */}
+            <aside className="hidden md:flex flex-col w-64 bg-card text-textColor border-r border-slate-100">
                 {/* Header / Logo Section */}
-                <div className="flex items-center gap-3 h-20 px-6 border-b border-background bg-card">
-                    <div className="w-10 h-10 bg-gradient-to-br from-primary via-secondary to-primary rounded-lg flex items-center justify-center shadow-sm">
-                        <span className="font-bold text-card text-lg">E</span>
+                <div className="flex items-center gap-3 h-16 px-5 border-b border-slate-100 bg-card">
+                    <div className="w-9 h-9 bg-gradient-to-br from-primary to-indigo-600 rounded-lg flex items-center justify-center shadow-sm p-1.5">
+                        <span className="font-bold text-white text-base">E</span>
                     </div>
                     <div>
-                        <span className="font-bold text-lg bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent tracking-tight">Expentra</span>
-                        <p className="text-xs text-textColor opacity-60 mt-0.5">Financial Dashboard</p>
+                        <span className="font-bold text-base bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent tracking-tight">Expentra</span>
+                        <p className="text-xs text-textMuted uppercase font-bold tracking-wider">Financial Dashboard</p>
                     </div>
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 overflow-y-auto px-4 py-6">
-                    <div className="space-y-2">
+                <nav className="flex-1 overflow-y-auto px-3 py-4">
+                    <div className="space-y-1.5">
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = location.pathname === item.path ||
@@ -116,28 +102,25 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
                                 <Link
                                     key={item.name}
                                     to={item.path}
-                                    onClick={() => {
-                                        setIsOpen?.(false);
-                                        item.action?.();
-                                    }}
+                                    onClick={() => item.action?.()}
                                     className={`
-                                        flex items-center gap-3 px-4 py-2.5
-                                        rounded-lg text-sm font-medium
-                                        transition-all duration-200
-                                        group relative
-                                        ${isActive
+                                         flex items-center gap-3 px-3.5 py-2.5
+                                         rounded-lg text-sm font-semibold
+                                         transition-all duration-200
+                                         group relative
+                                         ${isActive
                                             ? 'bg-primary/10 text-primary shadow-sm'
-                                            : 'text-textColor hover:bg-background hover:text-primary hover:translate-x-1'
+                                            : 'text-textColor hover:bg-slate-50 hover:text-primary'
                                         }
-                                    `}
+                                     `}
                                 >
                                     <Icon className={`
-                                        w-5 h-5 transition-all duration-200
-                                        ${isActive ? 'text-primary' : 'opacity-70 group-hover:text-primary'}
-                                    `} />
+                                         w-5 h-5 transition-all duration-200
+                                         ${isActive ? 'text-primary' : 'opacity-60 group-hover:text-primary'}
+                                     `} />
                                     <span className="flex-1">{item.name}</span>
                                     {isActive && (
-                                        <div className="absolute left-0 w-1 h-8 bg-secondary rounded-r-lg"></div>
+                                        <div className="absolute left-0 w-0.5 h-6 bg-primary rounded-r-lg"></div>
                                     )}
                                 </Link>
                             );
@@ -145,6 +128,78 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
                     </div>
                 </nav>
             </aside>
+
+            {/* Mobile Bottom Navigation Bar (hidden on desktop) */}
+            <div className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-card border-t border-slate-100 flex items-center justify-around z-50 shadow-lg px-2">
+                {mainItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.path ||
+                        location.pathname.startsWith(item.path + '/');
+                    return (
+                        <Link
+                            key={item.name}
+                            to={item.path}
+                            onClick={() => {
+                                setShowMoreMenu(false);
+                                item.action?.();
+                            }}
+                            className={`flex flex-col items-center justify-center flex-1 py-1 text-center transition-all ${isActive ? 'text-primary' : 'text-textColor/60 hover:text-primary'
+                                }`}
+                        >
+                            <Icon className="w-5.5 h-5.5 mb-0.5" />
+                            <span className="text-[10px] font-bold tracking-tight truncate max-w-[68px]">{item.name}</span>
+                        </Link>
+                    );
+                })}
+
+                {/* 5th Button: More */}
+                <button
+                    onClick={() => setShowMoreMenu(prev => !prev)}
+                    className={`flex flex-col items-center justify-center flex-1 py-1 text-center transition-all ${showMoreMenu ? 'text-primary' : 'text-textColor/60 hover:text-primary'
+                        }`}
+                >
+                    <div className="flex gap-0.5 mb-1.5 mt-0.5 items-center justify-center">
+                        <span className={`w-1.5 h-1.5 rounded-full ${showMoreMenu ? 'bg-primary' : 'bg-textColor/60'}`}></span>
+                        <span className={`w-1.5 h-1.5 rounded-full ${showMoreMenu ? 'bg-primary' : 'bg-textColor/60'}`}></span>
+                        <span className={`w-1.5 h-1.5 rounded-full ${showMoreMenu ? 'bg-primary' : 'bg-textColor/60'}`}></span>
+                    </div>
+                    <span className="text-[10px] font-bold tracking-tight">More</span>
+                </button>
+            </div>
+
+            {/* More Items Popover overlay */}
+            {showMoreMenu && (
+                <>
+                    <div
+                        className="fixed inset-0 z-40 bg-slate-900/10 backdrop-blur-[1px] md:hidden"
+                        onClick={() => setShowMoreMenu(false)}
+                    />
+                    <div className="md:hidden fixed bottom-20 right-4 bg-card border border-slate-100 rounded-2xl shadow-xl p-3.5 z-50 min-w-[200px] animate-in slide-in-from-bottom-5 duration-200">
+                        <div className="space-y-1">
+                            {moreItems.map((item) => {
+                                const Icon = item.icon;
+                                const isActive = location.pathname === item.path ||
+                                    location.pathname.startsWith(item.path + '/');
+                                return (
+                                    <Link
+                                        key={item.name}
+                                        to={item.path}
+                                        onClick={() => {
+                                            setShowMoreMenu(false);
+                                            item.action?.();
+                                        }}
+                                        className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all ${isActive ? 'bg-primary/10 text-primary' : 'text-textColor hover:bg-slate-50 hover:text-primary'
+                                            }`}
+                                    >
+                                        <Icon className="w-5 h-5 opacity-80" />
+                                        <span>{item.name}</span>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </>
+            )}
         </>
     );
 };

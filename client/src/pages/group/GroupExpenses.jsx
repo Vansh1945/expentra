@@ -133,54 +133,54 @@ const GroupExpenses = () => {
     }
 
     return (
-        <div className="space-y-6 pb-10 text-textColor">
+        <div className="space-y-6 pb-8 text-textColor">
             {/* Header Section */}
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="flex items-center gap-4">
-                    <div className="p-3 bg-primary/10 rounded-2xl">
-                        <MdGroup className="w-8 h-8 text-primary" />
+                <div className="flex items-center gap-3">
+                    <div className="p-2.5 bg-primary/10 rounded-xl">
+                        <MdGroup className="w-6 h-6 text-primary" />
                     </div>
                     <div>
-                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight">{groupData?.name}</h1>
-                        <p className="text-sm opacity-60 mt-1">Activity and settlement history</p>
+                        <h1 className="h1-premium">{groupData?.name}</h1>
+                        <p className="small-premium mt-0.5">Activity and settlement history</p>
                     </div>
                 </div>
                 <button
                     onClick={() => navigate('/groups/add-expense')}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl hover:bg-primary/90 transition-all duration-300 shadow-sm hover:shadow-md font-bold text-sm"
+                    className="btn-primary"
                 >
-                    <MdAdd className="text-lg" />
+                    <MdAdd className="text-base" />
                     Add Expense
                 </button>
             </div>
 
             {/* Activities Table */}
-            <div className="bg-card rounded-2xl shadow-sm border border-background overflow-hidden transition-all duration-300">
+            <div className="bg-card rounded-xl shadow-sm border border-slate-100 overflow-hidden transition-all duration-300">
                 <div className="overflow-x-auto">
                     <table className="min-w-full">
                         <thead>
-                            <tr className="bg-background/50 border-b border-background">
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-primary uppercase tracking-widest">Date</th>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-primary uppercase tracking-widest">Description</th>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-primary uppercase tracking-widest">Payers / Method</th>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-primary uppercase tracking-widest">Category</th>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-primary uppercase tracking-widest">Amount</th>
-                                <th className="px-6 py-4 text-right text-[10px] font-black text-primary uppercase tracking-widest">Actions</th>
+                            <tr className="bg-slate-50/70 border-b border-slate-100">
+                                <th className="px-3.5 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Date</th>
+                                <th className="px-3.5 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Description</th>
+                                <th className="px-3.5 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Payers / Method</th>
+                                <th className="px-3.5 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Category</th>
+                                <th className="px-3.5 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Amount</th>
+                                <th className="px-3.5 py-2 text-right text-[9px] font-bold text-textMuted uppercase tracking-wider">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-background">
+                        <tbody className="divide-y divide-slate-100">
                             {activities.map((act) => {
                                 const isExpense = act.activityType === 'expense';
                                 return (
                                     <React.Fragment key={act._id}>
                                         <tr 
                                             onClick={() => setExpandedActivity(expandedActivity === act._id ? null : act._id)}
-                                            className={`group cursor-pointer transition-all duration-200 ${expandedActivity === act._id ? 'bg-primary/5' : 'hover:bg-background/80'}`}
+                                            className={`group cursor-pointer transition-all duration-205 ${expandedActivity === act._id ? 'bg-primary/5' : 'hover:bg-slate-50/50'}`}
                                         >
-                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium opacity-60">
-                                                <div className="flex items-center gap-2">
+                                            <td className="px-3.5 py-2 whitespace-nowrap text-xs font-semibold text-textMuted">
+                                                <div className="flex items-center gap-1">
                                                     <div className={`transition-transform duration-200 ${expandedActivity === act._id ? 'rotate-180' : ''}`}>
-                                                        <MdKeyboardArrowDown className="text-primary opacity-40" />
+                                                        <MdKeyboardArrowDown className="text-primary opacity-50" />
                                                     </div>
                                                     {new Date(act.date).toLocaleDateString('en-IN', {
                                                         day: '2-digit',
@@ -189,106 +189,106 @@ const GroupExpenses = () => {
                                                     })}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4">
+                                            <td className="px-3.5 py-2">
                                                 <div className="flex flex-col">
-                                                    <span className="text-sm font-bold opacity-90">{act.title}</span>
+                                                    <span className="text-xs font-bold text-textColor">{act.title}</span>
                                                     {act.note && (
-                                                        <span className="text-[10px] opacity-40 italic mt-0.5 line-clamp-1">{act.note}</span>
+                                                        <span className="text-[9px] text-textMuted italic mt-0.5 line-clamp-1">{act.note}</span>
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <div className="flex items-center gap-2">
+                                            <td className="px-3.5 py-2 whitespace-nowrap">
+                                                <div className="flex items-center gap-1">
                                                     {isExpense ? (
-                                                        <div className="flex -space-x-2">
+                                                        <div className="flex -space-x-1">
                                                             {act.paidBy?.map((p, idx) => (
-                                                                <div key={idx} className="w-6 h-6 rounded-full bg-primary/10 border-2 border-card flex items-center justify-center text-[8px] font-black text-primary uppercase" title={p.name}>
+                                                                <div key={idx} className="w-5 h-5 rounded-full bg-primary/10 border border-card flex items-center justify-center text-[7px] font-black text-primary uppercase" title={p.name}>
                                                                     {p.name.charAt(0)}
                                                                 </div>
                                                             ))}
-                                                            <span className="text-[10px] opacity-60 font-medium ml-3 self-center">
-                                                                {act.paidBy?.length > 1 ? `${act.paidBy[0].name} +${act.paidBy.length - 1}` : act.paidBy?.[0]?.name}
+                                                            <span className="text-[9px] text-textMuted font-medium ml-1.5 self-center">
+                                                                    {act.paidBy?.length > 1 ? `${act.paidBy[0].name} +${act.paidBy.length - 1}` : act.paidBy?.[0]?.name}
                                                             </span>
                                                         </div>
                                                     ) : (
-                                                        <span className="px-2 py-0.5 rounded-md bg-secondary/10 text-secondary text-[10px] font-black uppercase tracking-tighter">
+                                                        <span className="px-1.5 py-0.5 rounded bg-slate-100 text-textMuted text-[9px] font-bold uppercase tracking-tighter">
                                                             Settlement ({act.paymentMethod || 'cash'})
                                                         </span>
                                                     )}
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-3.5 py-2 whitespace-nowrap">
                                                 {isExpense ? (
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="w-8 h-8 rounded-lg bg-background border border-background flex items-center justify-center p-1.5 shadow-sm">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <div className="w-5.5 h-5.5 rounded bg-slate-50 border border-slate-100 flex items-center justify-center p-1 shadow-sm">
                                                             <CategoryIcon
                                                                 iconName={categories.find(c => c.name === act.category)?.icon || 'Category'}
                                                                 className="text-primary w-full h-full"
                                                             />
                                                         </div>
-                                                        <span className="px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full bg-background border border-background opacity-70">
+                                                        <span className="px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider rounded bg-slate-50 border border-slate-100 text-textMuted">
                                                             {act.category || 'Other'}
                                                         </span>
                                                     </div>
                                                 ) : (
-                                                    <span className="opacity-20">—</span>
+                                                    <span className="text-slate-300">—</span>
                                                 )}
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                <span className={`text-sm font-black ${isExpense ? 'text-danger' : 'text-secondary'}`}>
+                                            <td className="px-3.5 py-2 whitespace-nowrap">
+                                                <span className={`text-xs font-bold ${isExpense ? 'text-danger' : 'text-success'}`}>
                                                     ₹{act.amount.toLocaleString()}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 whitespace-nowrap text-right">
+                                            <td className="px-3.5 py-2 whitespace-nowrap text-right">
                                                 {isExpense ? (
-                                                    <div className="flex justify-end gap-2" onClick={e => e.stopPropagation()}>
+                                                    <div className="flex justify-end gap-0.5" onClick={e => e.stopPropagation()}>
                                                         <button
                                                             onClick={() => navigate(`/groups/expenses/edit/${act._id}`)}
-                                                            className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                                                            className="p-1 text-primary hover:bg-primary/5 rounded transition-colors"
                                                             title="Edit"
                                                         >
-                                                            <MdEdit className="w-4 h-4" />
+                                                            <MdEdit className="w-3 h-3" />
                                                         </button>
                                                         <button
                                                             onClick={() => handleDeleteExpense(act._id)}
-                                                            className="p-2 text-danger hover:bg-danger/10 rounded-lg transition-colors"
+                                                            className="p-1 text-danger hover:bg-danger/5 rounded transition-colors"
                                                             title="Delete"
                                                         >
-                                                            <MdDelete className="w-4 h-4" />
+                                                            <MdDelete className="w-3 h-3" />
                                                         </button>
                                                     </div>
                                                 ) : (
-                                                    <span className="text-[10px] font-bold opacity-30 px-3 cursor-default">SYSTEM</span>
+                                                    <span className="text-[8px] font-bold text-textMuted/40 px-1.5 cursor-default">SYSTEM</span>
                                                 )}
                                             </td>
                                         </tr>
 
                                         {/* Expanded Settlement Details */}
                                         {expandedActivity === act._id && (
-                                            <tr className="bg-background/50 border-b border-background">
-                                                <td colSpan="6" className="px-10 py-6">
-                                                    <div className="flex flex-col gap-4 animate-in fade-in slide-in-from-top-1 duration-200">
-                                                        <div className="flex items-center gap-2 text-primary">
-                                                            <MdCompareArrows className="text-lg" />
-                                                            <h4 className="text-xs font-black uppercase tracking-widest">
+                                            <tr className="bg-slate-50/30 border-b border-slate-100">
+                                                <td colSpan="6" className="px-4 py-2.5">
+                                                    <div className="flex flex-col gap-2 animate-in fade-in duration-200">
+                                                        <div className="flex items-center gap-1 text-primary">
+                                                            <MdCompareArrows className="text-xs" />
+                                                            <h4 className="text-[8px] font-bold uppercase tracking-wider text-textMuted">
                                                                 {isExpense ? 'Settlement Breakdown' : 'Included Expenses'}
                                                             </h4>
                                                         </div>
 
-                                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                                                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
                                                             {isExpense ? (
                                                                 act.settlements?.map((s, idx) => (
-                                                                    <div key={idx} className="bg-card border border-background rounded-xl p-3 shadow-sm flex items-center justify-between gap-4">
-                                                                        <div className="flex items-center gap-3">
-                                                                            <div className="flex items-center gap-1.5 min-w-0">
-                                                                                <span className="text-[10px] font-bold opacity-80 truncate">{s.from.name}</span>
-                                                                                <MdKeyboardArrowUp className="rotate-90 text-primary opacity-30 text-xs shrink-0" />
-                                                                                <span className="text-[10px] font-bold opacity-80 truncate">{s.to.name}</span>
+                                                                    <div key={idx} className="bg-card border border-slate-100 rounded-lg p-2 shadow-sm flex items-center justify-between gap-3">
+                                                                        <div className="flex items-center gap-2">
+                                                                            <div className="flex items-center gap-1 min-w-0">
+                                                                                <span className="text-[9px] font-bold text-textColor truncate">{s.from.name}</span>
+                                                                                <MdKeyboardArrowUp className="rotate-90 text-primary opacity-40 text-xs shrink-0" />
+                                                                                <span className="text-[9px] font-bold text-textColor truncate">{s.to.name}</span>
                                                                             </div>
                                                                         </div>
                                                                         <div className="flex flex-col items-end shrink-0">
-                                                                            <span className="text-xs font-black text-secondary">₹{s.amount.toLocaleString()}</span>
-                                                                            <span className={`text-[8px] font-black uppercase px-1.5 py-0.5 rounded-md ${s.reimbursementStatus === 'paid' ? 'bg-secondary/10 text-secondary' : 'bg-danger/50/10 text-danger'}`}>
+                                                                            <span className="text-xs font-bold text-textColor">₹{s.amount.toLocaleString()}</span>
+                                                                            <span className={`text-[7px] font-bold uppercase px-1 py-0.25 rounded ${s.reimbursementStatus === 'paid' ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}`}>
                                                                                 {s.reimbursementStatus}
                                                                             </span>
                                                                         </div>
@@ -296,16 +296,16 @@ const GroupExpenses = () => {
                                                                 ))
                                                             ) : (
                                                                 act.underlyingExpenses?.map((ue, idx) => (
-                                                                    <div key={idx} className="bg-card border border-background rounded-xl p-3 shadow-sm flex items-center justify-between gap-4">
-                                                                        <span className="text-[10px] font-bold opacity-80 truncate">{ue.title}</span>
-                                                                        <span className="text-xs font-black text-secondary shrink-0">₹{ue.amount.toLocaleString()}</span>
+                                                                    <div key={idx} className="bg-card border border-slate-100 rounded-lg p-2 shadow-sm flex items-center justify-between gap-3">
+                                                                        <span className="text-[9px] font-bold text-textColor truncate">{ue.title}</span>
+                                                                        <span className="text-xs font-bold text-textColor shrink-0">₹{ue.amount.toLocaleString()}</span>
                                                                     </div>
                                                                 ))
                                                             )}
                                                         </div>
 
                                                         {isExpense && (!act.settlements || act.settlements.length === 0) && (
-                                                            <p className="text-[10px] font-bold opacity-30 italic">No settlement needed for this expense.</p>
+                                                            <p className="text-[8px] font-bold text-textMuted/50 italic">No settlement needed for this expense.</p>
                                                         )}
                                                     </div>
                                                 </td>
@@ -316,14 +316,14 @@ const GroupExpenses = () => {
                             })}
                             {activities.length === 0 && (
                                 <tr>
-                                    <td colSpan="6" className="px-6 py-16 text-center">
-                                        <div className="w-16 h-16 bg-background rounded-2xl flex items-center justify-center mx-auto mb-4 border border-background">
-                                            <MdReceipt className="w-8 h-8 opacity-20" />
+                                    <td colSpan="6" className="px-5 py-8 text-center">
+                                        <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mx-auto mb-3 border border-slate-100">
+                                            <MdReceipt className="w-6 h-6 opacity-30 text-textMuted" />
                                         </div>
-                                        <p className="text-sm font-bold opacity-40">No activity history found</p>
+                                        <p className="text-xs font-bold text-textMuted">No activity history found</p>
                                         <button
                                             onClick={() => navigate('/groups/add-expense')}
-                                            className="mt-4 text-primary font-black text-[10px] uppercase tracking-widest hover:underline"
+                                            className="mt-3 text-primary font-bold text-[9px] uppercase tracking-wider hover:underline"
                                         >
                                             Add First Expense
                                         </button>

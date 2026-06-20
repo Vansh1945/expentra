@@ -22,11 +22,11 @@ const PublicNavbar = () => {
                 <div className="flex justify-between h-16 items-center">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                            <span className="font-black text-card text-base">E</span>
+                        <div className="w-8 h-8 bg-gradient-to-br from-primary to-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
+                            <span className="font-bold text-white text-sm">E</span>
                         </div>
-                        <span className="text-xl font-bold text-textColor tracking-tight">
-                            EXPENTRA
+                        <span className="text-base font-bold bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent tracking-tight">
+                            Expentra
                         </span>
                     </Link>
 
@@ -36,7 +36,7 @@ const PublicNavbar = () => {
                             <Link
                                 key={link.name}
                                 to={link.path}
-                                className={`text-sm font-semibold transition-colors duration-200 ${
+                                className={`text-sm font-medium transition-colors duration-200 ${
                                     isActive(link.path)
                                         ? 'text-primary'
                                         : 'text-textColor hover:text-primary'
@@ -47,7 +47,7 @@ const PublicNavbar = () => {
                         ))}
                         <Link
                             to="/login"
-                            className="bg-primary text-card px-5 py-2 rounded-lg text-sm font-semibold hover:opacity-90 transition-all duration-200"
+                            className="btn-primary py-1.5 px-4 text-xs font-semibold"
                         >
                             Login
                         </Link>
@@ -57,10 +57,10 @@ const PublicNavbar = () => {
                     <div className="md:hidden flex items-center">
                         <button
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="text-textColor p-2 rounded-md hover:bg-background transition-colors"
+                            className="text-textColor p-2 rounded-md hover:bg-slate-50 transition-colors"
                             aria-label="Toggle menu"
                         >
-                            {isMenuOpen ? <MdClose size={26} /> : <MdMenu size={26} />}
+                            {isMenuOpen ? <MdClose size={22} /> : <MdMenu size={22} />}
                         </button>
                     </div>
                 </div>
@@ -68,17 +68,17 @@ const PublicNavbar = () => {
 
             {/* Mobile Navigation */}
             {isMenuOpen && (
-                <div className="md:hidden bg-card border-t border-background">
+                <div className="md:hidden bg-card border-t border-slate-100">
                     <div className="px-4 pt-2 pb-4 space-y-1">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
                                 to={link.path}
                                 onClick={() => setIsMenuOpen(false)}
-                                className={`block px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
+                                className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                                     isActive(link.path)
                                         ? 'text-primary bg-primary/5'
-                                        : 'text-textColor hover:bg-background hover:text-primary'
+                                        : 'text-textColor hover:bg-slate-50 hover:text-primary'
                                 }`}
                             >
                                 {link.name}
@@ -87,7 +87,7 @@ const PublicNavbar = () => {
                         <Link
                             to="/login"
                             onClick={() => setIsMenuOpen(false)}
-                            className="block px-4 py-3 rounded-lg bg-primary text-card text-sm font-semibold text-center mt-2 hover:opacity-90 transition-all duration-200"
+                            className="block btn-primary text-xs text-center mt-2"
                         >
                             Login
                         </Link>

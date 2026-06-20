@@ -76,121 +76,121 @@ const Login = () => {
         <div className="min-h-screen bg-background flex flex-col">
             <PublicNavbar />
 
-            <div className="flex-grow flex items-center justify-center py-10 px-6">
-                <div className="w-full max-w-5xl bg-card rounded-2xl shadow-md overflow-hidden flex flex-col md:flex-row min-h-[580px]">
-
+            <div className="flex-grow flex items-center justify-center py-4 px-3">
+                <div className="w-full max-w-3xl bg-card rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col md:flex-row min-h-[400px]">
+ 
                     {/* Visual Identity Panel */}
-                    <div className="hidden md:flex md:w-[45%] bg-primary p-12 text-card flex-col justify-between relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-secondary/20 rounded-full -mr-32 -mt-32 blur-3xl" />
-                        <div className="absolute bottom-0 left-0 w-64 h-64 bg-card/5 rounded-full -ml-32 -mb-32 blur-2xl" />
-
+                    <div className="hidden md:flex md:w-[42%] bg-gradient-to-br from-primary to-indigo-800 p-6 text-white flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-48 h-48 bg-white/5 rounded-full -mr-24 -mt-24 blur-2xl" />
+                        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24 blur-2xl" />
+ 
                         <div className="relative z-10">
-                            <div className="flex items-center gap-3 mb-12">
-                                <div className="w-11 h-11 bg-card rounded-xl flex items-center justify-center shadow-md">
-                                    <span className="text-primary font-black text-xl">E</span>
+                            <div className="flex items-center gap-2 mb-6">
+                                <div className="w-7 h-7 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                                    <span className="text-primary font-bold text-xs">E</span>
                                 </div>
-                                <span className="text-lg font-bold tracking-tight uppercase">Expentra</span>
+                                <span className="text-xs font-semibold tracking-wider uppercase text-white/90">Expentra</span>
                             </div>
-
-                            <h2 className="text-3xl font-bold leading-tight mb-4">
+ 
+                            <h2 className="text-xl font-bold leading-tight mb-2">
                                 Track Your <br />
-                                <span className="text-secondary">Money Easily.</span>
+                                <span className="text-success bg-white/10 px-1.5 py-0.5 rounded-md">Money Easily.</span>
                             </h2>
-                            <p className="text-sm text-card/70 leading-relaxed max-w-xs">
+                            <p className="text-[11px] text-white/70 leading-relaxed max-w-[180px]">
                                 Simple way to manage your daily expenses and savings.
                             </p>
                         </div>
-
-                        <div className="relative z-10 space-y-4">
-                            <div className="flex items-center gap-4 bg-card/10 p-4 rounded-xl border border-card/10 hover:bg-card/15 transition-all">
-                                <div className="w-9 h-9 rounded-lg bg-card/10 flex items-center justify-center text-sm font-bold">1</div>
+ 
+                        <div className="relative z-10 space-y-2">
+                            <div className="flex items-center gap-2.5 bg-white/10 p-2.5 rounded-lg border border-white/5">
+                                <div className="w-6 h-6 rounded bg-white/10 flex items-center justify-center text-[10px] font-semibold">1</div>
                                 <div>
-                                    <p className="text-sm font-semibold">Cloud Sync</p>
-                                    <p className="text-xs text-card/50 uppercase tracking-widest">Access everywhere</p>
+                                    <p className="text-[11px] font-semibold">Cloud Sync</p>
+                                    <p className="text-[8px] text-white/50 font-bold uppercase tracking-wider">Access everywhere</p>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-4 bg-card/10 p-4 rounded-xl border border-card/10">
-                                <div className="w-9 h-9 rounded-lg bg-secondary flex items-center justify-center text-sm font-bold text-card">2</div>
+                            <div className="flex items-center gap-2.5 bg-white/10 p-2.5 rounded-lg border border-white/5">
+                                <div className="w-6 h-6 rounded bg-success flex items-center justify-center text-[10px] font-semibold text-white">2</div>
                                 <div>
-                                    <p className="text-sm font-semibold">Group Split</p>
-                                    <p className="text-xs text-card/50 uppercase tracking-widest">With friends &amp; family</p>
+                                    <p className="text-[11px] font-semibold">Group Split</p>
+                                    <p className="text-[8px] text-white/50 font-bold uppercase tracking-wider">With friends &amp; family</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+ 
                     {/* Login Form Panel */}
-                    <div className="w-full md:w-[55%] p-8 lg:p-14 flex flex-col justify-center">
-                        <div className="max-w-md mx-auto w-full">
-                            <div className="mb-8">
-                                <h1 className="text-3xl font-bold text-textColor mb-1">Welcome Back</h1>
-                                <p className="text-sm text-textColor/60 uppercase tracking-wider font-semibold">
+                    <div className="w-full md:w-[58%] p-6 lg:p-8 flex flex-col justify-center bg-card">
+                        <div className="max-w-sm mx-auto w-full">
+                            <div className="mb-4">
+                                <h1 className="h2-premium mb-0.5">Welcome Back</h1>
+                                <p className="text-[10px] text-textMuted uppercase tracking-wider font-semibold">
                                     Sign in to your account
                                 </p>
                             </div>
-
-                            <form className="space-y-5" onSubmit={handleSubmit}>
+ 
+                            <form className="space-y-3.5" onSubmit={handleSubmit}>
                                 <div>
-                                    <label className="block text-xs font-semibold text-textColor/60 uppercase tracking-wider mb-2">
+                                    <label className="label-premium">
                                         Email
                                     </label>
                                     <input
                                         type="email"
-                                        className="w-full px-4 py-3 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-textColor placeholder-textColor/30 text-sm transition-all duration-200"
+                                        className="input-premium"
                                         placeholder="your@email.com"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                     />
                                 </div>
-
+ 
                                 <div>
-                                    <label className="block text-xs font-semibold text-textColor/60 uppercase tracking-wider mb-2">
+                                    <label className="label-premium">
                                         Password
                                     </label>
                                     <input
                                         type="password"
-                                        className="w-full px-4 py-3 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-textColor placeholder-textColor/30 text-sm transition-all duration-200"
+                                        className="input-premium"
                                         placeholder="••••••••••••"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
                                     />
                                 </div>
-
+ 
                                 <button
                                     type="submit"
-                                    className="w-full bg-primary text-card py-3 rounded-lg font-semibold text-sm uppercase tracking-wider shadow-lg hover:opacity-90 transition-all duration-200 mt-2"
+                                    className="btn-primary w-full py-2 text-xs font-bold uppercase tracking-wider mt-1"
                                 >
                                     Login
                                 </button>
                             </form>
-
-                            <div className="relative my-6">
+ 
+                            <div className="relative my-4">
                                 <div className="absolute inset-0 flex items-center">
-                                    <div className="w-full border-t border-background"></div>
+                                    <div className="w-full border-t border-slate-100"></div>
                                 </div>
-                                <div className="relative flex justify-center text-xs uppercase">
-                                    <span className="bg-card px-2 text-textColor/40 font-semibold tracking-wider">Or continue with</span>
+                                <div className="relative flex justify-center text-[9px] uppercase">
+                                    <span className="bg-card px-2 text-textMuted/60 font-semibold tracking-wider">Or continue with</span>
                                 </div>
                             </div>
-
+ 
                             <button
                                 onClick={handleGoogleLogin}
-                                className="w-full flex items-center justify-center gap-3 bg-background border border-background py-3 rounded-lg font-semibold text-sm uppercase tracking-wider shadow-sm hover:bg-background/80 transition-all duration-200"
+                                className="btn-secondary w-full py-2 text-xs font-bold uppercase tracking-wider"
                             >
-                                <FcGoogle className="text-xl" />
+                                <FcGoogle className="text-sm" />
                                 <span>Google</span>
                             </button>
-
-                            <div className="mt-8 pt-8 border-t border-background flex flex-col sm:flex-row items-center justify-between gap-4">
-                                <div>
-                                    <p className="text-xs text-textColor/50 uppercase tracking-wider mb-1">New to Expentra?</p>
-                                    <p className="text-sm font-semibold text-textColor">Create your free account</p>
+ 
+                            <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-2.5">
+                                <div className="text-left w-full sm:w-auto">
+                                    <p className="text-[9px] text-textMuted/60 uppercase tracking-wider mb-0.5">New to Expentra?</p>
+                                    <p className="text-[11px] font-semibold text-textColor">Create your free account</p>
                                 </div>
                                 <Link
                                     to="/register"
-                                    className="bg-secondary text-card px-6 py-2 rounded-lg font-semibold text-sm hover:opacity-90 transition-all duration-200 shadow-md"
+                                    className="btn-success text-xs px-3 py-1.5 w-full sm:w-auto text-center"
                                 >
                                     Sign Up
                                 </Link>

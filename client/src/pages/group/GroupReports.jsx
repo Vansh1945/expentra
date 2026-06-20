@@ -192,91 +192,91 @@ const GroupReports = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto px-4 py-8 space-y-8 bg-background min-h-screen pb-20">
+        <div className="max-w-6xl mx-auto px-4 py-4 space-y-4 bg-background min-h-screen pb-16">
             {/* Header Section */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-textColor tracking-tight">Group Reports</h1>
-                    <p className="text-sm font-semibold text-textColor/50 mt-1 uppercase tracking-widest">{groupData?.name} • Financial activity</p>
+                    <h1 className="h1-premium">Group Reports</h1>
+                    <p className="small-premium mt-0.5">{groupData?.name} • Financial activity</p>
                 </div>
                 <button
                     onClick={handleDownloadCSV}
-                    className="flex items-center gap-2 px-6 py-2.5 bg-primary text-white text-sm font-bold rounded-xl hover:opacity-90 transition-all shadow-md shadow-primary/10"
+                    className="btn-primary"
                 >
-                    <MdDownload className="text-lg" /> Export CSV
+                    <MdDownload className="text-sm" /> Export CSV
                 </button>
             </div>
 
             {/* Overview Stats Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="bg-card rounded-2xl border border-background p-6 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="text-[10px] font-black text-textColor/50 uppercase tracking-widest">Total Transaction Value</p>
-                        <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-                            <MdAttachMoney className="w-5 h-5" />
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="card-premium">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <p className="label-premium">Total Value</p>
+                        <div className="w-7 h-7 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                            <MdAttachMoney className="w-3.5 h-3.5" />
                         </div>
                     </div>
-                    <p className="text-3xl font-bold text-textColor tracking-tight">₹{totalFilteredAmount.toLocaleString()}</p>
+                    <p className="text-lg md:text-xl font-bold text-textColor tracking-tight">₹{totalFilteredAmount.toLocaleString()}</p>
                 </div>
 
-                <div className="bg-card rounded-2xl border border-background p-6 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="text-[10px] font-black text-textColor/50 uppercase tracking-widest text-danger">Gross Expenses</p>
-                        <div className="w-10 h-10 bg-danger/5 rounded-xl flex items-center justify-center text-danger">
-                            <MdReceipt className="w-5 h-5" />
+                <div className="card-premium">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <p className="label-premium text-danger">Gross Expenses</p>
+                        <div className="w-7 h-7 bg-danger/5 rounded-lg flex items-center justify-center text-danger">
+                            <MdReceipt className="w-3.5 h-3.5" />
                         </div>
                     </div>
-                    <p className="text-3xl font-bold text-danger tracking-tight">₹{expenseTotal.toLocaleString()}</p>
+                    <p className="text-lg md:text-xl font-bold text-danger tracking-tight">₹{expenseTotal.toLocaleString()}</p>
                 </div>
 
-                <div className="bg-card rounded-2xl border border-background p-6 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="text-[10px] font-black text-textColor/50 uppercase tracking-widest text-secondary">Total Settlements</p>
-                        <div className="w-10 h-10 bg-secondary/10 rounded-xl flex items-center justify-center text-secondary">
-                            <MdCompareArrows className="w-5 h-5" />
+                <div className="card-premium">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <p className="label-premium text-secondary">Total Settlements</p>
+                        <div className="w-7 h-7 bg-slate-100 rounded-lg flex items-center justify-center text-textMuted">
+                            <MdCompareArrows className="w-3.5 h-3.5" />
                         </div>
                     </div>
-                    <p className="text-3xl font-bold text-secondary tracking-tight">₹{settlementTotal.toLocaleString()}</p>
+                    <p className="text-lg md:text-xl font-bold text-textColor/75 tracking-tight">₹{settlementTotal.toLocaleString()}</p>
                 </div>
             </div>
 
             {/* Smart Filters Container */}
-            <div className="bg-card rounded-2xl border border-background shadow-sm p-6">
-                <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-background rounded-lg flex items-center justify-center text-primary">
-                            <MdFilterList className="w-5 h-5" />
+            <div className="bg-card rounded-xl border border-slate-100 shadow-sm p-4">
+                <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                        <div className="w-7 h-7 bg-slate-50 rounded-lg flex items-center justify-center text-primary border border-slate-100">
+                            <MdFilterList className="w-3.5 h-3.5" />
                         </div>
-                        <h3 className="font-bold text-textColor tracking-tight">Advanced Filters</h3>
+                        <h3 className="text-xs font-bold text-textColor uppercase tracking-wider">Advanced Filters</h3>
                     </div>
                     {hasActiveFilters && (
                         <button
                             onClick={clearFilters}
-                            className="text-[10px] font-black text-primary hover:text-primary/70 transition-all uppercase tracking-widest bg-primary/5 px-3 py-1.5 rounded-lg border border-primary/10"
+                            className="text-[9px] font-black text-primary hover:text-primary/70 transition-all uppercase tracking-widest bg-primary/5 px-2 py-0.5 rounded border border-primary/10"
                         >
-                            <MdClear className="inline text-xs mb-0.5 mr-1" /> Reset Filters
+                            <MdClear className="inline text-xs mb-0.5 mr-0.5" /> Reset
                         </button>
                     )}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-textColor/50 uppercase tracking-widest ml-1">Type</label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="space-y-1">
+                        <label className="label-premium">Type</label>
                         <select
                             value={filterType}
                             onChange={e => setFilterType(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary text-sm font-bold text-textColor"
+                            className="select-premium font-bold"
                         >
                             <option value="">All Transactions</option>
                             <option value="expense">Expenses Only</option>
                             <option value="settlement">Settlements Only</option>
                         </select>
                     </div>
-                    <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-textColor/50 uppercase tracking-widest ml-1">Category</label>
+                    <div className="space-y-1">
+                        <label className="label-premium">Category</label>
                         <select
                             value={filterCategory}
                             onChange={e => setFilterCategory(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary text-sm font-bold text-textColor transition-all"
+                            className="select-premium font-bold"
                             disabled={filterType === 'settlement'}
                         >
                             <option value="">All Categories</option>
@@ -285,12 +285,12 @@ const GroupReports = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-textColor/50 uppercase tracking-widest ml-1">Paid By / From</label>
+                    <div className="space-y-1">
+                        <label className="label-premium">Paid By / From</label>
                         <select
                             value={filterPaidBy}
                             onChange={e => setFilterPaidBy(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary text-sm font-bold text-textColor transition-all"
+                            className="select-premium font-bold"
                         >
                             <option value="">Any Member</option>
                             {members.map(m => (
@@ -298,12 +298,12 @@ const GroupReports = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="space-y-1.5">
-                        <label className="text-[10px] font-black text-textColor/50 uppercase tracking-widest ml-1">Sorting</label>
+                    <div className="space-y-1">
+                        <label className="label-premium">Sorting</label>
                         <select
                             value={sortBy}
                             onChange={e => setSortBy(e.target.value)}
-                            className="w-full px-4 py-2.5 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/10 focus:border-primary text-sm font-bold text-textColor transition-all"
+                            className="select-premium font-bold"
                         >
                             <option value="date-desc">Timeline (Newest)</option>
                             <option value="date-asc">Timeline (Oldest)</option>
@@ -315,75 +315,74 @@ const GroupReports = () => {
             </div>
 
             {/* Results Table View */}
-            <div className="bg-card rounded-2xl border border-background shadow-sm overflow-hidden">
-                <div className="px-6 py-5 border-b border-background flex items-center justify-between">
-                    <p className="text-[10px] font-black text-textColor/50 uppercase tracking-widest">
-                        Activity Stream <span className="text-primary font-black ml-1">({filteredActivities.length})</span>
+            <div className="bg-card rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                <div className="px-4 py-2.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                    <p className="text-[9px] font-bold text-textMuted uppercase tracking-wider">
+                        Activity Stream <span className="text-primary font-black ml-0.5">({filteredActivities.length})</span>
                     </p>
-                    <p className="text-[10px] font-black text-textColor/50 uppercase tracking-widest">
-                        Total Value: <span className="text-textColor font-black ml-1">₹{totalFilteredAmount.toLocaleString()}</span>
+                    <p className="text-[9px] font-bold text-textMuted uppercase tracking-wider">
+                        Total Value: <span className="text-textColor font-black ml-0.5">₹{totalFilteredAmount.toLocaleString()}</span>
                     </p>
                 </div>
 
                 <div className="overflow-x-auto">
                     {filteredActivities.length === 0 ? (
-                        <div className="p-20 text-center">
-                            <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center mx-auto mb-4 border border-background">
-                                <MdOutlineReceiptLong className="w-8 h-8 text-textColor/40" />
+                        <div className="p-8 text-center">
+                            <div className="w-10 h-10 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-2 border border-slate-100">
+                                <MdOutlineReceiptLong className="w-5 h-5 text-textMuted/40" />
                             </div>
-                            <p className="text-textColor font-bold">No results found</p>
-                            <p className="text-textColor/50 text-xs mt-1">Try adjusting your filters to see more activity.</p>
+                            <p className="text-textColor font-bold text-xs">No results found</p>
+                            <p className="text-textMuted text-[9px] mt-0.5">Try adjusting your filters to see more activity.</p>
                         </div>
                     ) : (
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-background/50 border-b border-background">
-                                    <th className="px-6 py-4 text-[10px] font-black text-textColor/50 uppercase tracking-widest">Description</th>
-                                    <th className="px-6 py-4 text-[10px] font-black text-textColor/50 uppercase tracking-widest">Category</th>
-                                    <th className="px-6 py-4 text-[10px] font-black text-textColor/50 uppercase tracking-widest">Member / From</th>
-                                    <th className="px-6 py-4 text-[10px] font-black text-textColor/50 uppercase tracking-widest text-right">Amount</th>
+                                <tr className="bg-slate-50/20 border-b border-slate-100">
+                                    <th className="px-3.5 py-2 text-[9px] font-bold text-textMuted uppercase tracking-wider">Description</th>
+                                    <th className="px-3.5 py-2 text-[9px] font-bold text-textMuted uppercase tracking-wider">Category</th>
+                                    <th className="px-3.5 py-2 text-[9px] font-bold text-textMuted uppercase tracking-wider">Member / From</th>
+                                    <th className="px-3.5 py-2 text-[9px] font-bold text-textMuted uppercase tracking-wider text-right">Amount</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-background">
+                            <tbody className="divide-y divide-slate-100">
                                 {filteredActivities.map((act) => (
-                                    <tr key={act.id} className="group hover:bg-background transition-all duration-200">
-                                        <td className="px-6 py-5">
-                                            <div className="space-y-1">
-                                                <p className="text-sm font-bold text-textColor tracking-tight">{act.title}</p>
-                                                <div className="flex items-center gap-3">
-                                                    <span className="text-[10px] font-bold text-textColor/50 flex items-center gap-1 uppercase tracking-widest">
+                                    <tr key={act.id} className="group hover:bg-slate-50/30 transition-all duration-200">
+                                        <td className="px-3.5 py-2">
+                                            <div className="space-y-0.5">
+                                                <p className="text-xs font-bold text-textColor tracking-tight">{act.title}</p>
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className="text-[8px] font-bold text-textMuted/70 flex items-center gap-0.5 uppercase tracking-wide">
                                                         <MdDateRange className="text-xs" /> {format(new Date(act.date), 'dd MMM yyyy')}
                                                     </span>
                                                     {act.note && (
-                                                        <span className="text-[9px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded flex items-center gap-1">
+                                                        <span className="text-[7px] font-bold text-primary bg-primary/5 px-1 py-0.25 rounded flex items-center gap-0.5">
                                                             <MdInfoOutline className="text-xs" /> {act.note}
                                                         </span>
                                                     )}
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 rounded-xl bg-background flex items-center justify-center text-primary shadow-sm border border-background transition-transform group-hover:scale-105">
-                                                    <CategoryIcon iconName={categoryMetadata[act.category?.toLowerCase()] || 'MdCategory'} className="w-5 h-5" />
+                                        <td className="px-3.5 py-2">
+                                            <div className="flex items-center gap-1.5">
+                                                <div className="w-7 h-7 rounded-lg bg-slate-50 flex items-center justify-center text-primary border border-slate-100 transition-transform group-hover:scale-105">
+                                                    <CategoryIcon iconName={categoryMetadata[act.category?.toLowerCase()] || 'MdCategory'} className="w-3.5 h-3.5" />
                                                 </div>
-                                                <p className="text-sm font-bold text-textColor tracking-tight">{act.category}</p>
+                                                <p className="text-xs font-semibold text-textColor tracking-tight">{act.category}</p>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <div className="flex items-center gap-3">
-                                                <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xs font-black shadow-sm transition-transform group-hover:scale-105 ${act.paidBy.includes(',') ? 'bg-primary/10 text-primary' : 'bg-primary/10 text-primary'
-                                                    }`}>
+                                        <td className="px-3.5 py-2">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-7 h-7 rounded-lg flex items-center justify-center text-[9px] font-black bg-primary/5 text-primary border border-primary/5 transition-transform group-hover:scale-105">
                                                     {act.paidBy.includes(',') ? 'M' : (act.paidBy.charAt(0) || 'U').toUpperCase()}
                                                 </div>
-                                                <p className="text-sm font-bold text-textColor truncate max-w-[120px] tracking-tight">{act.paidBy || 'Unknown'}</p>
+                                                <p className="text-xs font-semibold text-textColor truncate max-w-[120px] tracking-tight">{act.paidBy || 'Unknown'}</p>
                                             </div>
                                         </td>
-                                        <td className="px-6 py-5 text-right">
-                                            <p className={`text-base font-black tracking-tight ${act.type === 'expense' ? 'text-danger' : 'text-secondary'}`}>
+                                        <td className="px-3.5 py-2 text-right">
+                                            <p className={`text-xs font-bold tracking-tight ${act.type === 'expense' ? 'text-danger' : 'text-success'}`}>
                                                 ₹{act.amount.toLocaleString()}
                                             </p>
-                                            <p className="text-[9px] font-black text-textColor/50 uppercase tracking-widest opacity-50">{act.type}</p>
+                                            <p className="text-[7px] font-bold text-textMuted/60 uppercase tracking-wider opacity-60 leading-none">{act.type}</p>
                                         </td>
                                     </tr>
                                 ))}

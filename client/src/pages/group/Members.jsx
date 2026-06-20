@@ -135,75 +135,75 @@ const Members = () => {
     }
 
     return (
-        <div className="max-w-6xl mx-auto px-4 py-8 space-y-6 bg-background min-h-screen pb-20">
+        <div className="max-w-6xl mx-auto px-4 py-4 space-y-4 bg-background min-h-screen pb-16">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-textColor tracking-tight">{groupData?.name}</h1>
-                    <p className="text-sm text-textColor/60 mt-1">Manage group members and squad invitations</p>
+                    <h1 className="h1-premium">{groupData?.name}</h1>
+                    <p className="small-premium mt-0.5">Manage group members and squad invitations</p>
                 </div>
-                <div className="flex items-center gap-2 px-4 py-2 bg-card rounded-xl border border-background shadow-sm">
-                    <MdPeople className="w-5 h-5 text-primary" />
-                    <span className="text-sm font-semibold text-textColor opacity-70">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 bg-card rounded-lg border border-slate-100 shadow-sm">
+                    <MdPeople className="w-3.5 h-3.5 text-primary" />
+                    <span className="text-xs font-semibold text-textColor opacity-70">
                         {groupData?.members?.length || 0} Members
                     </span>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div className="space-y-4">
                     {/* Invite Options Card */}
-                    <div className="bg-card rounded-2xl border border-background shadow-sm overflow-hidden transition-all duration-300">
-                        <div className="px-6 py-4 border-b border-background flex items-center gap-3">
-                            <div className="bg-background rounded-xl p-2">
-                                <MdGroupAdd className="w-5 h-5 text-primary" />
+                    <div className="bg-card rounded-xl border border-slate-100 shadow-sm overflow-hidden transition-all duration-300">
+                        <div className="px-4 py-2 border-b border-slate-100 flex items-center gap-2">
+                            <div className="bg-slate-50 rounded-lg p-1 border border-slate-100">
+                                <MdGroupAdd className="w-3.5 h-3.5 text-primary" />
                             </div>
-                            <h2 className="text-sm font-semibold text-textColor">Quick Invite</h2>
+                            <h2 className="text-xs font-bold text-textColor">Quick Invite</h2>
                         </div>
-                        <div className="p-6 space-y-4">
+                        <div className="p-4 space-y-3">
                             {/* Invite Code */}
                             <div>
-                                <label className="block text-xs font-semibold text-textColor/50 uppercase tracking-wider mb-1.5">
+                                <label className="label-premium">
                                     Invite Code
                                 </label>
-                                <div className="flex items-center gap-2">
-                                    <div className="flex-1 bg-background px-4 py-2 rounded-xl font-mono text-base font-bold text-center border border-background text-textColor tracking-widest shadow-inner">
+                                <div className="flex items-center gap-1.5">
+                                    <div className="flex-1 bg-slate-50 px-3 py-1.5 rounded-lg font-mono text-xs font-bold text-center border border-slate-200 text-textColor tracking-widest shadow-inner">
                                         {groupData?.inviteCode || 'N/A'}
                                     </div>
                                     <button
                                         onClick={() => copyToClipboard(groupData?.inviteCode, "Invite code copied!")}
-                                        className="p-2.5 bg-background text-primary rounded-xl border border-background hover:bg-primary/5 transition-all"
+                                        className="p-1.5 bg-slate-50 text-primary rounded-lg border border-slate-200 hover:bg-primary/5 transition-all"
                                         title="Copy Code"
                                     >
-                                        <MdContentCopy className="w-4 h-4" />
+                                        <MdContentCopy className="w-3.5 h-3.5" />
                                     </button>
                                 </div>
                             </div>
 
                             {/* Invite Link */}
                             <div>
-                                <label className="block text-xs font-semibold text-textColor/50 uppercase tracking-wider mb-1.5">
+                                <label className="label-premium">
                                     Invite Link
                                 </label>
-                                <div className="flex items-center gap-2">
-                                    <div className="flex-1 bg-background px-4 py-2 rounded-xl text-xs truncate border border-background text-textColor opacity-60">
+                                <div className="flex items-center gap-1.5">
+                                    <div className="flex-1 bg-slate-50 px-2 py-1.5 rounded-lg text-[10px] truncate border border-slate-200 text-textColor opacity-60">
                                         {groupData?.inviteLink || 'N/A'}
                                     </div>
                                     <button
                                         onClick={() => copyToClipboard(groupData?.inviteLink, "Invite link copied!")}
-                                        className="p-2.5 bg-background text-primary rounded-xl border border-background hover:bg-primary/5 transition-all"
+                                        className="p-1.5 bg-slate-50 text-primary rounded-lg border border-slate-200 hover:bg-primary/5 transition-all"
                                         title="Copy Link"
                                     >
-                                        <MdLink className="w-4 h-4" />
+                                        <MdLink className="w-3.5 h-3.5" />
                                     </button>
                                 </div>
                             </div>
 
                             <button
                                 onClick={() => toast.info("Email invitation coming soon!")}
-                                className="w-full py-2.5 bg-primary text-card rounded-xl font-medium text-sm hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-sm"
+                                className="btn-primary w-full py-1.5"
                             >
-                                <MdEmail className="w-4 h-4" />
+                                <MdEmail className="w-3.5 h-3.5" />
                                 Invite via Email
                             </button>
                         </div>
@@ -211,46 +211,43 @@ const Members = () => {
 
                     {/* Add Member Form */}
                     {isAdmin && (
-                        <div className="bg-card rounded-2xl border border-background shadow-sm overflow-hidden transition-all duration-300">
-                            <div className="px-6 py-4 border-b border-background flex items-center gap-3">
-                                <div className="bg-background rounded-xl p-2">
-                                    <MdPerson className="w-5 h-5 text-secondary" />
+                        <div className="bg-card rounded-xl border border-slate-100 shadow-sm overflow-hidden transition-all duration-300">
+                            <div className="px-4 py-2 border-b border-slate-100 flex items-center gap-2">
+                                <div className="bg-slate-50 rounded-lg p-1 border border-slate-100">
+                                    <MdPerson className="w-3.5 h-3.5 text-textMuted" />
                                 </div>
-                                <h2 className="text-sm font-semibold text-textColor">Add Member</h2>
+                                <h2 className="text-xs font-bold text-textColor">Add Member</h2>
                             </div>
-                            <form onSubmit={handleAddMember} className="p-6 space-y-4">
-                                <div>
-                                    <label className="block text-xs font-semibold text-textColor/50 uppercase tracking-wider mb-1.5">
+                            <form onSubmit={handleAddMember} className="p-4 space-y-3">
+                                <div className="space-y-1">
+                                    <label className="label-premium">
                                         Full Name *
                                     </label>
                                     <input
                                         type="text"
                                         value={name}
                                         onChange={e => setName(e.target.value)}
-                                        className="w-full px-4 py-2 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm font-medium text-textColor transition-all"
+                                        className="input-premium"
                                         placeholder="e.g. John Doe"
                                         required
                                     />
                                 </div>
-                                <div>
-                                    <label className="block text-xs font-semibold text-textColor/50 uppercase tracking-wider mb-1.5 flex items-center justify-between">
-                                        Email <span className="text-[10px] lowercase opacity-50 font-normal tracking-normal">(optional)</span>
+                                <div className="space-y-1">
+                                    <label className="label-premium flex items-center justify-between">
+                                        Email <span className="text-[9px] lowercase opacity-50 font-normal tracking-normal">(optional)</span>
                                     </label>
                                     <input
                                         type="email"
                                         value={email}
                                         onChange={e => setEmail(e.target.value)}
-                                        className="w-full px-4 py-2 bg-background border border-background rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm font-medium text-textColor transition-all"
+                                        className="input-premium"
                                         placeholder="john@example.com"
                                     />
                                 </div>
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className={`w-full py-2.5 rounded-xl font-medium text-sm text-white transition-all shadow-sm ${isSubmitting
-                                            ? 'bg-card cursor-not-allowed'
-                                            : 'bg-primary hover:opacity-90'
-                                        }`}
+                                    className="btn-primary w-full py-1.5"
                                 >
                                     {isSubmitting ? 'Adding...' : 'Add Member'}
                                 </button>
@@ -260,33 +257,33 @@ const Members = () => {
                 </div>
 
                 {/* Member List */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-card rounded-2xl border border-background shadow-sm overflow-hidden h-full flex flex-col min-h-[500px]">
-                        <div className="px-6 py-4 border-b border-background flex items-center gap-3">
-                            <div className="bg-background rounded-xl p-2">
-                                <MdPeople className="w-5 h-5 text-primary" />
+                <div className="lg:col-span-2 space-y-4">
+                    <div className="bg-card rounded-xl border border-slate-100 shadow-sm overflow-hidden h-full flex flex-col min-h-[400px]">
+                        <div className="px-4 py-2 border-b border-slate-100 flex items-center gap-2">
+                            <div className="bg-slate-50 rounded-lg p-1 border border-slate-100">
+                                <MdPeople className="w-3.5 h-3.5 text-primary" />
                             </div>
-                            <h2 className="text-sm font-semibold text-textColor">Active Squad Members</h2>
+                            <h2 className="text-xs font-bold text-textColor">Active Squad Members</h2>
                         </div>
 
-                        <div className="p-4 flex-1 overflow-y-auto max-h-[600px] scrolling-touch">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="p-3 flex-1 overflow-y-auto max-h-[600px] scrolling-touch">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                 {groupData?.members?.map((member) => {
                                     const isCreator = groupData.createdBy?.toString() === (member.user?.toString() || member._id?.toString());
                                     const isCurrentUser = user && member.user?.toString() === user._id?.toString();
                                     const isEditing = editingMemberId === member._id;
 
                                     return (
-                                        <div key={member._id} className={`group p-4 rounded-xl border transition-all duration-300 ${
-                                            isEditing ? 'bg-card border-primary shadow-md' : 'bg-background border-background hover:border-primary/20 hover:shadow-sm'
+                                        <div key={member._id} className={`group p-3 rounded-lg border transition-all duration-300 ${
+                                            isEditing ? 'bg-card border-primary shadow-sm' : 'bg-slate-50/50 border-slate-100 hover:border-primary/20 hover:shadow-sm'
                                         }`}>
                                             {isEditing ? (
-                                                <div className="space-y-3">
+                                                <div className="space-y-1.5">
                                                     <input
                                                         type="text"
                                                         value={editName}
                                                         onChange={e => setEditName(e.target.value)}
-                                                        className="w-full px-3 py-1.5 bg-background border border-background rounded-lg text-sm font-medium focus:ring-2 focus:ring-primary/20"
+                                                        className="w-full px-2 py-1 bg-card border border-slate-200 rounded text-xs font-medium focus:ring-1 focus:ring-primary/20"
                                                         placeholder="Name"
                                                         autoFocus
                                                     />
@@ -294,19 +291,19 @@ const Members = () => {
                                                         type="email"
                                                         value={editEmail}
                                                         onChange={e => setEditEmail(e.target.value)}
-                                                        className="w-full px-3 py-1.5 bg-background border border-background rounded-lg text-sm font-medium focus:ring-2 focus:ring-primary/20"
+                                                        className="w-full px-2 py-1 bg-card border border-slate-200 rounded text-xs font-medium focus:ring-1 focus:ring-primary/20"
                                                         placeholder="Email"
                                                     />
-                                                    <div className="flex gap-2">
+                                                    <div className="flex gap-1.5">
                                                         <button
                                                             onClick={() => handleUpdateMember(member._id)}
-                                                            className="flex-1 py-1.5 bg-secondary text-white rounded-lg text-xs font-semibold hover:opacity-90"
+                                                            className="flex-1 py-1 bg-primary text-white rounded text-[9px] font-semibold hover:opacity-90"
                                                         >
                                                             Save
                                                         </button>
                                                         <button
                                                             onClick={() => setEditingMemberId(null)}
-                                                            className="flex-1 py-1.5 bg-card text-textColor rounded-lg text-xs font-semibold hover:bg-card"
+                                                            className="flex-1 py-1 bg-card border border-slate-200 text-textColor rounded text-[9px] font-semibold hover:bg-slate-50"
                                                         >
                                                             Cancel
                                                         </button>
@@ -315,38 +312,38 @@ const Members = () => {
                                             ) : (
                                                 <div className="flex flex-col h-full justify-between">
                                                     <div className="flex items-start justify-between">
-                                                        <div className="flex items-center gap-3 min-w-0">
-                                                            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary font-bold text-sm border border-primary/10">
+                                                        <div className="flex items-center gap-2 min-w-0">
+                                                            <div className="w-7 h-7 rounded bg-primary/10 flex items-center justify-center text-primary font-bold text-xs border border-primary/10">
                                                                 {member.name.charAt(0).toUpperCase()}
                                                             </div>
                                                             <div className="min-w-0">
-                                                                <p className="text-sm font-semibold text-textColor truncate">{member.name}</p>
-                                                                <p className="text-[10px] text-textColor/60 truncate font-medium">{member.email || 'No email shared'}</p>
+                                                                <p className="text-xs font-semibold text-textColor truncate">{member.name}</p>
+                                                                <p className="text-[9px] text-textMuted truncate font-medium">{member.email || 'No email shared'}</p>
                                                             </div>
                                                         </div>
-                                                        <div className="flex flex-col items-end gap-1">
+                                                        <div className="flex flex-col items-end gap-0.5">
                                                             {isCreator && (
-                                                                <span className="text-[9px] font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full uppercase tracking-wide">Admin</span>
+                                                                <span className="text-[7px] font-bold bg-amber-100 text-amber-700 px-1 py-0.25 rounded uppercase tracking-wide">Admin</span>
                                                             )}
                                                             {isCurrentUser && !isCreator && (
-                                                                <span className="text-[9px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full uppercase tracking-wide">You</span>
+                                                                <span className="text-[7px] font-bold bg-primary/10 text-primary px-1 py-0.25 rounded uppercase tracking-wide">You</span>
                                                             )}
                                                         </div>
                                                     </div>
 
                                                     {(isAdmin && !isCreator) && (
-                                                        <div className="flex items-center gap-3 mt-4 pt-3 border-t border-background opacity-0 group-hover:opacity-100 transition-opacity">
+                                                        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100 opacity-0 group-hover:opacity-100 transition-opacity">
                                                             <button
                                                                 onClick={() => startEditing(member)}
-                                                                className="text-[10px] font-bold text-textColor opacity-40 hover:opacity-100 hover:text-primary transition-all flex items-center gap-1"
+                                                                className="text-[9px] font-bold text-textMuted hover:text-primary transition-all flex items-center gap-0.5"
                                                             >
-                                                                <MdEdit className="w-3.5 h-3.5" /> Edit
+                                                                <MdEdit className="w-3 h-3" /> Edit
                                                             </button>
                                                             <button
                                                                 onClick={() => handleDeleteMember(member._id, member.name)}
-                                                                className="text-[10px] font-bold text-textColor opacity-40 hover:opacity-100 hover:text-danger transition-all flex items-center gap-1"
+                                                                className="text-[9px] font-bold text-textMuted hover:text-danger transition-all flex items-center gap-0.5"
                                                             >
-                                                                <MdDelete className="w-3.5 h-3.5" /> Remove
+                                                                <MdDelete className="w-3 h-3" /> Remove
                                                             </button>
                                                         </div>
                                                     )}
@@ -358,10 +355,10 @@ const Members = () => {
                             </div>
 
                             {groupData?.members?.length === 0 && (
-                                <div className="flex flex-col items-center justify-center py-16 text-center text-textColor/50">
-                                    <MdPeople className="w-12 h-12 mb-3 opacity-20" />
-                                    <p className="text-sm font-medium">No members yet</p>
-                                    <p className="text-xs opacity-60 mt-1">Building your squad? Start inviting others!</p>
+                                <div className="flex flex-col items-center justify-center py-12 text-center text-textMuted">
+                                    <MdPeople className="w-10 h-10 mb-2 opacity-25" />
+                                    <p className="text-xs font-medium">No members yet</p>
+                                    <p className="text-[9px] opacity-60 mt-0.5">Building your squad? Start inviting others!</p>
                                 </div>
                             )}
                         </div>
@@ -371,11 +368,11 @@ const Members = () => {
 
             {/* Access Disclaimer */}
             {!isAdmin && (
-                <div className="bg-amber-50 rounded-xl border border-amber-100 p-4 flex items-start gap-3">
-                    <MdInfoOutline className="w-5 h-5 text-amber-600 shrink-0" />
+                <div className="bg-amber-50 rounded-lg border border-amber-100 p-2.5 flex items-start gap-2">
+                    <MdInfoOutline className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
                     <div>
-                        <p className="text-sm font-semibold text-amber-900 leading-none">Security Note</p>
-                        <p className="text-xs text-amber-800/70 mt-1.5 leading-relaxed">
+                        <p className="text-xs font-bold text-amber-900 leading-none">Security Note</p>
+                        <p className="text-[9px] text-amber-800/80 mt-0.5 leading-relaxed">
                             Squad management (adding or removing members) is restricted to Group Admins only. You can still use the invite codes to invite friends.
                         </p>
                     </div>

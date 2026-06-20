@@ -19,10 +19,10 @@ const Layout = () => {
                 <Navbar user={user} setIsSidebarOpen={setIsSidebarOpen} />
 
                 {/* Page Content */}
-                <main className="p-4 md:p-6 bg-background flex-1 overflow-x-hidden overflow-y-auto w-full">
+                <main className="p-4 md:p-6 lg:p-8 bg-background flex-1 overflow-x-hidden overflow-y-auto w-full">
                     <div className="max-w-7xl mx-auto space-y-6">
                         {/* Content Container */}
-                        <div className="bg-transparent pb-6">
+                        <div className="bg-transparent pb-20 md:pb-6">
                             <Outlet />
                         </div>
                     </div>

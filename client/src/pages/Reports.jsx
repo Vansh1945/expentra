@@ -8,7 +8,7 @@ import {
 } from 'recharts';
 import { MdDownload, MdAttachMoney, MdTrendingUp, MdWarning, MdCategory, MdShowChart, MdTrendingDown } from 'react-icons/md';
 
-const COLORS = ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#14B8A6', '#84CC16'];
+const COLORS = ['#4F46E5', '#10B981', '#F59E0B', '#F43F5E', '#8B5CF6', '#EC4899', '#0EA5E9', '#64748B'];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const Reports = () => {
@@ -84,21 +84,19 @@ const Reports = () => {
                 </div>
             </div>
         );
-    }
-
-    return (
-        <div className="space-y-6 bg-transparent pb-10">
+    }    return (
+        <div className="space-y-4 bg-transparent pb-4">
             {/* Header Section */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-textColor">Reports</h1>
-                    <p className="text-sm text-textColor opacity-70 mt-1">Detailed analysis of your income and spending</p>
+                    <h1 className="h1-premium">Reports</h1>
+                    <p className="text-xs text-textMuted mt-0.5">Detailed analysis of your income and spending</p>
                 </div>
-                <div className="flex flex-wrap gap-3 items-center">
+                <div className="flex flex-wrap gap-1.5 items-center">
                     <select
                         value={selectedMonth}
                         onChange={e => setSelectedMonth(Number(e.target.value))}
-                        className="bg-card rounded-xl border border-background px-4 py-2 text-sm text-textColor outline-none focus:ring-2 focus:ring-primary/20 shadow-sm transition-all cursor-pointer"
+                        className="select-premium py-1 px-2.5 text-xs w-auto h-8"
                     >
                         {MONTHS.map((m, i) => (
                             <option key={m} value={i + 1}>{m}</option>
@@ -107,7 +105,7 @@ const Reports = () => {
                     <select
                         value={selectedYear}
                         onChange={e => setSelectedYear(Number(e.target.value))}
-                        className="bg-card rounded-xl border border-background px-4 py-2 text-sm text-textColor outline-none focus:ring-2 focus:ring-primary/20 shadow-sm transition-all cursor-pointer"
+                        className="select-premium py-1 px-2.5 text-xs w-auto h-8"
                     >
                         {years.map(y => (
                             <option key={y} value={y}>{y}</option>
@@ -115,78 +113,78 @@ const Reports = () => {
                     </select>
                     <button
                         onClick={exportCSV}
-                        className="inline-flex items-center gap-2 px-4 py-2 bg-card border border-background text-primary rounded-xl hover:bg-background transition-all duration-300 text-sm font-semibold shadow-sm ml-2"
+                        className="btn-secondary py-1 px-2.5 text-xs font-semibold h-8"
                     >
-                        <MdDownload className="text-lg" /> Export CSV
+                        <MdDownload className="text-sm" /> Export CSV
                     </button>
                 </div>
             </div>
 
             {/* Clean KPI row resembling Analysis Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {/* Total Income */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 hover:shadow-md flex flex-col justify-between">
+                <div className="card-premium flex flex-col justify-between h-full">
                     <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="bg-background rounded-xl p-2.5">
-                                <MdAttachMoney className="w-5 h-5 text-secondary" />
+                        <div className="flex items-center gap-2 mb-2.5">
+                            <div className="bg-slate-50 rounded-lg p-1.5">
+                                <MdAttachMoney className="w-3.5 h-3.5 text-success" />
                             </div>
-                            <h3 className="text-sm font-semibold text-textColor opacity-70">Total Income</h3>
+                            <h3 className="text-xs font-bold text-textColor">Total Income</h3>
                         </div>
-                        <p className="text-4xl font-black text-secondary">₹{totalIncome.toLocaleString()}</p>
+                        <p className="text-lg font-bold text-success">₹{totalIncome.toLocaleString()}</p>
                     </div>
-                    <p className="text-xs text-textColor opacity-50 font-medium mt-3">{MONTHS[selectedMonth - 1]} {selectedYear}</p>
+                    <p className="text-[9px] text-textMuted/60 font-semibold uppercase mt-2.5">{MONTHS[selectedMonth - 1]} {selectedYear}</p>
                 </div>
 
                 {/* Total Expense */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 hover:shadow-md flex flex-col justify-between">
+                <div className="card-premium flex flex-col justify-between h-full">
                     <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="bg-background rounded-xl p-2.5">
-                                <MdTrendingUp className="w-5 h-5 text-danger" />
+                        <div className="flex items-center gap-2 mb-2.5">
+                            <div className="bg-slate-50 rounded-lg p-1.5">
+                                <MdTrendingUp className="w-3.5 h-3.5 text-danger" />
                             </div>
-                            <h3 className="text-sm font-semibold text-textColor opacity-70">Total Expense</h3>
+                            <h3 className="text-xs font-bold text-textColor">Total Expense</h3>
                         </div>
-                        <p className="text-4xl font-black text-danger">₹{totalSpent.toLocaleString()}</p>
+                        <p className="text-lg font-bold text-danger">₹{totalSpent.toLocaleString()}</p>
                     </div>
-                    <p className="text-xs text-textColor opacity-50 font-medium mt-3">{MONTHS[selectedMonth - 1]} {selectedYear}</p>
+                    <p className="text-[9px] text-textMuted/60 font-semibold uppercase mt-2.5">{MONTHS[selectedMonth - 1]} {selectedYear}</p>
                 </div>
 
                 {/* Remaining Balance */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 hover:shadow-md flex flex-col justify-between">
+                <div className="card-premium flex flex-col justify-between h-full">
                     <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="bg-background rounded-xl p-2.5">
-                                {remainingBalance >= 0 ? <MdTrendingDown className="w-5 h-5 text-primary" /> : <MdTrendingUp className="w-5 h-5 text-danger" />}
+                        <div className="flex items-center gap-2 mb-2.5">
+                            <div className="bg-slate-50 rounded-lg p-1.5">
+                                {remainingBalance >= 0 ? <MdTrendingDown className="w-3.5 h-3.5 text-primary" /> : <MdTrendingUp className="w-3.5 h-3.5 text-danger" />}
                             </div>
-                            <h3 className="text-sm font-semibold text-textColor opacity-70">Remaining Balance</h3>
+                            <h3 className="text-xs font-bold text-textColor">Remaining Balance</h3>
                         </div>
-                        <p className={`text-4xl font-black ${remainingBalance >= 0 ? 'text-primary' : 'text-danger'}`}>
+                        <p className={`text-lg font-bold ${remainingBalance >= 0 ? 'text-primary' : 'text-danger'}`}>
                             ₹{remainingBalance.toLocaleString()}
                         </p>
                     </div>
-                    <p className="text-xs text-textColor opacity-50 font-medium mt-3">Savings Rate: {savingsRate}%</p>
+                    <p className="text-[9px] text-textMuted/60 font-semibold uppercase mt-2.5">Savings Rate: {savingsRate}%</p>
                 </div>
             </div>
 
             {/* Warning Message (Moved Below Stats) */}
             {totalSpent > 0 && totalIncome > 0 && totalSpent > totalIncome && (
-                <div className="flex items-start gap-2 bg-danger/5 border border-danger/20 px-3 py-2.5 rounded-lg text-xs text-danger font-medium w-fit mt-2">
-                    <MdWarning className="shrink-0 text-sm mt-0.5" />
+                <div className="flex items-start gap-2 bg-danger/5 border border-danger/20 px-2.5 py-1.5 rounded-lg text-[10px] text-danger font-semibold w-fit mt-0.5 shadow-sm">
+                    <MdWarning className="shrink-0 text-xs mt-0.5" />
                     <span>Warning: You have outspent your total income by ₹{(totalSpent - totalIncome).toLocaleString()} this month.</span>
                 </div>
             )}
 
             {/* Charts Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
                 {/* Category-wise Pie Chart */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 flex flex-col justify-center relative overflow-hidden">
-                    <div className="absolute top-6 left-6">
-                        <h3 className="text-lg font-semibold text-textColor">Expense Breakdown</h3>
-                        <p className="text-sm text-textColor opacity-60 mt-0.5">Where your money went this month</p>
+                <div className="card-premium flex flex-col justify-center relative overflow-hidden">
+                    <div className="absolute top-3 left-3">
+                        <h3 className="text-xs font-bold text-textColor">Expense Breakdown</h3>
+                        <p className="text-[9px] text-textMuted mt-0.5">Where your money went this month</p>
                     </div>
                     {categoryData.length > 0 ? (
-                        <div className="h-72 w-full mt-14">
+                        <div className="h-44 w-full mt-8">
                             <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                                 <PieChart>
                                     <Pie
@@ -194,9 +192,9 @@ const Reports = () => {
                                         data={categoryData}
                                         cx="50%"
                                         cy="50%"
-                                        innerRadius={60}
-                                        outerRadius={95}
-                                        paddingAngle={4}
+                                        innerRadius={38}
+                                        outerRadius={55}
+                                        paddingAngle={3}
                                         dataKey="value"
                                         stroke="none"
                                     >
@@ -204,38 +202,38 @@ const Reports = () => {
                                             <Cell key={index} fill={COLORS[index % COLORS.length]} />
                                         ))}
                                     </Pie>
-                                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} formatter={value => `₹${value.toLocaleString()}`} />
-                                    <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                                    <Tooltip contentStyle={{ borderRadius: '6px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', fontSize: '10px' }} formatter={value => `₹${value.toLocaleString()}`} />
+                                    <Legend wrapperStyle={{ fontSize: '9px', paddingTop: '6px' }} />
                                 </PieChart>
                             </ResponsiveContainer>
                         </div>
                     ) : (
-                        <div className="h-64 w-full mt-14 flex items-center justify-center text-sm text-textColor opacity-40 italic bg-background/50 rounded-xl">
+                        <div className="h-36 w-full mt-8 flex items-center justify-center text-xs text-textMuted italic bg-slate-50/50 rounded-lg border border-dashed border-slate-200">
                             No expenses logged for breakdown
                         </div>
                     )}
                 </div>
 
                 {/* Yearly Trend Line Chart */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 pb-8">
-                    <div className="mb-8">
-                        <h3 className="text-lg font-semibold text-textColor">Monthly Trend ({selectedYear})</h3>
-                        <p className="text-sm text-textColor opacity-60 mt-0.5">Your monthly spending velocity</p>
+                <div className="card-premium flex flex-col justify-center">
+                    <div className="mb-2.5">
+                        <h3 className="text-xs font-bold text-textColor">Monthly Trend ({selectedYear})</h3>
+                        <p className="text-[9px] text-textMuted mt-0.5">Your monthly spending velocity</p>
                     </div>
                     {yearlyData?.monthlyBreakdown?.length > 0 ? (
-                        <div className="h-64 w-full">
+                        <div className="h-44 w-full">
                             <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
-                                <LineChart data={yearlyData.monthlyBreakdown} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
+                                <LineChart data={yearlyData.monthlyBreakdown} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
                                     <XAxis
                                         dataKey="month"
                                         tickFormatter={val => MONTHS[val - 1] || val}
-                                        axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 13, fontWeight: 500}} dy={15}
+                                        axisLine={false} tickLine={false} tick={{fill: '#64748B', fontSize: 10, fontWeight: 500}} dy={10}
                                     />
-                                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} dx={-10} tickFormatter={(val) => `₹${val/1000}k`} />
+                                    <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748B', fontSize: 10}} dx={-5} tickFormatter={(val) => `₹${val.toLocaleString()}`} />
                                     <Tooltip
-                                        cursor={{stroke: '#E5E7EB', strokeWidth: 2}}
-                                        contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', padding: '12px' }}
+                                        cursor={{stroke: '#F1F5F9', strokeWidth: 2}}
+                                        contentStyle={{ borderRadius: '6px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', padding: '6px', fontSize: '10px' }}
                                         formatter={v => `₹${v.toLocaleString()}`}
                                         labelFormatter={val => MONTHS[val - 1] || val}
                                     />
@@ -244,16 +242,16 @@ const Reports = () => {
                                         type="monotone"
                                         dataKey="totalAmount"
                                         name="Expense"
-                                        stroke="#2563EB"
-                                        strokeWidth={4}
-                                        dot={{ r: 5, fill: '#2563EB', strokeWidth: 2, stroke: '#FFFFFF' }}
-                                        activeDot={{ r: 7 }}
+                                        stroke="#4F46E5"
+                                        strokeWidth={2}
+                                        dot={{ r: 3, fill: '#4F46E5', strokeWidth: 1, stroke: '#FFFFFF' }}
+                                        activeDot={{ r: 5 }}
                                     />
                                 </LineChart>
                             </ResponsiveContainer>
                         </div>
                     ) : (
-                        <div className="h-64 w-full flex items-center justify-center text-sm text-textColor opacity-40 italic bg-background/50 rounded-xl">
+                        <div className="h-48 w-full flex items-center justify-center text-xs text-textMuted italic bg-slate-50/50 rounded-lg border border-dashed border-slate-200">
                             No yearly data available
                         </div>
                     )}
@@ -262,11 +260,13 @@ const Reports = () => {
 
             {/* Empty State Overlay / Fallback */}
             {categoryData.length === 0 && totalIncome === 0 && (
-                <div className="bg-card rounded-2xl border border-background p-12 text-center shadow-sm mt-6">
-                    <div className="flex flex-col items-center gap-3">
-                        <MdAttachMoney className="w-16 h-16 text-textColor opacity-20" />
-                        <h3 className="text-lg font-medium text-textColor opacity-70">No Data Available</h3>
-                        <p className="text-textColor opacity-50 text-sm">
+                <div className="card-premium p-6 text-center">
+                    <div className="flex flex-col items-center gap-2">
+                        <div className="p-3 bg-slate-50 border border-slate-100 shadow-sm rounded-full">
+                            <MdAttachMoney className="w-8 h-8 text-textColor opacity-20" />
+                        </div>
+                        <h3 className="text-sm font-bold text-textColor">No Data Available</h3>
+                        <p className="text-textMuted text-xs mt-0.5">
                             No income or expense records found for {MONTHS[selectedMonth - 1]} {selectedYear}.
                         </p>
                     </div>

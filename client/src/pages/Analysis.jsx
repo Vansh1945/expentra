@@ -82,8 +82,8 @@ const Analysis = () => {
     const healthScoreRaw = analysis?.financialHealthScore || '0/100';
     const healthScore = parseInt(healthScoreRaw.split('/')[0], 10) || 0;
 
-    const healthColor = healthScore >= 80 ? 'text-secondary' : healthScore >= 50 ? 'text-primary' : 'text-danger';
-    const healthBarColor = healthScore >= 80 ? 'bg-secondary' : healthScore >= 50 ? 'bg-primary' : 'bg-danger';
+    const healthColor = healthScore >= 80 ? 'text-success' : healthScore >= 50 ? 'text-primary' : 'text-danger';
+    const healthBarColor = healthScore >= 80 ? 'bg-success' : healthScore >= 50 ? 'bg-primary' : 'bg-danger';
 
     // Processing Trend Data
     const trendData = MONTHS.map((m, i) => {
@@ -95,18 +95,18 @@ const Analysis = () => {
     const savingsRate = monthlyData?.totalIncome > 0 ? (((monthlyData.totalIncome - monthlyData.totalSpent) / monthlyData.totalIncome) * 100).toFixed(1) : 0;
 
     return (
-        <div className="space-y-6 bg-transparent pb-10">
+        <div className="space-y-4 bg-transparent pb-4">
             {/* Header Section */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-textColor">Analysis</h1>
-                    <p className="text-sm text-textColor/60 mt-1">Smart financial overview and insights</p>
+                    <h1 className="h1-premium">Analysis</h1>
+                    <p className="text-xs text-textMuted mt-0.5">Smart financial overview and insights</p>
                 </div>
-                <div className="flex flex-wrap gap-3 items-center">
+                <div className="flex flex-wrap gap-1.5 items-center">
                     <select
                         value={selectedMonth}
                         onChange={e => setSelectedMonth(Number(e.target.value))}
-                        className="bg-card rounded-xl border border-background px-4 py-2 text-sm text-textColor outline-none focus:ring-2 focus:ring-primary/20 shadow-sm transition-all cursor-pointer"
+                        className="select-premium py-1 px-2.5 text-xs w-auto h-8"
                     >
                         {MONTHS.map((m, i) => (
                             <option key={m} value={i + 1}>{m}</option>
@@ -115,7 +115,7 @@ const Analysis = () => {
                     <select
                         value={selectedYear}
                         onChange={e => setSelectedYear(Number(e.target.value))}
-                        className="bg-card rounded-xl border border-background px-4 py-2 text-sm text-textColor outline-none focus:ring-2 focus:ring-primary/20 shadow-sm transition-all cursor-pointer"
+                        className="select-premium py-1 px-2.5 text-xs w-auto h-8"
                     >
                         {[0, 1, 2].map(o => {
                             const y = today.getFullYear() - o;
@@ -126,35 +126,35 @@ const Analysis = () => {
             </div>
 
             {/* Smart Expense Prediction */}
-            <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl shadow-md p-8 text-card relative overflow-hidden transition-all duration-300">
-                <div className="absolute -right-10 -top-10 bg-card/10 w-48 h-48 rounded-full blur-2xl"></div>
-                <div className="absolute -left-10 -bottom-10 bg-card/10 w-32 h-32 rounded-full blur-xl"></div>
-                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="bg-gradient-to-br from-primary to-indigo-800 rounded-xl shadow-md p-4 text-white relative overflow-hidden transition-all duration-300">
+                <div className="absolute -right-10 -top-10 bg-white/5 w-48 h-48 rounded-full blur-2xl"></div>
+                <div className="absolute -left-10 -bottom-10 bg-white/5 w-32 h-32 rounded-full blur-xl"></div>
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="bg-card/20 rounded-xl p-2.5 backdrop-blur-sm shadow-sm">
-                                <MdLightbulb className="w-6 h-6 text-card" />
+                        <div className="flex items-center gap-2 mb-2">
+                            <div className="bg-white/10 rounded-lg p-1.5 backdrop-blur-sm shadow-sm">
+                                <MdLightbulb className="w-4 h-4 text-white" />
                             </div>
-                            <h2 className="text-lg font-bold tracking-wide">Expense Prediction</h2>
+                            <h2 className="text-sm font-bold tracking-wide">Expense Prediction</h2>
                         </div>
-                        <p className="text-white/80 text-sm max-w-sm leading-relaxed">
+                        <p className="text-white/80 text-[11px] max-w-sm leading-relaxed">
                             Based on your rolling average, our intelligence predicts your expenses next month to be:
                         </p>
                     </div>
                     <div className="md:text-right w-full md:w-auto">
                         {prediction > 0 ? (
                             <>
-                                <p className="text-4xl md:text-5xl font-black drop-shadow-md tracking-tight">
+                                <p className="text-xl md:text-2xl font-bold tracking-tight">
                                     ₹{prediction.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                 </p>
-                                <div className="inline-flex mt-3 bg-card/20 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20">
-                                    <p className="text-xs font-bold text-white tracking-wide">
+                                <div className="inline-flex mt-1.5 bg-white/10 px-2.5 py-0.5 rounded-full backdrop-blur-md border border-white/10">
+                                    <p className="text-[9px] font-bold text-white tracking-wide">
                                         {prediction > (monthlyData?.totalIncome || 0) ? '⚠️ Alert: May exceed current income' : '✓ Spending under control'}
                                     </p>
                                 </div>
                             </>
                         ) : (
-                            <p className="text-white/90 text-sm font-medium italic">
+                            <p className="text-white/90 text-[11px] font-medium italic">
                                 Insufficient historical data to construct predictions.
                             </p>
                         )}
@@ -163,73 +163,73 @@ const Analysis = () => {
             </div>
 
             {/* Core Insights Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {/* Health Score */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center gap-3 mb-6">
-                        <div className="bg-background rounded-xl p-2.5">
-                            <MdHealthAndSafety className={`w-5 h-5 ${healthColor}`} />
+                <div className="card-premium">
+                    <div className="flex items-center gap-2 mb-2.5">
+                        <div className="bg-slate-50 border border-slate-100 rounded-lg p-1.5">
+                            <MdHealthAndSafety className={`w-3.5 h-3.5 ${healthColor}`} />
                         </div>
-                        <h3 className="text-sm font-semibold text-textColor opacity-70">Health Score</h3>
+                        <h3 className="text-xs font-bold text-textColor">Health Score</h3>
                     </div>
-                    <div className="flex items-baseline gap-1">
-                        <span className={`text-4xl font-black ${healthColor}`}>{healthScore}</span>
-                        <span className="text-lg text-textColor opacity-40 font-bold">/100</span>
+                    <div className="flex items-baseline gap-0.5">
+                        <span className={`text-xl font-bold ${healthColor}`}>{healthScore}</span>
+                        <span className="text-xs text-textMuted font-semibold">/100</span>
                     </div>
-                    <div className="w-full mt-6 bg-background rounded-full h-2">
+                    <div className="w-full mt-2.5 bg-slate-100 rounded-full h-1">
                         <div
-                            className={`h-2 rounded-full transition-all duration-1000 ${healthBarColor}`}
+                            className={`h-1 rounded-full transition-all duration-1000 ${healthBarColor}`}
                             style={{ width: `${Math.min(100, healthScore)}%` }}
                         />
                     </div>
                 </div>
 
                 {/* Average Daily Expense */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+                <div className="card-premium flex flex-col justify-between">
                     <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="bg-background rounded-xl p-2.5">
-                                <MdAutoGraph className="w-5 h-5 text-primary" />
+                        <div className="flex items-center gap-2 mb-2.5">
+                            <div className="bg-slate-50 border border-slate-100 rounded-lg p-1.5">
+                                <MdAutoGraph className="w-3.5 h-3.5 text-primary" />
                             </div>
-                            <h3 className="text-sm font-semibold text-textColor opacity-70">Daily Spend Rate</h3>
+                            <h3 className="text-xs font-bold text-textColor">Daily Spend Rate</h3>
                         </div>
-                        <p className="text-4xl font-black text-textColor">₹{Number(averageDailyExpense).toLocaleString()}</p>
+                        <p className="text-lg font-bold text-textColor">₹{Number(averageDailyExpense).toLocaleString()}</p>
                     </div>
-                    <p className="text-xs text-textColor opacity-50 font-medium">Average spent per day</p>
+                    <p className="text-[9px] text-textMuted/60 font-semibold uppercase mt-2.5">Average spent per day</p>
                 </div>
 
                 {/* Savings Rate */}
-                <div className="bg-card rounded-2xl border border-background shadow-sm p-6 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+                <div className="card-premium flex flex-col justify-between">
                     <div>
-                        <div className="flex items-center gap-3 mb-6">
-                            <div className="bg-background rounded-xl p-2.5">
-                                {savingsRate >= 0 ? <MdTrendingUp className="w-5 h-5 text-secondary" /> : <MdTrendingDown className="w-5 h-5 text-danger" />}
+                        <div className="flex items-center gap-2 mb-2.5">
+                            <div className="bg-slate-50 border border-slate-100 rounded-lg p-1.5">
+                                {savingsRate >= 0 ? <MdTrendingUp className="w-3.5 h-3.5 text-success" /> : <MdTrendingDown className="w-3.5 h-3.5 text-danger" />}
                             </div>
-                            <h3 className="text-sm font-semibold text-textColor opacity-70">Savings Rate</h3>
+                            <h3 className="text-xs font-bold text-textColor">Savings Rate</h3>
                         </div>
-                        <p className={`text-4xl font-black ${savingsRate >= 0 ? 'text-secondary' : 'text-danger'}`}>{savingsRate}%</p>
+                        <p className={`text-lg font-bold ${savingsRate >= 0 ? 'text-success' : 'text-danger'}`}>{savingsRate}%</p>
                     </div>
-                    <p className="text-xs text-textColor opacity-50 font-medium">Income retention metric</p>
+                    <p className="text-[9px] text-textMuted/60 font-semibold uppercase mt-2.5">Income retention metric</p>
                 </div>
             </div>
 
             {/* Annual Trend Chart */}
-            <div className="bg-card rounded-2xl border border-background shadow-sm p-6 pb-8 transition-all duration-300">
-                <div className="mb-8">
-                    <h3 className="text-lg font-semibold text-textColor">Annual Spending Trend</h3>
-                    <p className="text-sm text-textColor/60 mt-0.5">Month-by-month expenditure trajectory</p>
+            <div className="card-premium">
+                <div className="mb-2.5">
+                    <h3 className="text-xs font-bold text-textColor">Annual Spending Trend</h3>
+                    <p className="text-[10px] text-textMuted mt-0.5">Month-by-month expenditure trajectory</p>
                 </div>
-                <div className="h-80 w-full">
+                <div className="h-52 w-full">
                     <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
-                        <LineChart data={trendData} margin={{ top: 5, right: 20, left: 10, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 13, fontWeight: 500}} dy={15} />
-                            <YAxis axisLine={false} tickLine={false} tick={{fill: '#9CA3AF', fontSize: 12}} dx={-10} tickFormatter={(val) => `₹${val/1000}k`} />
+                        <LineChart data={trendData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+                            <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748B', fontSize: 10, fontWeight: 500}} dy={10} />
+                            <YAxis axisLine={false} tickLine={false} tick={{fill: '#64748B', fontSize: 10}} dx={-5} tickFormatter={(val) => `₹${val.toLocaleString()}`} />
                             <Tooltip
-                                cursor={{stroke: '#E5E7EB', strokeWidth: 2}}
-                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)', padding: '12px' }}
+                                cursor={{stroke: '#F1F5F9', strokeWidth: 2}}
+                                contentStyle={{ borderRadius: '6px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', padding: '6px', fontSize: '10px' }}
                             />
-                            <Line type="monotone" dataKey="spent" name="Spent" stroke="#2563EB" strokeWidth={4} dot={{r: 5, fill: '#2563EB', strokeWidth: 2, stroke: '#FFFFFF'}} activeDot={{r: 7}} />
+                            <Line type="monotone" dataKey="spent" name="Spent" stroke="#4F46E5" strokeWidth={2} dot={{r: 3, fill: '#4F46E5', strokeWidth: 1, stroke: '#FFFFFF'}} activeDot={{r: 5}} />
                         </LineChart>
                     </ResponsiveContainer>
                 </div>

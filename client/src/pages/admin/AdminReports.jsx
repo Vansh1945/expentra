@@ -105,26 +105,23 @@ const AdminReports = () => {
     const hasActiveFilters = startDate || endDate || selectedUser;
 
     return (
-        <div className="space-y-6" id="admin-report-content">
+        <div className="space-y-4" id="admin-report-content">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="flex items-center gap-3">
-                    <div className="p-2 bg-primary/5 rounded-lg">
-                        <MdReceipt className="w-7 h-7 text-primary" />
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div className="flex items-center gap-2">
+                    <div className="p-1.5 bg-primary/5 rounded-lg">
+                        <MdReceipt className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold text-textColor">System Reports</h1>
-                        <p className="text-sm text-textColor/70 mt-0.5">Extract and analyze financial transactions</p>
+                        <h1 className="h1-premium">System Reports</h1>
+                        <p className="small-premium mt-0.5">Extract and analyze financial transactions</p>
                     </div>
                 </div>
                 <div className="flex gap-2">
                     <button
                         onClick={exportCSV}
                         disabled={reports.length === 0}
-                        className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition ${reports.length === 0
-                                ? 'bg-card text-textColor/50 cursor-not-allowed'
-                                : 'bg-green-600 text-white hover:bg-green-700 shadow-sm'
-                            }`}
+                        className="btn-success py-1 px-2.5 text-xs"
                     >
                         <MdDownload className="text-sm" />
                         CSV
@@ -133,56 +130,50 @@ const AdminReports = () => {
             </div>
 
             {/* Filters Card */}
-            <div className="bg-card rounded-lg border border-background shadow-sm overflow-hidden">
-                <div className="px-5 py-3 bg-background border-b border-background">
+            <div className="card-premium !p-0 overflow-hidden">
+                <div className="px-4 py-2 bg-slate-50/50 border-b border-slate-100">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <MdDateRange className="w-5 h-5 text-primary" />
-                            <h2 className="font-semibold text-textColor">Filter Reports</h2>
+                        <div className="flex items-center gap-1.5">
+                            <MdDateRange className="w-4 h-4 text-primary" />
+                            <h2 className="text-xs font-bold text-textColor uppercase tracking-wider">Filter Reports</h2>
                         </div>
                         {hasActiveFilters && (
                             <button
                                 onClick={clearFilters}
-                                className="flex items-center gap-1 text-xs text-textColor/60 hover:text-textColor/80 transition"
+                                className="flex items-center gap-0.5 text-[9px] font-bold text-textMuted/60 hover:text-textColor uppercase tracking-wider transition-all duration-200"
                             >
-                                <MdClear className="text-sm" />
+                                <MdClear className="text-xs" />
                                 Clear filters
                             </button>
                         )}
                     </div>
                 </div>
-                <form onSubmit={fetchReports} className="p-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <form onSubmit={fetchReports} className="p-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                         <div>
-                            <label className="block text-xs font-medium text-textColor/80 uppercase tracking-wide mb-1">
-                                Start Date
-                            </label>
+                            <label className="label-premium">Start Date</label>
                             <input
                                 type="date"
                                 value={startDate}
                                 onChange={e => setStartDate(e.target.value)}
-                                className="w-full px-3 py-2 border border-background rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="input-premium py-1 text-xs"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-medium text-textColor/80 uppercase tracking-wide mb-1">
-                                End Date
-                            </label>
+                            <label className="label-premium">End Date</label>
                             <input
                                 type="date"
                                 value={endDate}
                                 onChange={e => setEndDate(e.target.value)}
-                                className="w-full px-3 py-2 border border-background rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="input-premium py-1 text-xs"
                             />
                         </div>
                         <div>
-                            <label className="block text-xs font-medium text-textColor/80 uppercase tracking-wide mb-1">
-                                Filter by User
-                            </label>
+                            <label className="label-premium">Filter by User</label>
                             <select
                                 value={selectedUser}
                                 onChange={e => setSelectedUser(e.target.value)}
-                                className="w-full px-3 py-2 border border-background rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="select-premium py-1 text-xs"
                             >
                                 <option value="">All Users</option>
                                 {users.map(u => (
@@ -193,7 +184,7 @@ const AdminReports = () => {
                         <div className="flex items-end">
                             <button
                                 type="submit"
-                                className="w-full px-4 py-2 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2"
+                                className="btn-primary w-full py-1 text-xs"
                             >
                                 <MdRefresh className="text-sm" />
                                 Generate Report
@@ -205,76 +196,76 @@ const AdminReports = () => {
 
             {/* Summary Cards */}
             {summary && reports.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div className="bg-card rounded-lg border border-background p-4 shadow-sm">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                    <div className="card-premium p-3">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-xs font-medium text-textColor/70 uppercase">Total Amount</p>
-                                <p className="text-2xl font-bold text-textColor">₹{summary.totalAmount.toLocaleString()}</p>
+                                <p className="text-[10px] font-semibold text-textMuted uppercase tracking-wider">Total Amount</p>
+                                <p className="text-lg md:text-xl font-bold text-textColor mt-0.5">₹{summary.totalAmount.toLocaleString()}</p>
                             </div>
-                            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <MdAttachMoney className="w-5 h-5 text-primary" />
+                            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <MdAttachMoney className="w-4 h-4 text-primary" />
                             </div>
                         </div>
-                        <p className="text-xs text-textColor/60 mt-2">{summary.count} transactions</p>
+                        <p className="text-[10px] text-textMuted mt-1.5 font-medium">{summary.count} transactions</p>
                     </div>
 
-                    <div className="bg-card rounded-lg border border-background p-4 shadow-sm">
+                    <div className="card-premium p-3">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-xs font-medium text-textColor/70 uppercase">Categories Used</p>
-                                <p className="text-2xl font-bold text-textColor">{summary.categories}</p>
+                                <p className="text-[10px] font-semibold text-textMuted uppercase tracking-wider">Categories Used</p>
+                                <p className="text-lg md:text-xl font-bold text-textColor mt-0.5">{summary.categories}</p>
                             </div>
-                            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <MdCategory className="w-5 h-5 text-primary" />
+                            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <MdCategory className="w-4 h-4 text-primary" />
                             </div>
                         </div>
-                        <p className="text-xs text-textColor/60 mt-2">Unique categories</p>
+                        <p className="text-[10px] text-textMuted mt-1.5 font-medium">Unique categories</p>
                     </div>
 
-                    <div className="bg-card rounded-lg border border-background p-4 shadow-sm">
+                    <div className="card-premium p-3">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-xs font-medium text-textColor/70 uppercase">Top Category</p>
-                                <p className="text-lg font-bold text-textColor truncate">{summary.topCategory}</p>
+                                <p className="text-[10px] font-semibold text-textMuted uppercase tracking-wider">Top Category</p>
+                                <p className="text-xs md:text-sm font-bold text-textColor mt-0.5 truncate max-w-[100px]" title={summary.topCategory}>{summary.topCategory}</p>
                             </div>
-                            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <MdTrendingUp className="w-5 h-5 text-primary" />
+                            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <MdTrendingUp className="w-4 h-4 text-primary" />
                             </div>
                         </div>
-                        <p className="text-xs text-textColor/60 mt-2">Highest spending</p>
+                        <p className="text-[10px] text-textMuted mt-1.5 font-medium">Highest spending</p>
                     </div>
 
-                    <div className="bg-card rounded-lg border border-background p-4 shadow-sm">
+                    <div className="card-premium p-3">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-xs font-medium text-textColor/70 uppercase">Avg Transaction</p>
-                                <p className="text-2xl font-bold text-textColor">
-                                    ₹{(summary.totalAmount / summary.count).toLocaleString()}
+                                <p className="text-[10px] font-semibold text-textMuted uppercase tracking-wider">Avg Transaction</p>
+                                <p className="text-lg md:text-xl font-bold text-textColor mt-0.5">
+                                    ₹{Math.round(summary.totalAmount / summary.count).toLocaleString()}
                                 </p>
                             </div>
-                            <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                                <MdReceipt className="w-5 h-5 text-primary" />
+                            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <MdReceipt className="w-4 h-4 text-primary" />
                             </div>
                         </div>
-                        <p className="text-xs text-textColor/60 mt-2">Per transaction</p>
+                        <p className="text-[10px] text-textMuted mt-1.5 font-medium">Per transaction</p>
                     </div>
                 </div>
             )}
 
             {/* Results Table */}
-            <div className="bg-card rounded-lg border border-background shadow-sm overflow-hidden">
-                <div className="px-5 py-3 bg-background border-b border-background">
+            <div className="card-premium !p-0 overflow-hidden">
+                <div className="px-4 py-2 bg-slate-50/50 border-b border-slate-100">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <MdReceipt className="w-5 h-5 text-primary" />
-                            <h3 className="font-semibold text-textColor">
+                        <div className="flex items-center gap-1.5">
+                            <MdReceipt className="w-4 h-4 text-primary" />
+                            <h3 className="font-bold text-textColor text-xs">
                                 Transactions {reports.length > 0 && `(${reports.length})`}
                             </h3>
                         </div>
                         {loading && (
-                            <div className="flex items-center gap-2 text-sm text-primary">
-                                <div className="animate-spin rounded-full w-4 h-4 border-2 border-blue-600 border-t-transparent"></div>
+                            <div className="flex items-center gap-1.5 text-[10px] font-bold text-primary uppercase tracking-wider">
+                                <div className="animate-spin rounded-full w-3 h-3 border-2 border-primary border-t-transparent"></div>
                                 Loading...
                             </div>
                         )}
@@ -282,72 +273,72 @@ const AdminReports = () => {
                 </div>
 
                 {loading ? (
-                    <div className="p-12 text-center">
-                        <div className="animate-pulse space-y-2">
-                            <div className="h-10 bg-card rounded w-full"></div>
-                            <div className="h-10 bg-card rounded w-full"></div>
-                            <div className="h-10 bg-card rounded w-full"></div>
+                    <div className="p-6 text-center">
+                        <div className="animate-pulse space-y-1.5">
+                            <div className="h-8 bg-slate-50 rounded w-full"></div>
+                            <div className="h-8 bg-slate-50 rounded w-full"></div>
+                            <div className="h-8 bg-slate-50 rounded w-full"></div>
                         </div>
                     </div>
                 ) : reports.length === 0 ? (
-                    <div className="p-12 text-center">
-                        <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center mx-auto mb-3">
-                            <MdReceipt className="w-8 h-8 text-textColor/50" />
+                    <div className="p-8 text-center">
+                        <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <MdReceipt className="w-5 h-5 text-textMuted/50" />
                         </div>
-                        <h3 className="text-lg font-semibold text-textColor">No Transactions Found</h3>
-                        <p className="text-textColor/70 text-sm mt-1">
+                        <h3 className="text-sm font-bold text-textColor">No Transactions Found</h3>
+                        <p className="small-premium mt-1 uppercase tracking-wide">
                             {hasActiveFilters ? 'Try adjusting your filters' : 'Select date range and generate report'}
                         </p>
                     </div>
                 ) : (
                     <div className="overflow-x-auto">
                         <table className="w-full">
-                            <thead className="bg-background border-b border-background">
+                            <thead className="bg-slate-50/20 border-b border-slate-100">
                                 <tr>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-textColor/70 uppercase">Date</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-textColor/70 uppercase">User</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-textColor/70 uppercase">Category</th>
-                                    <th className="px-4 py-3 text-left text-xs font-medium text-textColor/70 uppercase">Description</th>
-                                    <th className="px-4 py-3 text-right text-xs font-medium text-textColor/70 uppercase">Amount</th>
+                                    <th className="px-3 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Date</th>
+                                    <th className="px-3 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">User</th>
+                                    <th className="px-3 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Category</th>
+                                    <th className="px-3 py-2 text-left text-[9px] font-bold text-textMuted uppercase tracking-wider">Description</th>
+                                    <th className="px-3 py-2 text-right text-[9px] font-bold text-textMuted uppercase tracking-wider">Amount</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-background">
+                            <tbody className="divide-y divide-slate-100">
                                 {reports.map((rp) => (
-                                    <tr key={rp._id} className="hover:bg-background transition">
-                                        <td className="px-4 py-3 text-sm text-textColor/70 whitespace-nowrap">
+                                    <tr key={rp._id} className="hover:bg-slate-50/30 transition-all duration-200">
+                                        <td className="px-3 py-2 text-xs text-textMuted font-medium whitespace-nowrap">
                                             {new Date(rp.date).toLocaleDateString()}
                                         </td>
-                                        <td className="px-4 py-3">
+                                        <td className="px-3 py-2">
                                             <div>
-                                                <p className="text-sm font-medium text-textColor">{rp.userId?.name || 'Unknown'}</p>
-                                                <p className="text-xs text-textColor/60">{rp.userId?.email || 'No email'}</p>
+                                                <p className="text-xs font-semibold text-textColor">{rp.userId?.name || 'Unknown'}</p>
+                                                <p className="text-[9px] text-textMuted/60 font-medium">{rp.userId?.email || 'No email'}</p>
                                             </div>
                                         </td>
-                                        <td className="px-4 py-3">
-                                            <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 text-primary text-xs font-medium rounded-full">
-                                                <MdCategory className="text-xs" />
+                                        <td className="px-3 py-2">
+                                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-primary/10 text-primary text-[9px] font-bold uppercase tracking-wider rounded-full">
+                                                <MdCategory className="text-[9px]" />
                                                 {rp.category}
                                             </span>
                                         </td>
-                                        <td className="px-4 py-3">
-                                            <p className="text-sm text-textColor/70 max-w-xs truncate" title={rp.title}>
+                                        <td className="px-3 py-2">
+                                            <p className="text-xs text-textMuted max-w-xs truncate font-medium" title={rp.title}>
                                                 {rp.title || '—'}
                                             </p>
                                         </td>
-                                        <td className="px-4 py-3 text-right">
-                                            <span className="text-sm font-semibold text-secondary">
+                                        <td className="px-3 py-2 text-right">
+                                            <span className="text-xs font-bold text-textColor">
                                                 ₹{rp.amount.toLocaleString()}
                                             </span>
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
-                            <tfoot className="bg-background border-t border-background">
+                            <tfoot className="bg-slate-50/50 border-t border-slate-100">
                                 <tr>
-                                    <td colSpan="4" className="px-4 py-3 text-right text-sm font-semibold text-textColor/80">
+                                    <td colSpan="4" className="px-3 py-2 text-right text-[10px] font-bold text-textMuted uppercase tracking-wider">
                                         Total:
                                     </td>
-                                    <td className="px-4 py-3 text-right text-sm font-bold text-primary">
+                                    <td className="px-3 py-2 text-right text-xs font-bold text-primary">
                                         ₹{reports.reduce((sum, r) => sum + r.amount, 0).toLocaleString()}
                                     </td>
                                 </tr>
@@ -358,12 +349,12 @@ const AdminReports = () => {
             </div>
 
             {/* Info Note */}
-            <div className="bg-primary/5 rounded-lg border border-blue-200 p-4">
-                <div className="flex items-start gap-3">
-                    <MdInfoOutline className="w-5 h-5 text-primary mt-0.5" />
+            <div className="bg-primary/5 rounded-xl border border-primary/10 p-3">
+                <div className="flex items-start gap-2.5">
+                    <MdInfoOutline className="w-4 h-4 text-primary mt-0.5 animate-pulse" />
                     <div>
-                        <p className="text-sm font-medium text-blue-900">Report Information</p>
-                        <p className="text-xs text-primary mt-0.5">
+                        <p className="text-[10px] font-bold text-primary uppercase tracking-wider">Report Information</p>
+                        <p className="text-[10px] text-textMuted mt-0.5 leading-relaxed font-medium">
                             Reports include all expense and income transactions across the platform.
                             Use date filters to narrow down results. Export to CSV for offline analysis.
                         </p>

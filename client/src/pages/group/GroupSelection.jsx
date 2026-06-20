@@ -116,290 +116,286 @@ const GroupSelection = () => {
     }
 
     return (
-        <div className="min-h-screen bg-background py-10 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-5xl mx-auto space-y-10 text-textColor">
+        <div className="min-h-screen bg-background py-4 px-3 sm:px-4">
+            <div className="max-w-5xl mx-auto space-y-4 text-textColor">
                 {/* Header Section */}
-                <div className="text-center space-y-4">
-                    <div className="inline-flex items-center justify-center p-4 bg-primary/10 rounded-2xl mb-2 transition-transform hover:scale-110">
-                        <MdGroup className="w-8 h-8 text-primary" />
+                <div className="text-center space-y-1">
+                    <div className="inline-flex items-center justify-center p-2 bg-primary/10 rounded-lg mb-0.5 transition-transform hover:scale-105">
+                        <MdGroup className="w-5 h-5 text-primary" />
                     </div>
-                    <h1 className="text-4xl font-extrabold tracking-tight">
-                        Group Selection
-                    </h1>
-                    <p className="text-textColor/60 text-lg max-w-2xl mx-auto leading-relaxed">
+                    <h1 className="h1-premium">Group Selection</h1>
+                    <p className="body-premium max-w-md mx-auto">
                         Track shared expenses, manage group bills, and collaborate seamlessly with friends and family.
                     </p>
                 </div>
-
-            {/* Tab Navigation */}
-            <div className="flex justify-center">
-                <div className="bg-card p-1.5 rounded-2xl flex gap-1 shadow-inner border border-background">
-                    <button
-                        onClick={() => setActiveTab('select')}
-                        className={`px-8 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2.5 ${activeTab === 'select'
-                            ? 'bg-card shadow-md text-primary scale-105'
-                            : 'text-textColor/60 hover:text-textColor hover:bg-card'
-                            }`}
-                    >
-                        <MdGroup className="text-lg" />
-                        My Groups
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('create')}
-                        className={`px-8 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2.5 ${activeTab === 'create'
-                            ? 'bg-card shadow-md text-primary scale-105'
-                            : 'text-textColor/60 hover:text-textColor hover:bg-card'
-                            }`}
-                    >
-                        <MdCreate className="text-lg" />
-                        Create Group
-                    </button>
-                    <button
-                        onClick={() => setActiveTab('join')}
-                        className={`px-8 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center gap-2.5 ${activeTab === 'join'
-                            ? 'bg-card shadow-md text-primary scale-105'
-                            : 'text-textColor/60 hover:text-textColor hover:bg-card'
-                            }`}
-                    >
-                        <MdLogin className="text-lg" />
-                        Join Group
-                    </button>
+ 
+                {/* Tab Navigation */}
+                <div className="flex justify-center">
+                    <div className="bg-card p-0.5 rounded-lg flex gap-0.5 border border-slate-150 shadow-sm">
+                        <button
+                            onClick={() => setActiveTab('select')}
+                            className={`px-4 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'select'
+                                ? 'bg-slate-50 text-primary shadow-sm border border-slate-100'
+                                : 'text-textMuted hover:text-textColor hover:bg-slate-50/50'
+                                }`}
+                        >
+                            <MdGroup className="text-xs" />
+                            My Groups
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('create')}
+                            className={`px-4 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'create'
+                                ? 'bg-slate-50 text-primary shadow-sm border border-slate-100'
+                                : 'text-textMuted hover:text-textColor hover:bg-slate-50/50'
+                                }`}
+                        >
+                            <MdCreate className="text-xs" />
+                            Create Group
+                        </button>
+                        <button
+                            onClick={() => setActiveTab('join')}
+                            className={`px-4 py-1.5 rounded-md text-xs font-semibold transition-all flex items-center gap-1.5 ${activeTab === 'join'
+                                ? 'bg-slate-50 text-primary shadow-sm border border-slate-100'
+                                : 'text-textMuted hover:text-textColor hover:bg-slate-50/50'
+                                }`}
+                        >
+                            <MdLogin className="text-xs" />
+                            Join Group
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            {/* Content Area */}
-            <div>
-                {/* My Groups Tab */}
-                {activeTab === 'select' && (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        {groups.length === 0 ? (
-                            <div className="text-center py-20 bg-card rounded-3xl border border-background shadow-sm">
-                                <div className="w-24 h-24 bg-background rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
-                                    <MdGroup className="w-12 h-12 text-textColor/40" />
-                                </div>
-                                <h3 className="text-2xl font-bold text-textColor">No groups found</h3>
-                                <p className="text-textColor/60 mt-2 max-w-sm mx-auto">
-                                    You aren't a member of any groups yet. Create a new one or join with an invite code.
-                                </p>
-                                <div className="mt-8 flex gap-4 justify-center">
-                                    <button
-                                        onClick={() => setActiveTab('create')}
-                                        className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/20 active:scale-95"
-                                    >
-                                        Create Group
-                                    </button>
-                                    <button
-                                        onClick={() => setActiveTab('join')}
-                                        className="px-8 py-3 bg-card border border-background text-textColor rounded-xl font-bold hover:bg-background transition-all shadow-sm active:scale-95"
-                                    >
-                                        Join Group
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                                {groups.map((group) => {
-                                    const isCreator = user && group.createdBy &&
-                                        group.createdBy.toString() === (user._id || user.id).toString();
-                                    return (
-                                        <div
-                                            key={group._id}
-                                            onClick={() => handleSelectGroup(group._id)}
-                                            className="group bg-card rounded-3xl border border-background shadow-sm cursor-pointer hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col"
+ 
+                {/* Content Area */}
+                <div>
+                    {/* My Groups Tab */}
+                    {activeTab === 'select' && (
+                        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-300">
+                            {groups.length === 0 ? (
+                                <div className="text-center py-10 bg-card rounded-xl border border-slate-100 shadow-sm">
+                                    <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-3 border border-slate-100">
+                                        <MdGroup className="w-6 h-6 text-textMuted/50" />
+                                    </div>
+                                    <h3 className="h3-premium">No groups found</h3>
+                                    <p className="body-premium mt-1 max-w-xs mx-auto">
+                                        You aren't a member of any groups yet. Create a new one or join with an invite code.
+                                    </p>
+                                    <div className="mt-4 flex gap-2 justify-center">
+                                        <button
+                                            onClick={() => setActiveTab('create')}
+                                            className="btn-primary text-xs px-3 py-1.5"
                                         >
-                                            <div className="p-8 flex-1">
-                                                <div className="flex items-start justify-between mb-6">
-                                                    <div className="w-14 h-14 bg-primary/5 rounded-2xl flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                                                        <MdGroup className="w-7 h-7 text-primary" />
-                                                    </div>
-                                                    {isCreator && (
-                                                        <div className="flex gap-2">
-                                                            <button
-                                                                onClick={(e) => startEditing(e, group)}
-                                                                className="p-2.5 text-textColor/50 hover:text-primary hover:bg-primary/5 rounded-xl transition-all"
-                                                                title="Edit Group"
-                                                            >
-                                                                <MdEdit className="w-5 h-5" />
-                                                            </button>
-                                                            <button
-                                                                onClick={(e) => {
-                                                                    e.stopPropagation();
-                                                                    handleDeleteGroup(group._id, group.name);
-                                                                }}
-                                                                className="p-2.5 text-textColor/50 hover:text-danger hover:bg-danger/5 rounded-xl transition-all"
-                                                                title="Delete Group"
-                                                            >
-                                                                <MdDelete className="w-5 h-5" />
-                                                            </button>
+                                            Create Group
+                                        </button>
+                                        <button
+                                            onClick={() => setActiveTab('join')}
+                                            className="btn-secondary text-xs px-3 py-1.5"
+                                        >
+                                            Join Group
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {groups.map((group) => {
+                                        const isCreator = user && group.createdBy &&
+                                            group.createdBy.toString() === (user._id || user.id).toString();
+                                        return (
+                                            <div
+                                                key={group._id}
+                                                onClick={() => handleSelectGroup(group._id)}
+                                                className="group card-premium cursor-pointer overflow-hidden flex flex-col justify-between"
+                                            >
+                                                <div>
+                                                    <div className="flex items-start justify-between mb-2">
+                                                        <div className="w-8 h-8 bg-primary/5 rounded-lg flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                                                            <MdGroup className="w-4 h-4 text-primary" />
                                                         </div>
-                                                    )}
-                                                </div>
-                                                <h3 className="text-xl font-bold text-textColor mb-2 group-hover:text-primary transition-colors">{group.name}</h3>
-                                                <p className="text-textColor/60 text-sm line-clamp-2 min-h-[40px] leading-relaxed">
-                                                    {group.description || 'Manage shared expenses and split bills with your team.'}
-                                                </p>
-                                            </div>
-                                            <div className="px-8 py-5 bg-background/50 border-t border-background flex items-center justify-between group-hover:bg-primary/5 transition-colors">
-                                                <div className="flex items-center gap-2 text-sm font-semibold text-textColor/70">
-                                                    <div className="w-8 h-8 rounded-full bg-card border border-background flex items-center justify-center -space-x-2">
-                                                       <MdPeople className="text-primary w-4 h-4" />
+                                                        {isCreator && (
+                                                            <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
+                                                                <button
+                                                                    onClick={(e) => startEditing(e, group)}
+                                                                    className="p-1 text-textMuted hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
+                                                                    title="Edit Group"
+                                                                >
+                                                                    <MdEdit className="w-3.5 h-3.5" />
+                                                                </button>
+                                                                <button
+                                                                    onClick={(e) => {
+                                                                        e.stopPropagation();
+                                                                        handleDeleteGroup(group._id, group.name);
+                                                                    }}
+                                                                    className="p-1 text-textMuted hover:text-danger hover:bg-danger/5 rounded-lg transition-all"
+                                                                    title="Delete Group"
+                                                                >
+                                                                    <MdDelete className="w-3.5 h-3.5" />
+                                                                </button>
+                                                            </div>
+                                                        )}
                                                     </div>
-                                                    <span>{group.members?.length || 1} members</span>
+                                                    <h3 className="text-xs font-bold text-textColor mb-1 group-hover:text-primary transition-colors">{group.name}</h3>
+                                                    <p className="body-premium line-clamp-2 min-h-[32px]">
+                                                        {group.description || 'Manage shared expenses and split bills with your team.'}
+                                                    </p>
                                                 </div>
-                                                <div className="text-primary text-sm font-bold flex items-center gap-1">
-                                                    Open <span className="transition-transform group-hover:translate-x-1">→</span>
+                                                <div className="pt-2.5 mt-2.5 border-t border-slate-100 flex items-center justify-between group-hover:bg-slate-50/50 transition-colors">
+                                                    <div className="flex items-center gap-1 text-[11px] font-medium text-textMuted">
+                                                        <MdPeople className="text-primary w-3.5 h-3.5" />
+                                                        <span>{group.members?.length || 1} members</span>
+                                                    </div>
+                                                    <div className="text-primary text-[11px] font-bold flex items-center gap-0.5">
+                                                        Open <span className="transition-transform group-hover:translate-x-0.5">→</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        )}
-                    </div>
-                )}
-
-                {/* Create Group Tab */}
-                {activeTab === 'create' && (
-                    <div className="max-w-xl mx-auto bg-card rounded-3xl shadow-xl overflow-hidden border border-background transition-all duration-500 animate-in zoom-in-95">
-                        <div className="bg-primary/5 px-8 py-6 border-b border-background">
-                            <div className="flex items-center gap-4">
-                                <div className="p-3 bg-card rounded-2xl shadow-sm text-primary">
-                                    <MdCreate className="w-6 h-6" />
+                                        );
+                                    })}
                                 </div>
-                                <div>
-                                    <h2 className="text-xl font-bold text-textColor">Create New Group</h2>
-                                    <p className="text-sm text-textColor/60">Launch a new space for your shared expenses</p>
-                                </div>
-                            </div>
+                            )}
                         </div>
-                        <form onSubmit={handleCreateGroup} className="p-8 space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-textColor/80 ml-1">Group Name</label>
-                                <input
-                                    type="text"
-                                    value={newGroup.name}
-                                    onChange={(e) => setNewGroup({ ...newGroup, name: e.target.value })}
-                                    placeholder="e.g., Goa Trip 2024, Roommates"
-                                    className="w-full px-5 py-4 bg-background border border-background rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-card focus:border-primary transition-all text-textColor placeholder:text-textColor/50"
-                                    required
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-textColor/80 ml-1">Description (Optional)</label>
-                                <textarea
-                                    value={newGroup.description}
-                                    onChange={(e) => setNewGroup({ ...newGroup, description: e.target.value })}
-                                    placeholder="What is this group for?"
-                                    className="w-full px-5 py-4 bg-background border border-background rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-card focus:border-primary transition-all text-textColor placeholder:text-textColor/50 resize-none"
-                                    rows="4"
-                                />
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full py-4 bg-primary text-white rounded-2xl font-bold text-lg hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/30 active:scale-[0.98]"
-                            >
-                                Create Group
-                            </button>
-                        </form>
-                    </div>
-                )}
-
-                {/* Join Group Tab */}
-                {activeTab === 'join' && (
-                    <div className="max-w-xl mx-auto bg-card rounded-3xl shadow-xl overflow-hidden border border-background transition-all duration-500 animate-in zoom-in-95">
-                        <div className="bg-secondary/5 px-8 py-6 border-b border-background">
-                            <div className="flex items-center gap-4">
-                                <div className="p-3 bg-card rounded-2xl shadow-sm text-secondary">
-                                    <MdLogin className="w-6 h-6" />
-                                </div>
-                                <div>
-                                    <h2 className="text-xl font-bold text-textColor">Join a Group</h2>
-                                    <p className="text-sm text-textColor/60">Enter the secret invite code shared with you</p>
+                    )}
+ 
+                    {/* Create Group Tab */}
+                    {activeTab === 'create' && (
+                        <div className="max-w-md mx-auto bg-card rounded-xl border border-slate-150 shadow-sm overflow-hidden transition-all duration-350 animate-in zoom-in-95">
+                            <div className="bg-slate-50/50 px-4 py-2.5 border-b border-slate-100">
+                                <div className="flex items-center gap-2">
+                                    <div className="p-1.5 bg-card rounded-md border border-slate-100 text-primary">
+                                        <MdCreate className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xs font-bold text-textColor">Create New Group</h2>
+                                        <p className="text-[10px] text-textMuted">Launch a new space for your shared expenses</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <form onSubmit={handleJoinGroup} className="p-8 space-y-8">
-                            <div className="space-y-4">
-                                <label className="text-sm font-bold text-textColor/80 block text-center">Enter 6-Character Invite Code</label>
-                                <input
-                                    type="text"
-                                    value={inviteCode}
-                                    onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
-                                    placeholder="CODE24"
-                                    className="w-full px-5 py-6 bg-background border-2 border-dashed border-background rounded-2xl focus:outline-none focus:ring-4 focus:ring-secondary/10 focus:bg-card focus:border-secondary transition-all text-center text-4xl font-black tracking-[0.5em] text-secondary placeholder:text-gray-200 uppercase"
-                                    maxLength={6}
-                                    required
-                                />
-                                <p className="text-xs text-textColor/50 text-center font-medium">
-                                    Invite codes are case-sensitive and must be exactly 6 characters.
-                                </p>
-                            </div>
-                            <button
-                                type="submit"
-                                className="w-full py-4 bg-secondary text-white rounded-2xl font-bold text-lg hover:bg-secondary/90 transition-all shadow-lg hover:shadow-secondary/30 active:scale-[0.98]"
-                            >
-                                Join Group Now
-                            </button>
-                        </form>
-                    </div>
-                )}
-            </div>
-
-            {/* Edit Modal */}
-            {editingGroup && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-textColor/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-card rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-white/20 transform transition-all animate-in zoom-in-95 duration-300">
-                        <div className="bg-background/50 px-8 py-6 border-b border-background flex justify-between items-center">
-                            <div>
-                                <h2 className="text-xl font-bold text-textColor">Edit Group</h2>
-                                <p className="text-xs text-textColor/60 mt-0.5">Update group name or description</p>
-                            </div>
-                            <button
-                                onClick={() => setEditingGroup(null)}
-                                className="p-2 hover:bg-card rounded-xl transition-all text-textColor/50 hover:text-textColor"
-                            >
-                                <MdClose className="w-6 h-6" />
-                            </button>
-                        </div>
-                        <form onSubmit={handleUpdateGroup} className="p-8 space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-textColor/80 ml-1">Group Name</label>
-                                <input
-                                    type="text"
-                                    value={editData.name}
-                                    onChange={(e) => setEditData({ ...editData, name: e.target.value })}
-                                    className="w-full px-5 py-4 bg-background border border-background rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-card focus:border-primary transition-all text-textColor"
-                                    required
-                                />
-                            </div>
-                            <div className="space-y-2">
-                                <label className="text-sm font-bold text-textColor/80 ml-1">Description</label>
-                                <textarea
-                                    value={editData.description}
-                                    onChange={(e) => setEditData({ ...editData, description: e.target.value })}
-                                    className="w-full px-5 py-4 bg-background border border-background rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-card focus:border-primary transition-all text-textColor resize-none"
-                                    rows="4"
-                                />
-                            </div>
-                            <div className="flex gap-4 pt-2">
-                                <button
-                                    type="button"
-                                    onClick={() => setEditingGroup(null)}
-                                    className="flex-1 py-4 border border-background text-textColor rounded-2xl font-bold hover:bg-background transition-all active:scale-95"
-                                >
-                                    Cancel
-                                </button>
+                            <form onSubmit={handleCreateGroup} className="p-4 space-y-3">
+                                <div className="space-y-1">
+                                    <label className="label-premium">Group Name</label>
+                                    <input
+                                        type="text"
+                                        value={newGroup.name}
+                                        onChange={(e) => setNewGroup({ ...newGroup, name: e.target.value })}
+                                        placeholder="e.g., Goa Trip, Roommates"
+                                        className="input-premium"
+                                        required
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="label-premium">Description (Optional)</label>
+                                    <textarea
+                                        value={newGroup.description}
+                                        onChange={(e) => setNewGroup({ ...newGroup, description: e.target.value })}
+                                        placeholder="What is this group for?"
+                                        className="input-premium resize-none"
+                                        rows="2"
+                                    />
+                                </div>
                                 <button
                                     type="submit"
-                                    className="flex-1 py-4 bg-primary text-white rounded-2xl font-bold hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/30 active:scale-95"
+                                    className="btn-primary w-full py-1.5 text-xs"
                                 >
-                                    Save
+                                    Create Group
+                                </button>
+                            </form>
+                        </div>
+                    )}
+ 
+                    {/* Join Group Tab */}
+                    {activeTab === 'join' && (
+                        <div className="max-w-md mx-auto bg-card rounded-xl border border-slate-150 shadow-sm overflow-hidden transition-all duration-350 animate-in zoom-in-95">
+                            <div className="bg-slate-50/50 px-4 py-2.5 border-b border-slate-100">
+                                <div className="flex items-center gap-2">
+                                    <div className="p-1.5 bg-card rounded-md border border-slate-100 text-secondary">
+                                        <MdLogin className="w-4 h-4" />
+                                    </div>
+                                    <div>
+                                        <h2 className="text-xs font-bold text-textColor">Join a Group</h2>
+                                        <p className="text-[10px] text-textMuted">Enter the secret invite code shared with you</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <form onSubmit={handleJoinGroup} className="p-4 space-y-4">
+                                <div className="space-y-2">
+                                    <label className="label-premium text-center block">Enter 6-Character Invite Code</label>
+                                    <input
+                                        type="text"
+                                        value={inviteCode}
+                                        onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
+                                        placeholder="CODE24"
+                                        className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:bg-card focus:border-primary transition-all text-center text-lg font-bold tracking-widest text-textColor placeholder:text-slate-350 uppercase"
+                                        maxLength={6}
+                                        required
+                                    />
+                                    <p className="text-[9px] text-textMuted/80 text-center font-medium">
+                                        Invite codes are case-sensitive and must be exactly 6 characters.
+                                    </p>
+                                </div>
+                                <button
+                                    type="submit"
+                                    className="btn-primary w-full py-1.5 text-xs"
+                                >
+                                    Join Group Now
+                                </button>
+                            </form>
+                        </div>
+                    )}
+                </div>
+ 
+                {/* Edit Modal */}
+                {editingGroup && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200">
+                        <div className="bg-card rounded-xl shadow-xl w-full max-w-sm overflow-hidden border border-slate-100 transform transition-all animate-in zoom-in-95 duration-200">
+                            <div className="bg-slate-50 px-4 py-2.5 border-b border-slate-100 flex justify-between items-center">
+                                <div>
+                                    <h2 className="text-xs font-bold text-textColor">Edit Group</h2>
+                                    <p className="text-[10px] text-textMuted">Update group name or description</p>
+                                </div>
+                                <button
+                                    onClick={() => setEditingGroup(null)}
+                                    className="p-1 hover:bg-slate-100 rounded-lg transition-all text-textMuted hover:text-textColor"
+                                >
+                                    <MdClose className="w-4 h-4" />
                                 </button>
                             </div>
-                        </form>
+                            <form onSubmit={handleUpdateGroup} className="p-4 space-y-3">
+                                <div className="space-y-1">
+                                    <label className="label-premium">Group Name</label>
+                                    <input
+                                        type="text"
+                                        value={editData.name}
+                                        onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                                        className="input-premium"
+                                        required
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="label-premium">Description</label>
+                                    <textarea
+                                        value={editData.description}
+                                        onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                                        className="input-premium resize-none"
+                                        rows="2"
+                                    />
+                                </div>
+                                <div className="flex gap-2.5 pt-1.5">
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditingGroup(null)}
+                                        className="btn-secondary flex-1 py-1.5 text-xs"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="btn-primary flex-1 py-1.5 text-xs"
+                                    >
+                                        Save
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
             </div>
         </div>
     );

@@ -11,7 +11,7 @@ import {
     MdAttachMoney, MdLightbulb, MdArrowForward, MdFlashOn, MdWarning
 } from 'react-icons/md';
 
-const COLORS = ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#06B6D4'];
+const COLORS = ['#4F46E5', '#10B981', '#F59E0B', '#F43F5E', '#8B5CF6', '#EC4899', '#0EA5E9'];
 
 // ==========================================
 // PERSONAL DASHBOARD
@@ -171,41 +171,41 @@ const Dashboard = () => {
         ((budgetStatus.totalSpent / budgetStatus.budget) * 100) : 0;
 
     return (
-        <div className="space-y-8 pb-10">
+        <div className="space-y-4 pb-4">
             {/* Header Section */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-textColor tracking-tight">Dashboard Overview</h1>
-                    <p className="text-sm text-textColor opacity-60 mt-1">Real-time financial tracking and insights</p>
+                    <h1 className="h1-premium">Dashboard Overview</h1>
+                    <p className="text-[10px] text-textMuted mt-0.5">Real-time financial tracking and insights</p>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex gap-1.5">
                     {challenges && (
                         <Link
                             to="/challenges"
-                            className="flex items-center gap-2 px-5 py-2.5 bg-warning/10 border border-warning/20 text-warning font-semibold rounded-xl hover:bg-warning/25 transition-all duration-300 shadow-sm"
+                            className="flex items-center gap-1 px-2 py-1 bg-warning/10 border border-warning/20 text-warning font-semibold rounded-md hover:bg-warning/25 transition-all text-[10px] shadow-sm"
                         >
-                            <MdFlashOn className="text-xl animate-bounce" />
+                            <MdFlashOn className="text-sm animate-bounce" />
                             <span>Streak: {challenges.streakCount} Days</span>
                         </Link>
                     )}
                     <button
                         onClick={handleSwitchToGroup}
-                        className="flex items-center gap-2 px-5 py-2.5 bg-card border border-background text-textColor font-semibold rounded-xl hover:bg-background transition-all duration-300 shadow-sm group"
+                        className="btn-secondary py-1 px-2.5 text-xs"
                     >
-                        <MdGroup className="text-xl text-primary group-hover:scale-110 transition-transform" />
+                        <MdGroup className="text-sm text-primary" />
                         <span>Switch to Group</span>
-                        <MdArrowForward className="text-lg opacity-40" />
+                        <MdArrowForward className="text-xs opacity-40" />
                     </button>
                 </div>
             </div>
 
             {/* Linear Regression Forecast warning indicator */}
             {forecast && forecast.willBreach && (
-                <div className="bg-danger/10 border border-danger/25 rounded-xl p-4 flex items-start gap-3 shadow-sm animate-pulse">
-                    <MdWarning className="text-danger text-2xl shrink-0 mt-0.5" />
+                <div className="bg-danger/5 border border-danger/20 rounded-lg p-2.5 flex items-start gap-2 shadow-sm">
+                    <MdWarning className="text-danger text-base shrink-0 mt-0.5" />
                     <div>
-                        <h4 className="font-bold text-danger text-sm">Budget Exceed Warning (Linear Regression Forecast)</h4>
-                        <p className="text-textColor/90 text-xs mt-1 leading-normal">
+                        <h4 className="font-bold text-danger text-[10px]">Budget Exceed Warning (Linear Regression Forecast)</h4>
+                        <p className="text-textColor/90 text-[10px] mt-0.5 leading-relaxed">
                             At your current spending rate, you are projected to spend <strong>₹{Math.round(forecast.projected).toLocaleString()}</strong> by the end of this month, exceeding your budget ceiling of <strong>₹{(budgetStatus?.budget || 0).toLocaleString()}</strong>.
                             You will likely breach your budget limit around <strong>Day {forecast.breachDay}</strong> of the month.
                         </p>
@@ -213,18 +213,18 @@ const Dashboard = () => {
                 </div>
             )}
 
-            {/* Smart Decision Support System: Displays predictive insights from analysisController */}
+            {/* Smart Decision Support System: Displays predictive insights */}
             {analysis?.insights && analysis.insights.length > 0 && (
-                <div className="bg-secondary/5 border border-secondary/20 rounded-xl p-3 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2 px-1">
-                        <MdLightbulb className="text-secondary text-base" />
-                        <h3 className="text-sm font-bold text-textColor tracking-tight">Decision Support Insights</h3>
+                <div className="bg-slate-50 border border-slate-200/60 rounded-lg p-2.5 shadow-sm">
+                    <div className="flex items-center gap-1 mb-1 px-0.5">
+                        <MdLightbulb className="text-primary text-xs" />
+                        <h3 className="text-[10px] font-bold text-textColor tracking-tight">Decision Support Insights</h3>
                     </div>
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-0.5">
                         {analysis.insights.map((insight, idx) => (
-                            <div key={idx} className="flex items-start gap-2 px-1">
-                                <span className="text-sm shrink-0">{insight.icon}</span>
-                                <p className="text-textColor/80 font-medium text-xs leading-snug">{insight.text}</p>
+                            <div key={idx} className="flex items-start gap-1 px-0.5">
+                                <span className="text-[10px] shrink-0">{insight.icon}</span>
+                                <p className="text-textMuted font-medium text-[10px] leading-relaxed">{insight.text}</p>
                             </div>
                         ))}
                     </div>
@@ -232,92 +232,92 @@ const Dashboard = () => {
             )}
 
             {/* Top Summary Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
                 {/* Total Income */}
-                <div className="bg-card rounded-2xl p-6 border border-background shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="text-xs font-bold text-textColor opacity-50 uppercase tracking-widest text-primary">Total Income</p>
-                        <div className="p-2 bg-secondary/10 rounded-lg">
-                            <MdAttachMoney className="text-secondary text-xl" />
+                <div className="card-premium flex flex-col justify-between h-full">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <p className="label-premium">Total Income</p>
+                        <div className="p-1 bg-success/10 rounded-md">
+                            <MdAttachMoney className="text-success text-base" />
                         </div>
                     </div>
-                    <p className="text-3xl font-black text-textColor">₹{(monthlyReport?.totalIncome || 0).toLocaleString()}</p>
-                    <div className="mt-5 w-full h-1.5 bg-background rounded-full overflow-hidden">
-                        <div className="h-full bg-secondary rounded-full w-full opacity-80"></div>
+                    <p className="text-lg md:text-xl font-bold text-textColor tracking-tight">₹{(monthlyReport?.totalIncome || 0).toLocaleString()}</p>
+                    <div className="mt-2.5 w-full h-1 bg-background rounded-full overflow-hidden">
+                        <div className="h-full bg-success rounded-full w-full opacity-80"></div>
                     </div>
                 </div>
 
                 {/* Total Expense */}
-                <div className="bg-card rounded-2xl p-6 border border-background shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="text-xs font-bold text-textColor opacity-50 uppercase tracking-widest text-primary">Total Expense</p>
-                        <div className="p-2 bg-danger/10 rounded-lg">
-                            <MdTrendingUp className="text-danger text-xl" />
+                <div className="card-premium flex flex-col justify-between h-full">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <p className="label-premium">Total Expense</p>
+                        <div className="p-1 bg-danger/10 rounded-md">
+                            <MdTrendingUp className="text-danger text-base" />
                         </div>
                     </div>
-                    <p className="text-3xl font-black text-textColor">₹{(monthlyReport?.totalSpent || 0).toLocaleString()}</p>
-                    <div className="mt-5 w-full h-1.5 bg-background rounded-full overflow-hidden">
+                    <p className="text-lg md:text-xl font-bold text-textColor tracking-tight">₹{(monthlyReport?.totalSpent || 0).toLocaleString()}</p>
+                    <div className="mt-2.5 w-full h-1 bg-background rounded-full overflow-hidden">
                         <div className={`h-full rounded-full transition-all duration-1000 ${incomePercentage > 90 ? 'bg-danger' : 'bg-primary'}`}
-                            style={{ width: `${Math.min(incomePercentage, 100)}%` }}>
+                             style={{ width: `${Math.min(incomePercentage, 100)}%` }}>
                         </div>
                     </div>
                 </div>
 
                 {/* Remaining Budget */}
-                <div className="bg-card rounded-2xl p-6 border border-background shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="text-xs font-bold text-textColor opacity-50 uppercase tracking-widest text-primary">Remaining Budget</p>
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                            <MdAccountBalance className="text-primary text-xl" />
+                <div className="card-premium flex flex-col justify-between h-full">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <p className="label-premium">Remaining Budget</p>
+                        <div className="p-1 bg-primary/10 rounded-md">
+                            <MdAccountBalance className="text-primary text-base" />
                         </div>
                     </div>
-                    <p className={`text-3xl font-black ${budgetStatus?.isExceeded ? 'text-danger' : 'text-textColor'}`}>
+                    <p className={`text-lg md:text-xl font-bold tracking-tight ${budgetStatus?.isExceeded ? 'text-danger' : 'text-textColor'}`}>
                         ₹{(budgetStatus?.remaining || 0).toLocaleString()}
                     </p>
-                    <div className="mt-5 w-full h-1.5 bg-background rounded-full overflow-hidden">
+                    <div className="mt-2.5 w-full h-1 bg-background rounded-full overflow-hidden">
                         <div className={`h-full rounded-full transition-all duration-1000 ${budgetStatus?.isExceeded ? 'bg-danger' : 'bg-primary opacity-60'}`}
-                            style={{ width: `${Math.min(budgetPercentage, 100)}%` }}>
+                             style={{ width: `${Math.min(budgetPercentage, 100)}%` }}>
                         </div>
                     </div>
                 </div>
 
                 {/* Balance */}
-                <div className="bg-card rounded-2xl p-6 border border-background shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="flex items-center justify-between mb-4">
-                        <p className="text-xs font-bold text-textColor opacity-50 uppercase tracking-widest text-primary">Net Balance</p>
-                        <div className="p-2 bg-secondary/10 rounded-lg">
-                            <MdTrendingDown className="text-secondary text-xl rotate-180" />
+                <div className="card-premium flex flex-col justify-between h-full">
+                    <div className="flex items-center justify-between mb-1.5">
+                        <p className="label-premium">Net Balance</p>
+                        <div className="p-1 bg-success/10 rounded-md">
+                            <MdTrendingDown className="text-success text-base rotate-180" />
                         </div>
                     </div>
-                    <p className={`text-3xl font-black ${monthlyReport?.remainingBalance < 0 ? 'text-danger' : 'text-textColor'}`}>
+                    <p className={`text-lg md:text-xl font-bold tracking-tight ${monthlyReport?.remainingBalance < 0 ? 'text-danger' : 'text-textColor'}`}>
                         ₹{(monthlyReport?.remainingBalance || 0).toLocaleString()}
                     </p>
-                    <p className="text-[10px] text-textColor opacity-40 font-bold uppercase mt-4">Income vs Outcome Flow</p>
+                    <p className="text-[8px] text-textMuted uppercase font-semibold tracking-wider mt-2.5">Income vs Outcome Flow</p>
                 </div>
             </div>
 
             {/* Charts & Insights Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-7 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-7 gap-4">
                 {/* Category Distribution (Left: 4 Units) */}
-                <div className="lg:col-span-4 bg-card rounded-3xl border border-background p-8 shadow-sm">
-                    <div className="flex justify-between items-start mb-8 text-secondary">
+                <div className="lg:col-span-4 card-premium">
+                    <div className="flex justify-between items-start mb-3">
                         <div>
-                            <h3 className="text-xl font-bold text-textColor tracking-tight">Category Distribution</h3>
-                            <p className="text-sm text-textColor opacity-50 mt-1">Monthly spending breakdown</p>
+                            <h3 className="h3-premium text-sm">Category Distribution</h3>
+                            <p className="text-[10px] text-textMuted mt-0.5">Monthly spending breakdown</p>
                         </div>
                     </div>
 
                     {categoryData.length > 0 ? (
-                        <div className="flex flex-col md:flex-row items-center gap-10">
+                        <div className="flex flex-col md:flex-row items-center gap-4">
                             {/* Donut Chart */}
-                            <div className="h-64 w-64 shrink-0 min-w-[256px] min-h-[256px]">
+                            <div className="h-36 w-36 shrink-0 min-w-[144px] min-h-[144px]">
                                 <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
                                     <PieChart>
                                         <Pie
                                             data={categoryData}
-                                            innerRadius={70}
-                                            outerRadius={100}
-                                            paddingAngle={4}
+                                            innerRadius={40}
+                                            outerRadius={60}
+                                            paddingAngle={3}
                                             dataKey="value"
                                             stroke="none"
                                         >
@@ -326,7 +326,7 @@ const Dashboard = () => {
                                             ))}
                                         </Pie>
                                         <Tooltip
-                                            contentStyle={{ borderRadius: '16px', border: 'none', boxShadow: '0 4px 15px rgba(0,0,0,0.05)' }}
+                                            contentStyle={{ borderRadius: '6px', border: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', fontSize: '10px' }}
                                             formatter={(val) => `₹${val.toLocaleString()}`}
                                         />
                                     </PieChart>
@@ -334,74 +334,68 @@ const Dashboard = () => {
                             </div>
 
                             {/* Detailed Legend */}
-                            <div className="w-full space-y-3">
-                                {categoryData.slice(0, 5).map((cat, index) => (
-                                    <div key={cat.name} className="flex items-center justify-between p-3 rounded-2xl bg-background/40 hover:bg-background/80 transition-colors">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
-                                            <span className="text-sm font-semibold text-textColor/80">{cat.name}</span>
+                            <div className="w-full space-y-1.5">
+                                {categoryData.slice(0, 4).map((cat, index) => (
+                                    <div key={cat.name} className="flex items-center justify-between p-1.5 rounded-lg bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                                        <div className="flex items-center gap-1.5">
+                                            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
+                                            <span className="text-[11px] font-semibold text-textColor">{cat.name}</span>
                                         </div>
-                                        <span className="text-sm font-bold text-textColor">₹{cat.value.toLocaleString()}</span>
+                                        <span className="text-[11px] font-bold text-textColor">₹{cat.value.toLocaleString()}</span>
                                     </div>
                                 ))}
-                                {categoryData.length > 5 && (
-                                    <p className="text-center text-[10px] text-textColor opacity-40 font-bold uppercase pt-2">+{categoryData.length - 5} More Categories</p>
+                                {categoryData.length > 4 && (
+                                    <p className="text-center text-[8px] text-textMuted font-bold uppercase pt-0.5">+{categoryData.length - 4} More Categories</p>
                                 )}
                             </div>
                         </div>
                     ) : (
-                        <div className="h-64 flex flex-col items-center justify-center bg-background/50 rounded-2xl border border-dashed border-background">
-                            <MdAccountBalance className="text-4xl text-textColor opacity-20 mb-3" />
-                            <p className="text-textColor opacity-50 font-medium">No spending data to visualize</p>
+                        <div className="h-36 flex flex-col items-center justify-center bg-slate-50/50 rounded-lg border border-dashed border-slate-200">
+                            <MdAccountBalance className="text-2xl text-textMuted opacity-20 mb-1" />
+                            <p className="text-xs text-textMuted font-medium">No spending data to visualize</p>
                         </div>
                     )}
                 </div>
 
                 {/* Smart Analysis (Right: 3 Units) */}
-                <div className="lg:col-span-3 flex flex-col gap-6">
-                    <div className="h-full bg-gradient-to-br from-primary to-secondary rounded-3xl p-8 text-card relative overflow-hidden shadow-lg group">
-                        <div className="absolute -right-12 -top-12 bg-card/10 w-48 h-48 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
-                        <div className="absolute -left-12 -bottom-12 bg-card/10 w-40 h-40 rounded-full blur-2xl"></div>
+                <div className="lg:col-span-3 flex flex-col gap-3">
+                    <div className="h-full bg-gradient-to-br from-primary to-indigo-800 rounded-xl p-4 text-white relative overflow-hidden shadow-md group">
+                        <div className="absolute -right-12 -top-12 bg-white/5 w-36 h-36 rounded-full blur-2xl group-hover:scale-105 transition-transform duration-700"></div>
+                        <div className="absolute -left-12 -bottom-12 bg-white/5 w-32 h-32 rounded-full blur-xl"></div>
 
-                        <div className="relative z-10 flex flex-col h-full">
-                            <div className="flex items-center gap-3 mb-8">
-                                <div className="p-3 bg-card/20 rounded-2xl backdrop-blur-sm border border-card/10">
-                                    <MdLightbulb className="text-2xl text-card" />
+                        <div className="relative z-10 flex flex-col h-full justify-between">
+                            <div className="flex items-center gap-1.5 mb-2.5">
+                                <div className="p-1.5 bg-white/10 rounded-md backdrop-blur-sm">
+                                    <MdLightbulb className="text-sm text-white" />
                                 </div>
-                                <div>
-                                    <h3 className="font-bold text-lg tracking-tight text-white">Smart Analysis</h3>
-                                </div>
+                                <h3 className="font-bold text-xs tracking-tight text-white">Smart Analysis</h3>
                             </div>
 
-                            <div className="space-y-6 mt-auto">
+                            <div className="space-y-3">
                                 <div>
-                                    <p className="text-xs font-bold text-white/50 uppercase tracking-widest mb-2">Top Spending Pattern</p>
-                                    <p className="text-2xl md:text-3xl font-black text-white leading-tight">
+                                    <p className="text-[9px] font-bold text-white/50 uppercase tracking-wider mb-0.5">Top Spending Pattern</p>
+                                    <p className="text-base font-bold text-white leading-tight">
                                         {analysis?.spendingPattern?.topCategory || 'Gathering insights...'}
                                     </p>
                                 </div>
 
-                                {/* Pattern-Based Analytics: Derived from 30-day rolling averages */}
                                 {analysis?.patternControl && (
-                                    <div className="pt-6 border-t border-white/10">
-                                        <p className="text-xs font-bold text-white/50 uppercase tracking-widest mb-2">Expense Control</p>
-                                        <p className="text-base text-white/90 leading-relaxed font-medium">
-                                            Your average daily expense is <strong className="text-white">₹{Number(analysis.patternControl.averageDailyExpense).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong> — expected monthly <strong className="text-white">₹{Number(analysis.patternControl.expectedMonthly).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong>
+                                    <div className="pt-2.5 border-t border-white/10">
+                                        <p className="text-[9px] font-bold text-white/50 uppercase tracking-wider mb-0.5">Expense Control</p>
+                                        <p className="text-[11px] text-white/90 leading-relaxed font-medium">
+                                            Daily average <strong className="text-white">₹{Number(analysis.patternControl.averageDailyExpense).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong> — expected monthly <strong className="text-white">₹{Number(analysis.patternControl.expectedMonthly).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</strong>
                                         </p>
                                     </div>
                                 )}
 
-                                <div className="pt-6 border-t border-white/10">
-                                    <p className="text-xs font-bold text-white/50 uppercase tracking-widest mb-2">Prediction Next Month</p>
-                                    <div className="flex items-baseline gap-2">
-                                        <p className="text-4xl font-black text-white">
+                                <div className="pt-2.5 border-t border-white/10">
+                                    <p className="text-[9px] font-bold text-white/50 uppercase tracking-wider mb-0.5">Prediction Next Month</p>
+                                    <div className="flex items-baseline gap-1.5">
+                                        <p className="text-lg font-bold text-white">
                                             ₹{Number(analysis?.futureExpensePrediction || 0).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </p>
-                                        <div className="bg-card/20 px-2 py-0.5 rounded text-[10px] font-bold uppercase text-white/80">Est.</div>
+                                        <div className="bg-white/10 px-1.5 py-0.5 rounded text-[8px] font-bold uppercase text-white/80">Est.</div>
                                     </div>
-                                    <p className="text-xs text-white/50 mt-4 leading-relaxed italic">
-                                        "Focus on controlling <strong>{analysis?.spendingPattern?.topCategory || 'expenditures'}</strong> to increase your health score."
-                                    </p>
                                 </div>
                             </div>
                         </div>

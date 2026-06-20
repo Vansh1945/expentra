@@ -68,10 +68,10 @@ const Alerts = () => {
             },
             PAYMENT_RECEIVED: {
                 icon: MdCheckCircle,
-                accent: 'bg-secondary',
-                text: 'text-secondary',
-                lightBg: 'bg-secondary/5',
-                iconColor: 'text-secondary',
+                accent: 'bg-success',
+                text: 'text-success',
+                lightBg: 'bg-success/5',
+                iconColor: 'text-success',
                 label: 'Payment Received',
                 isSmart: false
             },
@@ -135,96 +135,94 @@ const Alerts = () => {
         return (
             <div className="space-y-4">
                 <div className="h-8 bg-card rounded w-1/4 animate-pulse"></div>
-                <div className="h-24 bg-card rounded-lg animate-pulse"></div>
-                <div className="h-24 bg-card rounded-lg animate-pulse"></div>
-                <div className="h-24 bg-card rounded-lg animate-pulse"></div>
+                <div className="h-20 bg-card rounded-lg animate-pulse"></div>
+                <div className="h-20 bg-card rounded-lg animate-pulse"></div>
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen bg-background pb-12">
-            <div className="max-w-4xl mx-auto space-y-8">
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
-                    <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <div className="p-3 bg-primary/10 rounded-2xl">
-                                <MdNotificationsActive className="w-7 h-7 text-primary" />
-                            </div>
-                            {unreadCount > 0 && (
-                                <span className="absolute -top-1 -right-1 w-6 h-6 bg-danger text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-background">
-                                    {unreadCount}
-                                </span>
-                            )}
+        <div className="bg-transparent pb-4 max-w-4xl mx-auto space-y-4">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div className="flex items-center gap-2.5">
+                    <div className="relative">
+                        <div className="p-1.5 bg-primary/10 rounded-lg">
+                            <MdNotificationsActive className="w-4 h-4 text-primary" />
                         </div>
-                        <div>
-                            <h1 className="text-3xl font-extrabold text-textColor tracking-tight">Alerts</h1>
-                            <p className="text-textColor/60 font-medium">Manage your financial notifications</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
                         {unreadCount > 0 && (
-                            <button
-                                onClick={handleMarkAllRead}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-primary bg-card border border-background rounded-xl hover:bg-primary hover:text-white shadow-sm transition-all duration-300"
-                            >
-                                <MdCheckCircle />
-                                Mark all read
-                            </button>
+                            <span className="absolute -top-1 -right-1 w-4 h-4 bg-danger text-white text-[8px] font-bold rounded-full flex items-center justify-center border border-white">
+                                {unreadCount}
+                            </span>
                         )}
-                        {notifications.length > 0 && (
-                            <button
-                                onClick={handleClearAll}
-                                className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-textColor/70 bg-card border border-background rounded-xl hover:bg-danger/5 hover:text-danger shadow-sm transition-all duration-300"
-                            >
-                                <MdDelete />
-                                Clear all
-                            </button>
-                        )}
-                        <button
-                            onClick={fetchNotifications}
-                            className="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-textColor/70 bg-card border border-background rounded-xl hover:bg-background shadow-sm transition-all duration-300"
-                        >
-                            <MdRefresh className="animate-spin-hover" />
-                            Refresh
-                        </button>
+                    </div>
+                    <div>
+                        <h1 className="h1-premium">Alerts</h1>
+                        <p className="text-[10px] text-textMuted mt-0.5">Manage your financial notifications</p>
                     </div>
                 </div>
-
-                {/* Filter Tabs */}
-                <div className="flex gap-2 p-1 bg-card/50 rounded-2xl w-fit">
+                <div className="flex flex-wrap gap-1.5">
+                    {unreadCount > 0 && (
+                        <button
+                            onClick={handleMarkAllRead}
+                            className="btn-secondary py-1 px-2.5 text-xs"
+                        >
+                            <MdCheckCircle className="text-xs text-primary" />
+                            Mark all read
+                        </button>
+                    )}
+                    {notifications.length > 0 && (
+                        <button
+                            onClick={handleClearAll}
+                            className="btn-secondary py-1 px-2.5 text-xs hover:text-danger hover:border-danger/30"
+                        >
+                            <MdDelete className="text-xs" />
+                            Clear all
+                        </button>
+                    )}
                     <button
-                        onClick={() => setFilter('all')}
-                        className={`px-6 py-2 text-sm font-bold rounded-xl transition-all duration-300 ${filter === 'all'
-                            ? 'bg-card text-primary shadow-sm'
-                            : 'text-textColor/60 hover:text-textColor/80'
-                            }`}
+                        onClick={fetchNotifications}
+                        className="btn-secondary py-1 px-2.5 text-xs"
                     >
-                        All
-                        <span className="ml-2 px-2 py-0.5 bg-card rounded-lg text-xs">{notifications.length}</span>
-                    </button>
-                    <button
-                        onClick={() => setFilter('unread')}
-                        className={`px-6 py-2 text-sm font-bold rounded-xl transition-all duration-300 ${filter === 'unread'
-                            ? 'bg-card text-primary shadow-sm'
-                            : 'text-textColor/60 hover:text-textColor/80'
-                            }`}
-                    >
-                        Unread
-                        <span className="ml-2 px-2 py-0.5 bg-card rounded-lg text-xs">{unreadCount}</span>
+                        <MdRefresh className="text-xs" />
+                        Refresh
                     </button>
                 </div>
+            </div>
+
+            {/* Filter Tabs */}
+            <div className="flex gap-0.5 p-0.5 bg-slate-100 rounded-md w-fit">
+                <button
+                    onClick={() => setFilter('all')}
+                    className={`px-3 py-0.5 text-xs font-semibold rounded-md transition-all duration-200 ${filter === 'all'
+                        ? 'bg-card text-primary shadow-sm'
+                        : 'text-textMuted hover:text-textColor'
+                        }`}
+                >
+                    All
+                    <span className="ml-1 px-1 py-0.5 bg-slate-200/60 rounded text-[8px] font-bold">{notifications.length}</span>
+                </button>
+                <button
+                    onClick={() => setFilter('unread')}
+                    className={`px-3 py-0.5 text-xs font-semibold rounded-md transition-all duration-200 ${filter === 'unread'
+                        ? 'bg-card text-primary shadow-sm'
+                        : 'text-textMuted hover:text-textColor'
+                        }`}
+                >
+                    Unread
+                    <span className="ml-1 px-1 py-0.5 bg-slate-200/60 rounded text-[8px] font-bold">{unreadCount}</span>
+                </button>
+            </div>
 
             {/* Notifications List */}
-            <div className="space-y-4">
+            <div className="space-y-2">
                 {filteredNotifications.length === 0 ? (
-                    <div className="bg-card rounded-3xl border border-background p-16 text-center shadow-sm">
-                        <div className="w-20 h-20 bg-background rounded-full flex items-center justify-center mx-auto mb-4 border border-background">
-                            <MdNotificationsNone className="w-10 h-10 text-textColor/40" />
+                    <div className="card-premium p-6 text-center">
+                        <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <MdNotificationsNone className="w-5 h-5 text-textMuted" />
                         </div>
-                        <h3 className="text-xl font-bold text-textColor">No Notifications</h3>
-                        <p className="text-textColor/60 mt-2 max-w-xs mx-auto">
+                        <h3 className="text-xs font-bold text-textColor">No Notifications</h3>
+                        <p className="text-[11px] text-textMuted mt-0.5 max-w-xs mx-auto">
                             {filter === 'unread' ? "You've read all your notifications! Great job managing your finances." : "You're all caught up! No recent activity to show."}
                         </p>
                     </div>
@@ -237,42 +235,37 @@ const Alerts = () => {
                         return (
                             <div
                                 key={notification._id || idx}
-                                className={`group relative overflow-hidden rounded-2xl border transition-all duration-300 ${config.isSmart
-                                    ? 'bg-gradient-to-r from-primary to-secondary p-[1px] shadow-lg hover:shadow-primary/20 scale-[1.01]'
-                                    : 'bg-card border-background shadow-sm hover:shadow-md hover:-translate-y-0.5'
+                                className={`group relative overflow-hidden rounded-xl border transition-all duration-200 ${config.isSmart
+                                    ? 'bg-gradient-to-br from-primary to-indigo-800 p-[1px] shadow-sm hover:shadow-md'
+                                    : 'bg-card border-slate-100 shadow-sm hover:shadow-md'
                                     }`}
                             >
-                                {/* Smart Background Overlay */}
-                                {config.isSmart && (
-                                    <div className="absolute inset-0 bg-card/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                )}
-
-                                <div className={`relative flex items-start gap-4 p-5 ${config.isSmart ? 'bg-gradient-to-r from-primary/95 to-secondary/95 rounded-[15px]' : ''}`}>
+                                <div className={`relative flex items-start gap-2.5 p-3 ${config.isSmart ? 'bg-gradient-to-br from-primary to-indigo-800 rounded-[11px]' : ''}`}>
                                     {/* Left Status Indicator */}
                                     {!config.isSmart && (
                                         <div className={`absolute left-0 top-0 bottom-0 w-1 ${config.accent}`}></div>
                                     )}
 
                                     {/* Icon */}
-                                    <div className={`shrink-0 p-3 rounded-xl ${config.isSmart ? 'bg-card/20' : config.lightBg}`}>
-                                        <Icon className={`w-6 h-6 ${config.isSmart ? 'text-white' : config.iconColor}`} />
+                                    <div className={`shrink-0 p-1.5 rounded-lg ${config.isSmart ? 'bg-white/10' : config.lightBg}`}>
+                                        <Icon className={`w-4 h-4 ${config.isSmart ? 'text-white' : config.iconColor}`} />
                                     </div>
 
                                     {/* Content */}
                                     <div className="flex-1 min-w-0">
-                                        <div className="flex flex-wrap items-center gap-3 mb-1.5">
-                                            <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${config.isSmart
-                                                ? 'bg-card text-primary'
+                                        <div className="flex flex-wrap items-center gap-1.5 mb-0.5">
+                                            <span className={`text-[8px] font-bold uppercase tracking-wider px-1 py-0.5 rounded ${config.isSmart
+                                                ? 'bg-white text-primary'
                                                 : `${config.lightBg} ${config.iconColor}`
                                                 }`}>
                                                 {config.label}
                                             </span>
                                             {isUnread && (
-                                                <span className={`text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-md ${config.isSmart ? 'bg-card/20 text-white' : 'bg-primary/10 text-primary'}`}>
+                                                <span className={`text-[8px] font-bold uppercase tracking-wider px-1 py-0.5 rounded ${config.isSmart ? 'bg-white/20 text-white' : 'bg-primary/10 text-primary'}`}>
                                                     NEW
                                                 </span>
                                             )}
-                                            <span className={`text-xs font-medium ${config.isSmart ? 'text-white/70' : 'text-textColor/50'}`}>
+                                            <span className={`text-[9px] font-semibold ${config.isSmart ? 'text-white/60' : 'text-textMuted/60'}`}>
                                                 {new Date(notification.createdAt).toLocaleDateString(undefined, {
                                                     month: 'short',
                                                     day: 'numeric',
@@ -281,24 +274,24 @@ const Alerts = () => {
                                                 })}
                                             </span>
                                         </div>
-                                        <h4 className={`text-base font-bold leading-tight ${config.isSmart ? 'text-white' : 'text-textColor'}`}>
+                                        <h4 className={`text-[11px] font-bold leading-relaxed ${config.isSmart ? 'text-white' : 'text-textColor'}`}>
                                             {notification.message}
                                         </h4>
 
                                         {/* Details Section */}
                                         {notification.details && notification.details.length > 0 && (
-                                            <div className={`mt-4 p-4 rounded-xl border ${config.isSmart
-                                                ? 'bg-card/10 border-white/20'
-                                                : 'bg-background border-background'
+                                            <div className={`mt-2 p-2 rounded-lg border ${config.isSmart
+                                                ? 'bg-white/10 border-white/10'
+                                                : 'bg-slate-50 border-slate-100'
                                                 }`}>
-                                                <p className={`text-[11px] font-bold uppercase tracking-widest mb-3 ${config.isSmart ? 'text-white/60' : 'text-textColor/50'}`}>Detailed Analysis</p>
-                                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <p className={`text-[8px] font-bold uppercase tracking-wider mb-1.5 ${config.isSmart ? 'text-white/60' : 'text-textMuted/60'}`}>Detailed Analysis</p>
+                                                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
                                                     {notification.details.map((d, i) => (
-                                                        <li key={i} className="flex items-center gap-3 p-2 rounded-lg bg-card/5">
-                                                            <div className={`w-2 h-2 rounded-full ${config.isSmart ? 'bg-secondary' : 'bg-primary'}`}></div>
+                                                        <li key={i} className="flex items-center gap-1.5 p-1 rounded bg-card/5">
+                                                            <div className={`w-1 h-1 rounded-full ${config.isSmart ? 'bg-white' : 'bg-primary'}`}></div>
                                                             <div className="flex flex-col">
-                                                                <span className={`text-xs font-bold ${config.isSmart ? 'text-white' : 'text-textColor'}`}>{d._id?.category}</span>
-                                                                <span className={`text-[10px] ${config.isSmart ? 'text-white/60' : 'text-textColor/60'}`}>₹{d._id?.amount} • {d.count} sessions</span>
+                                                                 <span className={`text-[10px] font-bold ${config.isSmart ? 'text-white' : 'text-textColor'}`}>{d._id?.category}</span>
+                                                                 <span className={`text-[8px] ${config.isSmart ? 'text-white/60' : 'text-textMuted/60'}`}>₹{d._id?.amount} • {d.count} sessions</span>
                                                             </div>
                                                         </li>
                                                     ))}
@@ -308,16 +301,16 @@ const Alerts = () => {
                                     </div>
 
                                     {/* Actions */}
-                                    <div className="flex flex-col gap-2 shrink-0">
+                                    <div className="flex flex-col gap-1.5 shrink-0">
                                         <button
                                             onClick={() => handleDelete(notification._id)}
-                                            className={`p-2 rounded-lg transition-all ${config.isSmart
-                                                ? 'text-white hover:bg-card/20'
-                                                : 'text-textColor/50 hover:text-danger hover:bg-danger/5'
+                                            className={`p-1 rounded-lg transition-colors ${config.isSmart
+                                                ? 'text-white hover:bg-white/10'
+                                                : 'text-textMuted hover:text-danger hover:bg-danger/5'
                                                 }`}
                                             title="Dismiss"
                                         >
-                                            <MdClose className="w-5 h-5" />
+                                            <MdClose className="w-3.5 h-3.5" />
                                         </button>
                                     </div>
                                 </div>
@@ -327,7 +320,6 @@ const Alerts = () => {
                 )}
             </div>
         </div>
-    </div>
     );
 };
 

@@ -47,41 +47,41 @@ const AdminProfile = () => {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4">
             {/* Header */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="flex items-center gap-3">
-                    <div className="p-2 bg-primary/5 rounded-lg">
-                        <MdAdminPanelSettings className="w-7 h-7 text-primary" />
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div className="flex items-center gap-2">
+                    <div className="p-1.5 bg-primary/5 rounded-lg">
+                        <MdAdminPanelSettings className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold text-textColor">Admin Profile</h1>
-                        <p className="text-sm text-textColor/70 mt-0.5">Manage your account settings and security</p>
+                        <h1 className="h1-premium">Admin Profile</h1>
+                        <p className="small-premium mt-0.5">Manage your account settings and security</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-secondary/5 rounded-full">
-                        <MdVerifiedUser className="w-4 h-4 text-secondary" />
-                        <span className="text-xs font-medium text-secondary">Administrator</span>
+                    <div className="flex items-center gap-1 px-2.5 py-0.5 bg-primary/5 rounded-full border border-primary/10">
+                        <MdVerifiedUser className="w-3 h-3 text-primary" />
+                        <span className="text-[9px] font-bold text-primary uppercase tracking-wider">Administrator</span>
                     </div>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 {/* Profile Form - Main Column */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-card rounded-lg border border-background shadow-sm overflow-hidden">
-                        <div className="px-5 py-3 bg-background border-b border-background">
-                            <div className="flex items-center gap-2">
-                                <MdSecurity className="w-5 h-5 text-primary" />
-                                <h2 className="font-semibold text-textColor">Security & Credentials</h2>
+                <div className="lg:col-span-2 space-y-4">
+                    <div className="card-premium !p-0 overflow-hidden">
+                        <div className="px-4 py-2 bg-slate-50/50 border-b border-slate-100">
+                            <div className="flex items-center gap-1.5">
+                                <MdSecurity className="w-4 h-4 text-primary" />
+                                <h2 className="text-xs font-bold text-textColor uppercase tracking-wider">Security & Credentials</h2>
                             </div>
-                            <p className="text-xs text-textColor/70 mt-0.5">Update your primary administrative contact and password</p>
+                            <p className="small-premium mt-0.5">Update your primary administrative contact and password</p>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="p-5 space-y-4">
+                        <form onSubmit={handleSubmit} className="p-4 space-y-3">
                             <div>
-                                <label className="block text-sm font-medium text-textColor/80 mb-1">
+                                <label className="label-premium">
                                     Display Name
                                 </label>
                                 <input
@@ -89,13 +89,13 @@ const AdminProfile = () => {
                                     required
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
-                                    className="w-full px-3 py-2 border border-background rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="input-premium py-1 text-xs"
                                     placeholder="Your full name"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-textColor/80 mb-1">
+                                <label className="label-premium">
                                     Admin Email
                                 </label>
                                 <input
@@ -103,13 +103,13 @@ const AdminProfile = () => {
                                     required
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full px-3 py-2 border border-background rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="input-premium py-1 text-xs"
                                     placeholder="admin@example.com"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-textColor/80 mb-1">
+                                <label className="label-premium">
                                     New Password
                                 </label>
                                 <div className="relative">
@@ -117,18 +117,18 @@ const AdminProfile = () => {
                                         type={showPassword ? "text" : "password"}
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full px-3 py-2 border border-background rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10"
+                                        className="input-premium pr-10 py-1 text-xs"
                                         placeholder="Leave blank to keep current password"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-textColor/60 hover:text-textColor/80"
+                                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-textMuted/60 hover:text-textColor text-xs"
                                     >
                                         {showPassword ? "🙈" : "👁️"}
                                     </button>
                                 </div>
-                                <p className="text-xs text-textColor/60 mt-1">
+                                <p className="text-[9px] text-textMuted/60 mt-0.5 font-semibold">
                                     Minimum 6 characters. Only update if you want to change your password.
                                 </p>
                             </div>
@@ -136,16 +136,16 @@ const AdminProfile = () => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="w-full py-2 bg-primary text-white rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                className="btn-primary w-full py-1.5 font-bold uppercase tracking-wider text-xs"
                             >
                                 {loading ? (
                                     <>
-                                        <div className="animate-spin rounded-full w-5 h-5 border-2 border-white border-t-transparent"></div>
+                                        <div className="animate-spin rounded-full w-3.5 h-3.5 border-2 border-white border-t-transparent"></div>
                                         Saving...
                                     </>
                                 ) : (
                                     <>
-                                        <MdSave className="text-base" />
+                                        <MdSave className="text-sm" />
                                         Update Settings
                                     </>
                                 )}
@@ -154,22 +154,22 @@ const AdminProfile = () => {
                     </div>
 
                     {/* Info Card */}
-                    <div className="bg-primary/5 rounded-lg border border-blue-200 p-4">
-                        <div className="flex items-start gap-3">
-                            <MdInfoOutline className="w-5 h-5 text-primary mt-0.5" />
+                    <div className="bg-primary/5 rounded-xl border border-primary/10 p-3">
+                        <div className="flex items-start gap-2.5">
+                            <MdInfoOutline className="w-4 h-4 text-primary mt-0.5" />
                             <div>
-                                <p className="text-sm font-medium text-blue-900">Security Tips</p>
-                                <ul className="text-xs text-blue-800 mt-2 space-y-1.5">
-                                    <li className="flex items-center gap-2">
-                                        <MdCheckCircle className="text-xs text-primary" />
+                                <p className="text-[10px] font-bold text-primary uppercase tracking-wider">Security Tips</p>
+                                <ul className="text-[10px] text-textMuted mt-1.5 space-y-1.5 font-medium">
+                                    <li className="flex items-center gap-1.5">
+                                        <MdCheckCircle className="text-xs text-primary/70" />
                                         Use a strong, unique password for your admin account
                                     </li>
-                                    <li className="flex items-center gap-2">
-                                        <MdCheckCircle className="text-xs text-primary" />
+                                    <li className="flex items-center gap-1.5">
+                                        <MdCheckCircle className="text-xs text-primary/70" />
                                         Never share your login credentials with others
                                     </li>
-                                    <li className="flex items-center gap-2">
-                                        <MdCheckCircle className="text-xs text-primary" />
+                                    <li className="flex items-center gap-1.5">
+                                        <MdCheckCircle className="text-xs text-primary/70" />
                                         Review your login activity regularly for suspicious access
                                     </li>
                                 </ul>
@@ -179,51 +179,51 @@ const AdminProfile = () => {
                 </div>
 
                 {/* Right Column - Login Activity */}
-                <div className="space-y-6">
-                    <div className="bg-card rounded-lg border border-background shadow-sm overflow-hidden">
-                        <div className="px-4 py-3 bg-background border-b border-background">
-                            <div className="flex items-center gap-2">
-                                <MdHistory className="w-5 h-5 text-primary" />
-                                <h3 className="font-semibold text-textColor">Login Activity</h3>
+                <div className="space-y-4">
+                    <div className="card-premium !p-0 overflow-hidden">
+                        <div className="px-3.5 py-2 bg-slate-50/50 border-b border-slate-100">
+                            <div className="flex items-center gap-1.5">
+                                <MdHistory className="w-4 h-4 text-primary" />
+                                <h3 className="font-bold text-textColor text-xs">Login Activity</h3>
                             </div>
-                            <p className="text-xs text-textColor/70 mt-0.5">Recent sign-ins to your account</p>
+                            <p className="small-premium mt-0.5">Recent sign-ins to your account</p>
                         </div>
 
-                        <div className="max-h-80 overflow-y-auto">
+                        <div className="max-h-64 overflow-y-auto">
                             {loginActivities.length === 0 ? (
-                                <div className="p-8 text-center">
-                                    <div className="w-16 h-16 bg-background rounded-full flex items-center justify-center mx-auto mb-3">
-                                        <MdHistory className="w-8 h-8 text-textColor/50" />
+                                <div className="p-6 text-center">
+                                    <div className="w-10 h-10 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                        <MdHistory className="w-5 h-5 text-textMuted/50" />
                                     </div>
-                                    <p className="text-sm text-textColor/70">No login activity recorded</p>
-                                    <p className="text-xs text-textColor/60 mt-1">Sign-ins will appear here</p>
+                                    <p className="text-xs font-semibold text-textColor">No activity recorded</p>
+                                    <p className="small-premium mt-1 uppercase tracking-wide">Sign-ins will appear here</p>
                                 </div>
                             ) : (
-                                <div className="divide-y divide-background">
+                                <div className="divide-y divide-slate-100">
                                     {[...loginActivities].reverse().map((log, index) => (
-                                        <div key={index} className="p-3 hover:bg-background transition">
-                                            <div className="flex items-start gap-3">
-                                                <div className="w-8 h-8 bg-primary/5 rounded-lg flex items-center justify-center shrink-0">
-                                                    <MdLocationOn className="w-4 h-4 text-primary" />
+                                        <div key={index} className="p-2.5 hover:bg-slate-50/30 transition-all duration-200">
+                                            <div className="flex items-start gap-2">
+                                                <div className="w-7 h-7 bg-primary/5 rounded-lg flex items-center justify-center shrink-0">
+                                                    <MdLocationOn className="w-3.5 h-3.5 text-primary" />
                                                 </div>
                                                 <div className="flex-1 min-w-0">
-                                                    <p className="text-sm font-medium text-textColor">
+                                                    <p className="text-xs font-semibold text-textColor">
                                                         {new Date(log.date).toLocaleDateString(undefined, {
                                                             month: 'short',
                                                             day: 'numeric',
                                                             year: 'numeric'
                                                         })}
                                                     </p>
-                                                    <p className="text-xs text-textColor/70">
+                                                    <p className="text-[10px] text-textMuted font-medium">
                                                         {new Date(log.date).toLocaleTimeString()}
                                                     </p>
-                                                    <p className="text-xs font-mono text-textColor/60 mt-1">
+                                                    <p className="text-[9px] font-mono text-textMuted/60 mt-0.5 font-semibold">
                                                         IP: {log.ip || 'Unknown'}
                                                     </p>
                                                 </div>
                                                 {log.isNewDevice && (
-                                                    <span className="text-xs font-medium bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">
-                                                        New Device
+                                                    <span className="text-[8px] font-bold uppercase tracking-wider bg-warning/10 text-warning px-1.5 py-0.5 rounded-full">
+                                                        New
                                                     </span>
                                                 )}
                                             </div>
@@ -235,44 +235,44 @@ const AdminProfile = () => {
                     </div>
 
                     {/* Admin Stats Card */}
-                    <div className="bg-card rounded-lg border border-background shadow-sm p-4">
-                        <div className="flex items-center gap-2 mb-3">
-                            <MdVerifiedUser className="w-5 h-5 text-primary" />
-                            <h3 className="font-semibold text-textColor">Account Summary</h3>
+                    <div className="card-premium p-3">
+                        <div className="flex items-center gap-1.5 mb-2.5">
+                            <MdVerifiedUser className="w-4 h-4 text-primary" />
+                            <h3 className="font-bold text-textColor text-xs">Account Summary</h3>
                         </div>
-                        <div className="space-y-3">
-                            <div className="flex justify-between items-center py-2 border-b border-background">
-                                <span className="text-sm text-textColor/70">Role</span>
-                                <span className="text-sm font-medium text-primary">Super Admin</span>
+                        <div className="space-y-1.5">
+                            <div className="flex justify-between items-center py-1.5 border-b border-slate-100">
+                                <span className="text-[11px] font-semibold text-textMuted">Role</span>
+                                <span className="text-[11px] font-bold text-primary uppercase tracking-wide">Super Admin</span>
                             </div>
-                            <div className="flex justify-between items-center py-2 border-b border-background">
-                                <span className="text-sm text-textColor/70">Account Status</span>
-                                <span className="text-sm font-medium text-secondary flex items-center gap-1">
+                            <div className="flex justify-between items-center py-1.5 border-b border-slate-100">
+                                <span className="text-[11px] font-semibold text-textMuted">Account Status</span>
+                                <span className="text-[11px] font-bold text-success flex items-center gap-0.5 uppercase tracking-wide">
                                     <MdCheckCircle className="text-xs" />
                                     Active
                                 </span>
                             </div>
-                            <div className="flex justify-between items-center py-2 border-b border-background">
-                                <span className="text-sm text-textColor/70">Member Since</span>
-                                <span className="text-sm font-medium text-textColor">
+                            <div className="flex justify-between items-center py-1.5 border-b border-slate-100">
+                                <span className="text-[11px] font-semibold text-textMuted">Member Since</span>
+                                <span className="text-[11px] font-bold text-textColor">
                                     {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'}
                                 </span>
                             </div>
-                            <div className="flex justify-between items-center py-2">
-                                <span className="text-sm text-textColor/70">Total Logins</span>
-                                <span className="text-sm font-medium text-textColor">{loginActivities.length}</span>
+                            <div className="flex justify-between items-center py-1.5">
+                                <span className="text-[11px] font-semibold text-textMuted">Total Logins</span>
+                                <span className="text-[11px] font-bold text-textColor">{loginActivities.length}</span>
                             </div>
                         </div>
                     </div>
 
                     {/* Security Warning */}
                     {!password && (
-                        <div className="bg-yellow-50 rounded-lg border border-yellow-200 p-4">
+                        <div className="bg-warning/5 rounded-xl border border-warning/15 p-3">
                             <div className="flex items-start gap-2">
-                                <MdWarning className="w-5 h-5 text-yellow-600 mt-0.5" />
+                                <MdWarning className="w-4 h-4 text-warning mt-0.5" />
                                 <div>
-                                    <p className="text-sm font-medium text-yellow-800">Security Recommendation</p>
-                                    <p className="text-xs text-yellow-700 mt-1">
+                                    <p className="text-[10px] font-bold text-warning uppercase tracking-wider">Security Recommendation</p>
+                                    <p className="text-[10px] text-textMuted mt-0.5 leading-relaxed font-medium">
                                         Consider updating your password regularly to maintain account security.
                                     </p>
                                 </div>
