@@ -10,6 +10,7 @@ import {
     MdAdminPanelSettings,
     MdHome,
     MdHandshake,
+    MdEmojiEvents,
 } from 'react-icons/md';
 import { FaMoneyBillWave } from 'react-icons/fa';
 
@@ -59,6 +60,7 @@ const Sidebar = ({ role, isOpen, setIsOpen }) => {
             { name: 'Reports', path: '/reports', icon: MdPieChart },
             { name: 'Budget', path: '/budget', icon: MdAttachMoney },
             { name: 'Analysis', path: '/analysis', icon: MdAnalytics },
+            { name: 'Quests & Badges', path: '/challenges', icon: MdEmojiEvents },
             { name: 'Group Mode', path: '/groups', icon: MdGroup, action: () => setAppMode('group') },
         ];
 

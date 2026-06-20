@@ -16,6 +16,7 @@ import incomeRoutes from './routes/incomeRoutes.js';
 import categoryRoutes from './routes/categoryRoutes.js';
 import groupRoutes from './routes/groupRoutes.js';
 import groupExpenseRoutes from './routes/groupExpenseRoutes.js';
+import challengeRoutes from './routes/challengeRoutes.js';
 
 connectDB();
 
@@ -60,6 +61,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/groups', groupRoutes);
 app.use('/api/group-expenses', groupExpenseRoutes);
+app.use('/api/challenges', challengeRoutes);
 
 app.get('/', (req, res) => {
     res.send('API is running...');

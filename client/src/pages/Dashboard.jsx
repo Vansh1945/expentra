@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate, Link } from 'react-router-dom';
+import axiosInstance from 'axios';
 import { AuthContext, API } from '../context/AuthContext';
 import { toast } from 'react-toastify';
 import {
@@ -8,7 +8,7 @@ import {
 } from 'recharts';
 import {
     MdGroup, MdTrendingUp, MdTrendingDown, MdAccountBalance,
-    MdAttachMoney, MdLightbulb, MdArrowForward
+    MdAttachMoney, MdLightbulb, MdArrowForward, MdFlashOn, MdWarning
 } from 'react-icons/md';
 
 const COLORS = ['#2563EB', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#06B6D4'];
@@ -24,6 +24,8 @@ const Dashboard = () => {
     const [analysis, setAnalysis] = useState(null);
     const [monthlyReport, setMonthlyReport] = useState(null);
     const [budgetStatus, setBudgetStatus] = useState(null);
+    const [challenges, setChallenges] = useState(null);
+    const [monthExpenses, setMonthExpenses] = useState([]);
 
     // ==========================================
     // DATA SYNCHRONIZATION
@@ -36,15 +38,19 @@ const Dashboard = () => {
                 const month = today.getMonth() + 1;
                 const year = today.getFullYear();
 
-                const [analysisRes, reportRes, budgetRes] = await Promise.all([
-                    axios.get(`${API}/analysis/summary`).catch(() => ({ data: null })),
-                    axios.get(`${API}/reports/monthly?month=${month}&year=${year}`).catch(() => ({ data: null })),
-                    axios.get(`${API}/budget?month=${month}&year=${year}`).catch(() => ({ data: null }))
+                const [analysisRes, reportRes, budgetRes, challengesRes, expensesRes] = await Promise.all([
+                    axiosInstance.get(`${API}/analysis/summary`).catch(() => ({ data: null })),
+                    axiosInstance.get(`${API}/reports/monthly?month=${month}&year=${year}`).catch(() => ({ data: null })),
+                    axiosInstance.get(`${API}/budget?month=${month}&year=${year}`).catch(() => ({ data: null })),
+                    axiosInstance.get(`${API}/challenges/status`).catch(() => ({ data: null })),
+                    axiosInstance.get(`${API}/expenses?month=${month}&year=${year}`).catch(() => ({ data: null }))
                 ]);
 
                 setAnalysis(analysisRes.data);
                 setMonthlyReport(reportRes.data);
                 setBudgetStatus(budgetRes.data);
+                setChallenges(challengesRes.data);
+                setMonthExpenses(expensesRes.data || []);
             } catch (error) {
                 toast.error('Failed to load dashboard data');
             } finally {
@@ -57,7 +63,7 @@ const Dashboard = () => {
 
     const handleSwitchToGroup = async () => {
         try {
-            const res = await axios.get(`${API}/groups`);
+            const res = await axiosInstance.get(`${API}/groups`);
             if (res.data.length > 0) {
                 setSelectedGroupId(res.data[0]._id);
                 setAppMode('group');
@@ -71,6 +77,72 @@ const Dashboard = () => {
             navigate('/groups');
         }
     };
+
+    // Calculate simple linear regression projection
+    const getForecast = () => {
+        if (!monthExpenses || monthExpenses.length === 0) return null;
+        
+        const dailyTotals = {};
+        monthExpenses.forEach(exp => {
+            const day = new Date(exp.date).getDate();
+            dailyTotals[day] = (dailyTotals[day] || 0) + exp.amount;
+        });
+
+        const todayDay = new Date().getDate();
+        const x = [];
+        const y = [];
+        let cumulative = 0;
+
+        for (let d = 1; d <= todayDay; d++) {
+            cumulative += dailyTotals[d] || 0;
+            x.push(d);
+            y.push(cumulative);
+        }
+
+        const n = x.length;
+        if (n < 2) {
+            const currentSpent = y[y.length - 1] || 0;
+            const projected = (currentSpent / todayDay) * 30;
+            return {
+                projected,
+                willBreach: budgetStatus?.budget ? projected > budgetStatus.budget : false,
+                breachDay: budgetStatus?.budget && projected > budgetStatus.budget ? Math.ceil(budgetStatus.budget / (currentSpent / todayDay)) : null
+            };
+        }
+
+        let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+        for (let i = 0; i < n; i++) {
+            sumX += x[i];
+            sumY += y[i];
+            sumXY += x[i] * y[i];
+            sumXX += x[i] * x[i];
+        }
+
+        const m = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+        const c = (sumY - m * sumX) / n;
+
+        const projected = Math.max(0, m * 30 + c);
+
+        let breachDay = null;
+        let willBreach = false;
+        if (budgetStatus?.budget && projected > budgetStatus.budget) {
+            willBreach = true;
+            if (m > 0) {
+                const day = (budgetStatus.budget - c) / m;
+                breachDay = Math.min(30, Math.max(1, Math.ceil(day)));
+            } else {
+                breachDay = todayDay;
+            }
+        }
+
+        return {
+            projected,
+            willBreach,
+            breachDay
+        };
+    };
+
+    const forecast = getForecast();
 
     if (loading) {
         return (
@@ -106,15 +178,40 @@ const Dashboard = () => {
                     <h1 className="text-2xl md:text-3xl font-bold text-textColor tracking-tight">Dashboard Overview</h1>
                     <p className="text-sm text-textColor opacity-60 mt-1">Real-time financial tracking and insights</p>
                 </div>
-                <button
-                    onClick={handleSwitchToGroup}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-card border border-background text-textColor font-semibold rounded-xl hover:bg-background transition-all duration-300 shadow-sm group"
-                >
-                    <MdGroup className="text-xl text-primary group-hover:scale-110 transition-transform" />
-                    <span>Switch to Group</span>
-                    <MdArrowForward className="text-lg opacity-40" />
-                </button>
+                <div className="flex gap-3">
+                    {challenges && (
+                        <Link
+                            to="/challenges"
+                            className="flex items-center gap-2 px-5 py-2.5 bg-warning/10 border border-warning/20 text-warning font-semibold rounded-xl hover:bg-warning/25 transition-all duration-300 shadow-sm"
+                        >
+                            <MdFlashOn className="text-xl animate-bounce" />
+                            <span>Streak: {challenges.streakCount} Days</span>
+                        </Link>
+                    )}
+                    <button
+                        onClick={handleSwitchToGroup}
+                        className="flex items-center gap-2 px-5 py-2.5 bg-card border border-background text-textColor font-semibold rounded-xl hover:bg-background transition-all duration-300 shadow-sm group"
+                    >
+                        <MdGroup className="text-xl text-primary group-hover:scale-110 transition-transform" />
+                        <span>Switch to Group</span>
+                        <MdArrowForward className="text-lg opacity-40" />
+                    </button>
+                </div>
             </div>
+
+            {/* Linear Regression Forecast warning indicator */}
+            {forecast && forecast.willBreach && (
+                <div className="bg-danger/10 border border-danger/25 rounded-xl p-4 flex items-start gap-3 shadow-sm animate-pulse">
+                    <MdWarning className="text-danger text-2xl shrink-0 mt-0.5" />
+                    <div>
+                        <h4 className="font-bold text-danger text-sm">Budget Exceed Warning (Linear Regression Forecast)</h4>
+                        <p className="text-textColor/90 text-xs mt-1 leading-normal">
+                            At your current spending rate, you are projected to spend <strong>₹{Math.round(forecast.projected).toLocaleString()}</strong> by the end of this month, exceeding your budget ceiling of <strong>₹{(budgetStatus?.budget || 0).toLocaleString()}</strong>.
+                            You will likely breach your budget limit around <strong>Day {forecast.breachDay}</strong> of the month.
+                        </p>
+                    </div>
+                </div>
+            )}
 
             {/* Smart Decision Support System: Displays predictive insights from analysisController */}
             {analysis?.insights && analysis.insights.length > 0 && (

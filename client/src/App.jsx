@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
@@ -27,7 +27,35 @@ axios.interceptors.request.use(
 // Add a response interceptor
 axios.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    // Check if network is offline or no response was received due to network issues
+    if (!error.response || error.message === 'Network Error' || !navigator.onLine) {
+      const config = error.config;
+      if (config && ['post', 'put', 'delete'].includes(config.method.toLowerCase()) && 
+          (config.url.includes('/expenses') || config.url.includes('/incomes') || config.url.includes('/challenges/complete-quest'))) {
+        
+        const offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
+        offlineQueue.push({
+          url: config.url,
+          method: config.method,
+          data: config.data ? JSON.parse(config.data) : null,
+          headers: config.headers
+        });
+        localStorage.setItem('offlineQueue', JSON.stringify(offlineQueue));
+        
+        toast.success('Transaction saved.');
+        
+        // Return a mock successful response structure to let UI finish correctly
+        return Promise.resolve({ 
+          data: { 
+            message: 'Saved offline', 
+            _id: 'temp-' + Date.now(), 
+            ...(config.data ? JSON.parse(config.data) : {}) 
+          } 
+        });
+      }
+    }
+
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -54,6 +82,7 @@ const Reports = React.lazy(() => import('./pages/Reports'));
 const Analysis = React.lazy(() => import('./pages/Analysis'));
 const Alerts = React.lazy(() => import('./pages/Alerts'));
 const Home = React.lazy(() => import('./pages/Home'));
+const Challenges = React.lazy(() => import('./pages/Challenges'));
 
 
 // Group Pages
@@ -74,6 +103,48 @@ const AdminProfile = React.lazy(() => import('./pages/admin/AdminProfile'));
 
 
 function App() {
+  React.useEffect(() => {
+    const syncOfflineData = async () => {
+      const offlineQueue = JSON.parse(localStorage.getItem('offlineQueue') || '[]');
+      if (offlineQueue.length === 0) return;
+
+      toast.info('Processing updates...');
+
+      const remainingQueue = [];
+      for (const req of offlineQueue) {
+        try {
+          await axios({
+            url: req.url,
+            method: req.method,
+            data: req.data,
+            headers: req.headers
+          });
+        } catch (err) {
+          console.error('Failed to sync transaction', req, err);
+          remainingQueue.push(req);
+        }
+      }
+
+      if (remainingQueue.length === 0) {
+        localStorage.removeItem('offlineQueue');
+        toast.success('Updates completed successfully!');
+        window.location.reload();
+      } else {
+        localStorage.setItem('offlineQueue', JSON.stringify(remainingQueue));
+        toast.error('Some updates failed.');
+      }
+    };
+
+    window.addEventListener('online', syncOfflineData);
+    if (navigator.onLine) {
+      syncOfflineData();
+    }
+
+    return () => {
+      window.removeEventListener('online', syncOfflineData);
+    };
+  }, []);
+
   return (
     <AuthProvider>
       <Router>
@@ -98,6 +169,7 @@ function App() {
               <Route path="/reports" element={<Reports />} />
               <Route path="/analysis" element={<Analysis />} />
               <Route path="/alerts" element={<Alerts />} />
+              <Route path="/challenges" element={<Challenges />} />
 
               <Route path="/groups" element={<GroupSelection />} />
               <Route path="/groups/dashboard" element={<GroupDashboard />} />

@@ -34,6 +34,21 @@ const userSchema = new mongoose.Schema(
         fcmTokens: {
             type: [String],
             default: [],
+        },
+        streakCount: {
+            type: Number,
+            default: 0,
+        },
+        lastActiveDate: {
+            type: Date,
+        },
+        badges: {
+            type: [String],
+            default: [],
+        },
+        questsCompleted: {
+            type: [String],
+            default: [],
         }
     },
     {
