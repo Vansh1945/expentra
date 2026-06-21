@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import PublicNavbar from '../components/PublicNavbar';
 import { auth, googleProvider } from '../firebase';
-import { signInWithPopup } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import { FcGoogle } from 'react-icons/fc';
 
 import logoImg from '../assets/logo.png';
@@ -25,6 +25,35 @@ const Login = () => {
             }
         }
     }, [token, user, navigate]);
+
+    useEffect(() => {
+        const checkRedirectResult = async () => {
+            try {
+                const result = await getRedirectResult(auth);
+                if (result?.user) {
+                    const user = result.user;
+                    const res = await axios.post(`${API}/auth/google`, {
+                        name: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL,
+                    });
+
+                    const { token, role } = res.data;
+                    login(token, res.data, role);
+                    toast.success('Google Login successful!');
+                    if (role === 'admin') {
+                        navigate('/admin/dashboard');
+                    } else {
+                        navigate('/dashboard');
+                    }
+                }
+            } catch (error) {
+                console.error("Google redirect sign-in error:", error);
+                toast.error(error.response?.data?.message || 'Google Login failed. Please try again.');
+            }
+        };
+        checkRedirectResult();
+    }, [navigate, login]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -67,6 +96,14 @@ const Login = () => {
         } catch (error) {
             if (error.code === 'auth/popup-closed-by-user') {
                 toast.warning('Authentication cancelled');
+            } else if (error.code === 'auth/popup-blocked') {
+                toast.info('Popup blocked. Redirecting to Google sign in...');
+                try {
+                    await signInWithRedirect(auth, googleProvider);
+                } catch (redirectError) {
+                    toast.error('Failed to redirect. Please enable popups or try a different browser.');
+                    console.error(redirectError);
+                }
             } else {
                 toast.error(error.response?.data?.message || 'Google Login failed. Please try again.');
                 console.error(error);
