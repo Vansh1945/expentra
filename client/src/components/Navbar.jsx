@@ -45,11 +45,11 @@ const Navbar = ({ user, setIsSidebarOpen }) => {
                         onClick={markAsSeen}
                         className="relative p-2 text-textColor hover:bg-slate-50 rounded-lg transition-all duration-200"
                     >
-                        <MdNotifications className="w-5.5 h-5.5 text-textColor/80" />
+                        <MdNotifications className="w-6 h-6 text-textColor/80" />
                         {unreadCount > 0 && (
-                            <span className="absolute top-0.5 right-0.5 flex h-4.5 w-4.5">
+                            <span className="absolute top-0.5 right-0.5 flex h-5 w-5">
                                 <span className="absolute inline-flex h-full w-full rounded-full bg-danger opacity-75 animate-ping"></span>
-                                <span className="relative inline-flex rounded-full h-4.5 w-4.5 bg-danger text-[10px] font-bold flex items-center justify-center text-white">
+                                <span className="relative inline-flex rounded-full h-5 w-5 bg-danger text-[10px] font-bold flex items-center justify-center text-white">
                                     {unreadCount > 9 ? '9+' : unreadCount}
                                 </span>
                             </span>
@@ -69,7 +69,7 @@ const Navbar = ({ user, setIsSidebarOpen }) => {
                     onClick={logout}
                     className="btn-primary py-1.5 px-3.5 text-xs md:text-sm"
                 >
-                    <MdLogout className="h-4.5 w-4.5" />
+                    <MdLogout className="h-4 w-4" />
                     <span className="hidden sm:inline-block">Logout</span>
                 </button>
             </div>
