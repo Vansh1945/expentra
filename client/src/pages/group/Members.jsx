@@ -22,6 +22,9 @@ const Members = () => {
     const [editEmail, setEditEmail] = useState('');
 
     const isAdmin = groupData && user && groupData.createdBy?.toString() === user._id?.toString();
+    const inviteLink = groupData?.inviteCode 
+        ? `${window.location.origin}/join-group/${groupData.inviteCode}` 
+        : 'N/A';
 
     const fetchGroupData = async () => {
         try {
@@ -187,10 +190,10 @@ const Members = () => {
                                 </label>
                                 <div className="flex items-center gap-1.5">
                                     <div className="flex-1 bg-slate-50 px-2 py-1.5 rounded-lg text-[10px] truncate border border-slate-200 text-textColor opacity-60">
-                                        {groupData?.inviteLink || 'N/A'}
+                                        {inviteLink}
                                     </div>
                                     <button
-                                        onClick={() => copyToClipboard(groupData?.inviteLink, "Invite link copied!")}
+                                        onClick={() => copyToClipboard(inviteLink, "Invite link copied!")}
                                         className="p-1.5 bg-slate-50 text-primary rounded-lg border border-slate-200 hover:bg-primary/5 transition-all"
                                         title="Copy Link"
                                     >
