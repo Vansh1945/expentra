@@ -31,6 +31,7 @@ const Login = () => {
             try {
                 const result = await getRedirectResult(auth);
                 if (result?.user) {
+                    sessionStorage.removeItem('isGoogleRedirecting');
                     const user = result.user;
                     const res = await axios.post(`${API}/auth/google`, {
                         name: user.displayName,
@@ -46,8 +47,12 @@ const Login = () => {
                     } else {
                         navigate('/dashboard');
                     }
+                } else if (sessionStorage.getItem('isGoogleRedirecting') === 'true') {
+                    sessionStorage.removeItem('isGoogleRedirecting');
+                    toast.error('Google Sign-in failed because your browser blocked third-party storage. Please allow popups in the URL bar and try again.');
                 }
             } catch (error) {
+                sessionStorage.removeItem('isGoogleRedirecting');
                 console.error("Google redirect sign-in error:", error);
                 toast.error(error.response?.data?.message || 'Google Login failed. Please try again.');
             }
@@ -97,10 +102,12 @@ const Login = () => {
             if (error.code === 'auth/popup-closed-by-user') {
                 toast.warning('Authentication cancelled');
             } else if (error.code === 'auth/popup-blocked') {
+                sessionStorage.setItem('isGoogleRedirecting', 'true');
                 toast.info('Popup blocked. Redirecting to Google sign in...');
                 try {
                     await signInWithRedirect(auth, googleProvider);
                 } catch (redirectError) {
+                    sessionStorage.removeItem('isGoogleRedirecting');
                     toast.error('Failed to redirect. Please enable popups or try a different browser.');
                     console.error(redirectError);
                 }
