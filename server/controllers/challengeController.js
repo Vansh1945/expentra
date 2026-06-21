@@ -107,7 +107,7 @@ export const getChallengeStatus = async (req, res, next) => {
                 ...quest,
                 progress,
                 target,
-                isCompleted: isCompleted || user.questsCompleted.includes(quest.id)
+                isCompleted: isCompleted || (user.questsCompleted || []).includes(quest.id)
             };
         });
 
@@ -141,7 +141,7 @@ export const getChallengeStatus = async (req, res, next) => {
             streakCount: currentStreak,
             badges: SYSTEM_BADGES.map(badge => ({
                 ...badge,
-                isUnlocked: user.badges.includes(badge.id)
+                isUnlocked: (user.badges || []).includes(badge.id)
             })),
             quests: questProgress
         });
@@ -161,6 +161,10 @@ export const completeQuest = async (req, res, next) => {
         if (!user) {
             res.status(404);
             return next(new Error('User not found'));
+        }
+
+        if (!user.questsCompleted) {
+            user.questsCompleted = [];
         }
 
         if (!user.questsCompleted.includes(questId)) {
