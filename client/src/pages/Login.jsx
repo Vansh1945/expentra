@@ -47,9 +47,6 @@ const Login = () => {
                     } else {
                         navigate('/dashboard');
                     }
-                } else if (sessionStorage.getItem('isGoogleRedirecting') === 'true') {
-                    sessionStorage.removeItem('isGoogleRedirecting');
-                    toast.error('Google Sign-in failed because your browser blocked third-party storage. Please allow popups in the URL bar and try again.');
                 }
             } catch (error) {
                 sessionStorage.removeItem('isGoogleRedirecting');
@@ -102,15 +99,9 @@ const Login = () => {
             if (error.code === 'auth/popup-closed-by-user') {
                 toast.warning('Authentication cancelled');
             } else if (error.code === 'auth/popup-blocked') {
-                sessionStorage.setItem('isGoogleRedirecting', 'true');
-                toast.info('Popup blocked. Redirecting to Google sign in...');
-                try {
-                    await signInWithRedirect(auth, googleProvider);
-                } catch (redirectError) {
-                    sessionStorage.removeItem('isGoogleRedirecting');
-                    toast.error('Failed to redirect. Please enable popups or try a different browser.');
-                    console.error(redirectError);
-                }
+                toast.error('Popup blocked. Please allow popups in your browser URL bar for this website and try again.');
+            } else if (error.code === 'auth/web-storage-unsupported') {
+                toast.error('Google Sign-in failed because your browser blocks third-party storage/cookies. Please enable cookies or try a different browser.');
             } else {
                 toast.error(error.response?.data?.message || 'Google Login failed. Please try again.');
                 console.error(error);
