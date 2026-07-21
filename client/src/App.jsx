@@ -4,10 +4,20 @@ import { AuthProvider } from './context/AuthContext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { Capacitor } from '@capacitor/core';
 
 // Configure Axios globally
-const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-const API_URL = (Array.isArray(rawApiUrl) ? rawApiUrl[0] : rawApiUrl).toString().trim().replace(/,$/, '');
+const getBaseUrl = () => {
+  const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+  let url = (Array.isArray(rawApiUrl) ? rawApiUrl[0] : rawApiUrl).toString().trim().replace(/,$/, '');
+
+  if (url.includes('localhost') && Capacitor.getPlatform() === 'android') {
+    return url.replace('localhost', '10.0.2.2');
+  }
+  return url;
+};
+
+const API_URL = getBaseUrl();
 console.log("Current API URL:", API_URL);
 axios.defaults.baseURL = API_URL;
 axios.defaults.withCredentials = true;
